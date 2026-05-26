@@ -29,6 +29,8 @@ public class GameState : MonoBehaviour
     }
     #endregion
 
+    public float Scale = 0f;
+
     public CombatPoints GlobalCombatPoints;
     public List<CombatPoints> RoomCombatPointsList;
 }
