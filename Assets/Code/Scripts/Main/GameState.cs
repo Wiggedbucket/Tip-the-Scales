@@ -33,6 +33,17 @@ public class GameState : MonoBehaviour
 
     public CombatPoints GlobalCombatPoints;
     public List<CombatPoints> RoomCombatPointsList;
+
+    public float GameTime = 0f;
+
+    public int CurrentWave;
+
+    private void Update()
+    {
+        GameTime += Time.deltaTime;
+    }
+
+    public void NextWave() => CurrentWave++;
 }
 
 [System.Serializable]
