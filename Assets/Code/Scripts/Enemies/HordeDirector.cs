@@ -9,20 +9,22 @@ public class HordeDirector : MonoBehaviour
 
     private CombatPoints combatPoints;
 
+    public static int TotalCurrentWave = 0;
+
     private int currentWave = 0;
     public int CurrentWave
     {
         get
         {
             // Makes sure that all the rooms don't stray too far from each other in terms of wave count
-            if (currentWave + maxWaveDeviation < GameState.Instance.TotalCurrentWave)
-                currentWave = GameState.Instance.TotalCurrentWave - maxWaveDeviation;
+            if (currentWave + maxWaveDeviation < TotalCurrentWave)
+                currentWave = TotalCurrentWave - maxWaveDeviation;
             return currentWave;
         }
         set
         {
             currentWave = value;
-            GameState.Instance.TotalCurrentWave += currentWave - value;
+            TotalCurrentWave += currentWave - value;
         }
     }
 
@@ -32,7 +34,7 @@ public class HordeDirector : MonoBehaviour
 
     public int baseBudget = 10;
 
-    private CountdownTimer countdownTimer;
+    private CountdownTimer waveCountdownTimer;
 
     [Tooltip("The amount of time it takes for the next wave to start, gets ignored for first wave.")]
     private float waveTimeInterval = 20f;
@@ -41,26 +43,26 @@ public class HordeDirector : MonoBehaviour
     {
         combatPoints = GameState.Instance.RoomCombatPointsList[id];
 
-        countdownTimer = new CountdownTimer(waveTimeInterval);
-        countdownTimer.OnTimerStop += StartWave;
-        countdownTimer.Start();
+        waveCountdownTimer = new CountdownTimer(waveTimeInterval);
+        waveCountdownTimer.OnTimerStop += StartWave;
+        waveCountdownTimer.Start();
     }
 
     private void Update()
     {
-        countdownTimer.Tick(Time.deltaTime);
+        waveCountdownTimer.Tick(Time.deltaTime);
     }
 
     private void StartWave()
     {
-        GameState.Instance.TotalCurrentWave++;
+        TotalCurrentWave++;
 
         int budget = CalculateBudget();
 
         StartCoroutine(enemySpawner.SpawnWave(budget, CurrentWave));
 
-        countdownTimer.Reset(waveTimeInterval);
-        countdownTimer.Start();
+        waveCountdownTimer.Reset(waveTimeInterval);
+        waveCountdownTimer.Start();
     }
 
     private int CalculateBudget()

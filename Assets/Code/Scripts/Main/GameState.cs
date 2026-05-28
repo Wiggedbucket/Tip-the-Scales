@@ -36,8 +36,6 @@ public class GameState : MonoBehaviour
 
     public float GameTime = 0f;
 
-    public int TotalCurrentWave;
-
     private void Update()
     {
         GameTime += Time.deltaTime;
