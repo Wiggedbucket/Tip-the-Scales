@@ -22,7 +22,7 @@ public class EnemySpawner : MonoBehaviour
 
         Transform spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Count)];
 
-        Debug.Log($"Starting wave with a budget of {budget}");
+        Debug.Log($"Starting wave {wave} with a budget of {budget}");
         while (budget > 0 && safety-- > 0)
         {
             if (aliveEnemies.Count >= maxEnemiesAlive)
@@ -96,7 +96,7 @@ public class EnemySpawner : MonoBehaviour
 
     private void SpawnEnemy(EnemyData enemyData, Transform spawnPoint)
     {
-        GameObject enemy = Instantiate(enemyData.enemy, spawnPoint.position, spawnPoint.rotation);
+        GameObject enemy = Instantiate(enemyData.enemy, spawnPoint.position, spawnPoint.rotation, transform);
 
         aliveEnemies.Add(enemy);
     }

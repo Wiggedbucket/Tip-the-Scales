@@ -13,15 +13,33 @@ MonoBehaviour:
   m_Name: EnemyRegistry
   m_EditorClassIdentifier: Assembly-CSharp::EnemyRegistry
   enemies:
-  - enemy: {fileID: 0}
+  - enemy: {fileID: 4470074452919762278, guid: 725fff3d8cee997439b96f9a2b001c68, type: 3}
     tier: 0
-    weight: 0
-    cost: 0
-    minimumWave: 0
-    maximumWave: 0
+    weight: 1
+    cost: 2
+    minimumWave: 1
+    maximumWave: 10
     appearanceChance:
       serializedVersion: 2
-      m_Curve: []
-      m_PreInfinity: 0
-      m_PostInfinity: 0
-      m_RotationOrder: 0
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4

@@ -10,6 +10,23 @@ public class HordeDirector : MonoBehaviour
     private CombatPoints combatPoints;
 
     private int currentWave = 0;
+    public int CurrentWave
+    {
+        get
+        {
+            // Makes sure that all the rooms don't stray too far from each other in terms of wave count
+            if (currentWave + maxWaveDeviation < GameState.Instance.TotalCurrentWave)
+                currentWave = GameState.Instance.TotalCurrentWave - maxWaveDeviation;
+            return currentWave;
+        }
+        set
+        {
+            currentWave = value;
+            GameState.Instance.TotalCurrentWave += currentWave - value;
+        }
+    }
+
+    private int maxWaveDeviation = 5;
 
     private float GameTime => GameState.Instance.GameTime;
 
@@ -36,11 +53,11 @@ public class HordeDirector : MonoBehaviour
 
     private void StartWave()
     {
-        GameState.Instance.NextWave();
+        GameState.Instance.TotalCurrentWave++;
 
         int budget = CalculateBudget();
 
-        StartCoroutine(enemySpawner.SpawnWave(budget, currentWave));
+        StartCoroutine(enemySpawner.SpawnWave(budget, CurrentWave));
 
         countdownTimer.Reset(waveTimeInterval);
         countdownTimer.Start();
@@ -50,7 +67,7 @@ public class HordeDirector : MonoBehaviour
     {
         int timeScaling = Mathf.FloorToInt(GameTime / 60f);
 
-        int waveScaling = currentWave * 2;
+        int waveScaling = CurrentWave * 2;
 
         int scoreDifference = Mathf.Abs(combatPoints.demonPoints - combatPoints.angelPoints);
 
