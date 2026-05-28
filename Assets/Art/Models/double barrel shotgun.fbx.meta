@@ -3,7 +3,32 @@ guid: 72a4114df8d80424d98b3f41dc4ecaa9
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: barrel
+    second: {fileID: 2100000, guid: 688a26bdb79eb564eb70473b05a00f57, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: handle grip
+    second: {fileID: 2100000, guid: 52f3c386af9e6de429cf24378ca16676, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: metal switch
+    second: {fileID: 2100000, guid: b2f75016609af2c41962109bce49e746, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: metal thing
+    second: {fileID: 2100000, guid: 8889262b467246a45be6901ab14a30aa, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: wings
+    second: {fileID: 2100000, guid: 064dc07d9eae46d44909b72bf1581cad, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

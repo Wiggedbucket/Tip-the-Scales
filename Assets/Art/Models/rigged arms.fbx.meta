@@ -3,7 +3,12 @@ guid: a861be1eeddfdf547890e5b2cbc82ada
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Basiccharacter_Body_Defaultskin
+    second: {fileID: 2100000, guid: e3d11356e5dc46949a2d9cc6ce049373, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
