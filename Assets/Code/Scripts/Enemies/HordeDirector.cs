@@ -15,7 +15,7 @@ public class HordeDirector : MonoBehaviour
 
     public static int TotalCurrentWave = 0;
 
-    private int currentWave = 0;
+    [SerializeField] private int currentWave = 0;
     public int CurrentWave
     {
         get
@@ -47,7 +47,6 @@ public class HordeDirector : MonoBehaviour
     {
         combatPoints = GameState.Instance.RoomCombatPointsList[id];
 
-        waveCountdownTimer = new CountdownTimer(waveTimeInterval);
         waveCountdownTimer.Start();
     }
 
@@ -56,6 +55,8 @@ public class HordeDirector : MonoBehaviour
         changeRoomStateEventBinding = new EventBinding<ChangeRoomStateEvent>(ChangeRoomState);
         EventBus<ChangeRoomStateEvent>.Register(changeRoomStateEventBinding);
 
+        if (waveCountdownTimer == null)
+            waveCountdownTimer = new CountdownTimer(waveTimeInterval);
         waveCountdownTimer.OnTimerStop += StartWave;
     }
 
@@ -84,7 +85,10 @@ public class HordeDirector : MonoBehaviour
 
     private void StartWave()
     {
+        CurrentWave++;
         TotalCurrentWave++;
+
+        Debug.Log($"Current wave: {CurrentWave}; Total current wave: {TotalCurrentWave}");
 
         int budget = CalculateBudget();
 

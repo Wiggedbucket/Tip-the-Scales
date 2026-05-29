@@ -7,7 +7,16 @@ public class RoomEntranceTrigger : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!other.CompareTag("Player") && roomId != -1)
+        if (!other.CompareTag("Player"))
+            return;
+
+        Execute();
+    }
+
+    [ContextMenu("Execute Trigger")]
+    private void Execute()
+    {
+        if (roomId == -1)
             return;
 
         EventBus<ChangeRoomStateEvent>.Raise(new ChangeRoomStateEvent

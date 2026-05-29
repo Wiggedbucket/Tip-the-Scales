@@ -12,7 +12,7 @@ public class EnemySpawner : MonoBehaviour
 
     [SerializeField] private int maxEnemiesAlive = 500;
 
-    private readonly List<GameObject> aliveEnemies = new();
+    private readonly HashSet<GameObject> aliveEnemies = new();
 
     public IEnumerator SpawnWave(int budget, int wave)
     {
@@ -103,6 +103,6 @@ public class EnemySpawner : MonoBehaviour
 
     private void CleanupEnemies()
     {
-        aliveEnemies.RemoveAll(e => e == null);
+        aliveEnemies.RemoveWhere(e => e == null);
     }
 }
