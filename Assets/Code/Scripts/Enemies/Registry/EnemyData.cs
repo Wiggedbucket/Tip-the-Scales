@@ -4,15 +4,31 @@ using UnityEngine;
 [Serializable]
 public struct EnemyData
 {
+    [Header("Prefab")]
     public GameObject enemy;
+
+    [Header("Classification")]
     public EnemyTier tier;
-    public int weight;
+
+    [Header("Balancing")]
     public int cost;
+    public int weight;
 
-    public int minimumWave;
-    public int maximumWave;
+    [Header("Wave Progression")]
 
-    [Tooltip("The chance of the enemy appearing between the min and max wave.\nAfter the max wave, the last chance point will be held for future waves.")]
+    [Tooltip("Wave where this enemy starts appearing.")]
+    public int startWave;
+
+    [Tooltip("Wave where the appearance curve reaches its end.")]
+    public int curveEndWave;
+
+    [Tooltip("Optional wave where the enemy stops spawning entirely. 0 = never.")]
+    public int stopSpawningWave;
+
+    [Tooltip(
+        "Controls spawn chance progression between Start Wave and Curve End Wave.\n" +
+        "After Curve End Wave, the final curve value is held."
+    )]
     public AnimationCurve appearanceChance;
 }
 

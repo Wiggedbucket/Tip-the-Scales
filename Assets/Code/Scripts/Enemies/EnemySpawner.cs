@@ -11,6 +11,7 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private List<Transform> spawnPoints;
 
     [SerializeField] private bool allEnemiesSpawned = false;
+
     [SerializeField] private float spawnDelay = 0.2f;
 
     [SerializeField] private int maxEnemiesAlive = 500;
@@ -38,8 +39,6 @@ public class EnemySpawner : MonoBehaviour
 
         int safety = 1000;
 
-        Transform spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Count)];
-
         Debug.Log($"Starting wave {wave} with a budget of {budget}");
         while (budget > 0 && safety-- > 0)
         {
@@ -50,6 +49,8 @@ public class EnemySpawner : MonoBehaviour
 
             if (enemy.enemy == null)
                 break;
+
+            Transform spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Count)];
 
             SpawnEnemy(enemy, spawnPoint);
 
@@ -76,13 +77,13 @@ public class EnemySpawner : MonoBehaviour
             if (enemy.cost > budget)
                 continue;
 
-            if (wave < enemy.minimumWave)
+            if (wave < enemy.startWave)
                 continue;
 
-            if (enemy.maximumWave > 0 && wave > enemy.maximumWave)
+            if (enemy.stopSpawningWave > 0 && wave > enemy.stopSpawningWave)
                 continue;
 
-            float curveValue = enemy.appearanceChance.Evaluate(Mathf.Clamp01((float)wave / enemy.maximumWave));
+            float curveValue = EvaluateAppearanceChance(enemy, wave);
 
             float finalWeight = curveValue * enemy.weight;
 
@@ -103,7 +104,7 @@ public class EnemySpawner : MonoBehaviour
 
         foreach (EnemyData enemy in validEnemies)
         {
-            float curveValue = enemy.appearanceChance.Evaluate(Mathf.Clamp01((float)wave / enemy.maximumWave));
+            float curveValue = EvaluateAppearanceChance(enemy, wave);
 
             float finalWeight = curveValue * enemy.weight;
 
@@ -114,6 +115,21 @@ public class EnemySpawner : MonoBehaviour
         }
 
         return validEnemies[0];
+    }
+
+    private float EvaluateAppearanceChance(EnemyData enemy, int wave)
+    {
+        if (wave < enemy.startWave)
+            return 0f;
+
+        int curveLength = enemy.curveEndWave - enemy.startWave;
+
+        if (curveLength <= 0)
+            return enemy.appearanceChance.Evaluate(1f);
+
+        float normalizedProgress = Mathf.Clamp01((float)(wave - enemy.startWave) / curveLength);
+
+        return enemy.appearanceChance.Evaluate(normalizedProgress);
     }
 
     private void SpawnEnemy(EnemyData enemyData, Transform spawnPoint)

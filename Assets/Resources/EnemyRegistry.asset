@@ -15,10 +15,11 @@ MonoBehaviour:
   enemies:
   - enemy: {fileID: 4470074452919762278, guid: 725fff3d8cee997439b96f9a2b001c68, type: 3}
     tier: 0
-    weight: 1
     cost: 2
-    minimumWave: 1
-    maximumWave: 10
+    weight: 1
+    startWave: 1
+    curveEndWave: 0
+    stopSpawningWave: 0
     appearanceChance:
       serializedVersion: 2
       m_Curve:

@@ -75,6 +75,7 @@ public class HordeDirector : MonoBehaviour
 
     public void TryStartWave()
     {
+        // Put a check to see if the points are good enough so the player can go to a different room
         StartWave();
     }
 
