@@ -7,6 +7,10 @@ public class HordeDirector : MonoBehaviour
 
     [SerializeField] private EnemySpawner enemySpawner;
 
+    public bool isPlayerInRoom = false;
+
+    private EventBinding<ChangeRoomStateEvent> changeRoomStateEventBinding;
+
     private CombatPoints combatPoints;
 
     public static int TotalCurrentWave = 0;
@@ -44,12 +48,37 @@ public class HordeDirector : MonoBehaviour
         combatPoints = GameState.Instance.RoomCombatPointsList[id];
 
         waveCountdownTimer = new CountdownTimer(waveTimeInterval);
-        waveCountdownTimer.OnTimerStop += StartWave;
         waveCountdownTimer.Start();
+    }
+
+    private void OnEnable()
+    {
+        changeRoomStateEventBinding = new EventBinding<ChangeRoomStateEvent>(ChangeRoomState);
+        EventBus<ChangeRoomStateEvent>.Register(changeRoomStateEventBinding);
+
+        waveCountdownTimer.OnTimerStop += StartWave;
+    }
+
+    private void OnDisable()
+    {
+        EventBus<ChangeRoomStateEvent>.Deregister(changeRoomStateEventBinding);
+
+        waveCountdownTimer.OnTimerStop -= StartWave;
+    }
+
+    private void ChangeRoomState(ChangeRoomStateEvent changeRoomStateEvent)
+    {
+        if (changeRoomStateEvent.RoomId != id)
+            return;
+
+        isPlayerInRoom = changeRoomStateEvent.isPlayerInRoom;
     }
 
     private void Update()
     {
+        if (!isPlayerInRoom)
+            return;
+
         waveCountdownTimer.Tick(Time.deltaTime);
     }
 
