@@ -69,6 +69,7 @@ public class EnemySpawner : MonoBehaviour
 
         float totalWeight = 0f;
 
+        // Find out which enemies are valid to spawn and calculate the total weight for the weighted random selection
         foreach (EnemyData enemy in Registry.enemies)
         {
             if (enemy.enemy == null)
@@ -102,6 +103,7 @@ public class EnemySpawner : MonoBehaviour
 
         float current = 0f;
 
+        // Select an enemy based on the weighted random value
         foreach (EnemyData enemy in validEnemies)
         {
             float curveValue = EvaluateAppearanceChance(enemy, wave);
