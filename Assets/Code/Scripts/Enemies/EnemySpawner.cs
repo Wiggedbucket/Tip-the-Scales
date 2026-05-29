@@ -6,17 +6,35 @@ public class EnemySpawner : MonoBehaviour
 {
     private EnemyRegistry Registry => EnemyRegistryDatabase.Registry;
 
+    [SerializeField] private HordeDirector hordeDirector;
+
     [SerializeField] private List<Transform> spawnPoints;
 
+    [SerializeField] private bool allEnemiesSpawned = false;
     [SerializeField] private float spawnDelay = 0.2f;
 
     [SerializeField] private int maxEnemiesAlive = 500;
 
     private readonly HashSet<GameObject> aliveEnemies = new();
 
+    private EventBinding<EnemyDiedEvent> enemyDiedEventBinding;
+
+    private void OnEnable()
+    {
+        enemyDiedEventBinding = new EventBinding<EnemyDiedEvent>(EnemyDied);
+        EventBus<EnemyDiedEvent>.Register(enemyDiedEventBinding);
+    }
+
+    private void OnDisable()
+    {
+        EventBus<EnemyDiedEvent>.Deregister(enemyDiedEventBinding);
+    }
+
     public IEnumerator SpawnWave(int budget, int wave)
     {
-        CleanupEnemies();
+        allEnemiesSpawned = false;
+
+        CleanUpEnemyHashSet();
 
         int safety = 1000;
 
@@ -36,8 +54,12 @@ public class EnemySpawner : MonoBehaviour
             SpawnEnemy(enemy, spawnPoint);
 
             budget -= enemy.cost;
-            yield return new WaitForSeconds(spawnDelay);
+
+            if (budget > 0 && safety-- > 0)
+                yield return new WaitForSeconds(spawnDelay);
         }
+
+        allEnemiesSpawned = true;
     }
 
     private EnemyData GetEnemyForBudget(int budget, int wave)
@@ -101,7 +123,20 @@ public class EnemySpawner : MonoBehaviour
         aliveEnemies.Add(enemy);
     }
 
-    private void CleanupEnemies()
+    private void EnemyDied(EnemyDiedEvent enemyDiedEvent)
+    {
+        aliveEnemies.Remove(enemyDiedEvent.enemyObject);
+        if (aliveEnemies.Count == 0 && allEnemiesSpawned)
+            hordeDirector.TryStartWave();
+    }
+
+    [ContextMenu("Kill All Enemies")]
+    private void KillAllEnemies()
+    {
+        EventBus<KillAllEnemiesEvent>.Raise(new KillAllEnemiesEvent());
+    }
+
+    private void CleanUpEnemyHashSet()
     {
         aliveEnemies.RemoveWhere(e => e == null);
     }

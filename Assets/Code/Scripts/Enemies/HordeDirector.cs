@@ -25,46 +25,28 @@ public class HordeDirector : MonoBehaviour
                 currentWave = TotalCurrentWave - maxWaveDeviation;
             return currentWave;
         }
-        set
-        {
-            currentWave = value;
-            TotalCurrentWave += currentWave - value;
-        }
     }
 
-    private int maxWaveDeviation = 5;
+    private readonly int maxWaveDeviation = 5;
 
     private float GameTime => GameState.Instance.GameTime;
 
     public int baseBudget = 10;
 
-    private CountdownTimer waveCountdownTimer;
-
-    [Tooltip("The amount of time it takes for the next wave to start, gets ignored for first wave.")]
-    private float waveTimeInterval = 20f;
-
     private void Start()
     {
         combatPoints = GameState.Instance.RoomCombatPointsList[id];
-
-        waveCountdownTimer.Start();
     }
 
     private void OnEnable()
     {
         changeRoomStateEventBinding = new EventBinding<ChangeRoomStateEvent>(ChangeRoomState);
         EventBus<ChangeRoomStateEvent>.Register(changeRoomStateEventBinding);
-
-        if (waveCountdownTimer == null)
-            waveCountdownTimer = new CountdownTimer(waveTimeInterval);
-        waveCountdownTimer.OnTimerStop += StartWave;
     }
 
     private void OnDisable()
     {
         EventBus<ChangeRoomStateEvent>.Deregister(changeRoomStateEventBinding);
-
-        waveCountdownTimer.OnTimerStop -= StartWave;
     }
 
     private void ChangeRoomState(ChangeRoomStateEvent changeRoomStateEvent)
@@ -73,19 +55,15 @@ public class HordeDirector : MonoBehaviour
             return;
 
         isPlayerInRoom = changeRoomStateEvent.isPlayerInRoom;
+
+        if (isPlayerInRoom)
+            StartWave();
     }
 
-    private void Update()
-    {
-        if (!isPlayerInRoom)
-            return;
-
-        waveCountdownTimer.Tick(Time.deltaTime);
-    }
-
+    [ContextMenu("Start Wave")]
     private void StartWave()
     {
-        CurrentWave++;
+        currentWave++;
         TotalCurrentWave++;
 
         Debug.Log($"Current wave: {CurrentWave}; Total current wave: {TotalCurrentWave}");
@@ -93,9 +71,11 @@ public class HordeDirector : MonoBehaviour
         int budget = CalculateBudget();
 
         StartCoroutine(enemySpawner.SpawnWave(budget, CurrentWave));
+    }
 
-        waveCountdownTimer.Reset(waveTimeInterval);
-        waveCountdownTimer.Start();
+    public void TryStartWave()
+    {
+        StartWave();
     }
 
     private int CalculateBudget()

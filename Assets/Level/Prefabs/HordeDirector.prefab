@@ -47,7 +47,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::HordeDirector
   id: 0
   enemySpawner: {fileID: 2793961321164048666}
-  gameTime: 0
+  isPlayerInRoom: 0
+  currentWave: 0
   baseBudget: 10
 --- !u!114 &2793961321164048666
 MonoBehaviour:
@@ -61,6 +62,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d2cf6840e1e0dc40924ed355cd66216, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemySpawner
+  hordeDirector: {fileID: 1216991767141128025}
   spawnPoints: []
   spawnDelay: 0.2
   maxEnemiesAlive: 500
