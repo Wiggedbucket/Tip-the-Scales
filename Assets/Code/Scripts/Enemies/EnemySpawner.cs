@@ -135,6 +135,7 @@ public class EnemySpawner : MonoBehaviour
     private void SpawnEnemy(EnemyData enemyData, Transform spawnPoint)
     {
         GameObject enemy = Instantiate(enemyData.enemy, spawnPoint.position, spawnPoint.rotation, transform);
+        enemy.GetComponent<TestDummyEnemy>().roomId = hordeDirector.id;
 
         aliveEnemies.Add(enemy);
     }
@@ -149,7 +150,10 @@ public class EnemySpawner : MonoBehaviour
     [ContextMenu("Kill All Enemies")]
     private void KillAllEnemies()
     {
-        EventBus<KillAllEnemiesEvent>.Raise(new KillAllEnemiesEvent());
+        EventBus<KillAllEnemiesEvent>.Raise(new KillAllEnemiesEvent()
+        {
+            roomId = hordeDirector.id
+        });
     }
 
     private void CleanUpEnemyHashSet()

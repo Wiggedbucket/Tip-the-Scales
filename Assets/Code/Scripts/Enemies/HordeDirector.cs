@@ -52,7 +52,12 @@ public class HordeDirector : MonoBehaviour
     private void ChangeRoomState(ChangeRoomStateEvent changeRoomStateEvent)
     {
         if (changeRoomStateEvent.RoomId != id)
+        {
+            if (changeRoomStateEvent.isPlayerInRoom)
+                isPlayerInRoom = false;
+
             return;
+        }
 
         isPlayerInRoom = changeRoomStateEvent.isPlayerInRoom;
 
@@ -75,7 +80,9 @@ public class HordeDirector : MonoBehaviour
 
     public void TryStartWave()
     {
-        // Put a check to see if the points are good enough so the player can go to a different room
+        if (!isPlayerInRoom)
+            return;
+
         StartWave();
     }
 
