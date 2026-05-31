@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5511324324782799504}
   m_Layer: 0
-  m_Name: Double shell
+  m_Name: Double shotgun shell
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

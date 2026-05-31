@@ -10,17 +10,17 @@ AnimatorStateMachine:
   m_Name: Base Layer
   m_ChildStates:
   - serializedVersion: 1
-    m_State: {fileID: 7883530063349752553}
-    m_Position: {x: 298.1353, y: 141.46385, z: 0}
+    m_State: {fileID: 3171408666028769754}
+    m_Position: {x: 321.34262, y: -99.50766, z: 0}
   - serializedVersion: 1
-    m_State: {fileID: 6594639598501892451}
-    m_Position: {x: 290, y: 220, z: 0}
+    m_State: {fileID: 3895984020082687842}
+    m_Position: {x: 330, y: 0, z: 0}
   - serializedVersion: 1
-    m_State: {fileID: 1838162679911004974}
-    m_Position: {x: 310, y: 10, z: 0}
+    m_State: {fileID: -1936058457054970196}
+    m_Position: {x: 330, y: 90, z: 0}
   - serializedVersion: 1
-    m_State: {fileID: -452015997496068729}
-    m_Position: {x: 300, y: 80, z: 0}
+    m_State: {fileID: 7263548328779935124}
+    m_Position: {x: 320, y: 170, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
@@ -30,15 +30,15 @@ AnimatorStateMachine:
   m_EntryPosition: {x: 50, y: 120, z: 0}
   m_ExitPosition: {x: 800, y: 120, z: 0}
   m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}
-  m_DefaultState: {fileID: -452015997496068729}
---- !u!1102 &-452015997496068729
+  m_DefaultState: {fileID: 3895984020082687842}
+--- !u!1102 &-1936058457054970196
 AnimatorState:
   serializedVersion: 6
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Armature_002_Shotgun Reload
+  m_Name: Armature_002_Shotgun Shoot
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -51,7 +51,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 10b70c95428158649a62ac4efbe5a232, type: 2}
+  m_Motion: {fileID: 7400000, guid: dc915b464e445194cb34c9ac5409e28b, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -79,14 +79,14 @@ AnimatorController:
     m_IKPass: 0
     m_SyncedLayerAffectsTiming: 0
     m_Controller: {fileID: 9100000}
---- !u!1102 &1838162679911004974
+--- !u!1102 &3171408666028769754
 AnimatorState:
   serializedVersion: 6
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Bullets Reload
+  m_Name: Armature_002_Shotgun Idle
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -99,20 +99,20 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 8cbb0ef8477da454082a82973061df12, type: 2}
+  m_Motion: {fileID: 7400000, guid: c8d5c8a1b09a1a74fb2535e3c333b978, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
---- !u!1102 &6594639598501892451
+--- !u!1102 &3895984020082687842
 AnimatorState:
   serializedVersion: 6
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Armature_002|Shotgun Shoot
+  m_Name: Armature_002_Shotgun Reload
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -125,20 +125,20 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 8205329529817185317, guid: 72a4114df8d80424d98b3f41dc4ecaa9, type: 3}
+  m_Motion: {fileID: 7400000, guid: 10b70c95428158649a62ac4efbe5a232, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
---- !u!1102 &7883530063349752553
+--- !u!1102 &7263548328779935124
 AnimatorState:
   serializedVersion: 6
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Armature_002|Shotgun Walk
+  m_Name: Armature_002_Shotgun Walk
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -151,7 +151,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 4744402563695965356, guid: 72a4114df8d80424d98b3f41dc4ecaa9, type: 3}
+  m_Motion: {fileID: 7400000, guid: 19a09502a06d4fc4ebca46a16f815c08, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
