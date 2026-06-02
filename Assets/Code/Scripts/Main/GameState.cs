@@ -33,6 +33,13 @@ public class GameState : MonoBehaviour
 
     public CombatPoints GlobalCombatPoints;
     public List<CombatPoints> RoomCombatPointsList;
+
+    public float GameTime = 0f;
+
+    private void Update()
+    {
+        GameTime += Time.deltaTime;
+    }
 }
 
 [System.Serializable]
