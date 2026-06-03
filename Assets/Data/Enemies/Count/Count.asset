@@ -18,6 +18,8 @@ MonoBehaviour:
   attackDamage: 20
   attackRange: 2.25
   attackCooldown: 2.5
-  anticipationTime: 0.6
+  anticipationTime: 0.4
   useLunge: 1
-  lungeForce: 12
+  lungeForce: 18
+  lungeRange: 4
+  damageRange: 2

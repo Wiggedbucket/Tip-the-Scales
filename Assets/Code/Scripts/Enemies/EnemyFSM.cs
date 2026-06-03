@@ -46,7 +46,10 @@ public class EnemyFSM : MonoBehaviour
     {
         agent.SetDestination(player.position);
         float distance =  Vector3.Distance(transform.position, player.position);
-        if (distance <= stats.attackRange)
+
+        float triggerRange = stats.useLunge ? stats.lungeRange : stats.attackRange;
+
+        if (distance <= stats.lungeRange)
         {
             agent.SetDestination(transform.position);
             agent.velocity = Vector3.zero;

@@ -8,10 +8,6 @@ public class PlayerMover : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        Physics.IgnoreLayerCollision(
-            LayerMask.NameToLayer("Player"),
-            LayerMask.NameToLayer("Enemy")
-            );
     }
     void FixedUpdate()
     {
