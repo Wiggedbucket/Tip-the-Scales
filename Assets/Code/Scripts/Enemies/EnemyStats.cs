@@ -9,4 +9,6 @@ public class EnemyStats : ScriptableObject
     [SerializeField] public float attackRange = 1.5f;
     [SerializeField] public float attackCooldown = 2f;
     [SerializeField] public float anticipationTime = 0.4f;
+    [SerializeField] public bool useLunge = false;
+    [SerializeField] public float lungeForce = 8f;
 }

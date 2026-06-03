@@ -5,7 +5,7 @@ public class EnemyFSM : MonoBehaviour
 {
     public enum State { Idle, Recover, Chase, Attack }
     [SerializeField] public EnemyStats stats;
-    [SerializeField] Transform player;
+    [SerializeField] public Transform player;
     public State currentState = State.Idle;
     NavMeshAgent agent;
     float currentHealth;
@@ -13,6 +13,7 @@ public class EnemyFSM : MonoBehaviour
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
+        agent.stoppingDistance = stats.attackRange * 0.8f;
         agent.speed = stats.moveSpeed;
         currentHealth = stats.maxHealth;    
     }
@@ -48,11 +49,13 @@ public class EnemyFSM : MonoBehaviour
         if (distance <= stats.attackRange)
         {
             agent.SetDestination(transform.position);
+            agent.velocity = Vector3.zero;
             currentState = State.Attack;
         }
     }
     void HandleRecover()
     {
+        agent.velocity = Vector3.zero;
         if (Time.time >= lastAttackTime + stats.attackCooldown)
         {
             currentState = State.Chase;
