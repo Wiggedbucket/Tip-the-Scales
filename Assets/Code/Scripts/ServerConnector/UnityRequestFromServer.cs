@@ -20,7 +20,6 @@ public class GameData
     public Objective obj2;
     public Objective obj3;
 }
-
 [System.Serializable]
 public class ResetRequest
 {
@@ -109,9 +108,7 @@ public class UnityRequestFromServer : MonoBehaviour
         }
     }
 
-    IEnumerator SendGameData(
-        GameData gameData
-    )
+    IEnumerator SendGameData(GameData gameData)
     {
         string json =
             JsonUtility.ToJson(gameData);
@@ -166,5 +163,24 @@ public class UnityRequestFromServer : MonoBehaviour
                 updatedData.score
             );
         }
+    }
+    private void ApplyToGameStateData(GameData data)
+    {
+        var list = GameState.Instance.RoomCombatPointsList;
+
+        CombatPoints room0 = list[0];
+        room0.angelPoints = data.obj1.light;
+        room0.demonPoints = data.obj1.dark;
+        list[0] = room0;
+
+        CombatPoints room1 = list[1];
+        room1.angelPoints = data.obj2.light;
+        room1.demonPoints = data.obj2.dark;
+        list[1] = room1;
+
+        CombatPoints room2 = list[2];
+        room2.angelPoints = data.obj3.light;
+        room2.demonPoints = data.obj3.dark;
+        list[2] = room2;
     }
 }
