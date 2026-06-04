@@ -10,16 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4568c7b4c6923724eb36957a67157dd8, type: 3}
-  m_Name: Count
+  m_Name: Viscount
   m_EditorClassIdentifier: Assembly-CSharp::EnemyStats
-  enemyName: Count
-  maxHealth: 80
-  moveSpeed: 3
-  attackDamage: 20
-  attackRange: 2.25
-  attackCooldown: 2.5
+  enemyName: Viscount
+  maxHealth: 60
+  moveSpeed: 4
+  attackDamage: 10
+  attackRange: 2
+  attackCooldown: 2
   anticipationTime: 0.4
-  useLunge: 1
-  lungeForce: 18
-  lungeRange: 4
-  damageRange: 2
+  useLunge: 0
+  lungeForce: 8
+  lungeRange: 2
+  damageRange: 1.5
+  canKite: 1
+  kiteDistance: 3
+  fireRange: 8
+  projectileSpeed: 8
+  homingStrength: 2

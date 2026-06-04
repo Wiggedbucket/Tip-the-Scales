@@ -7,6 +7,7 @@ public class EnemyFSM : MonoBehaviour
     public enum State { Idle, Recover, Chase, Attack, Kite }
     [SerializeField] public EnemyStats stats;
     [SerializeField] public Transform player;
+    public float lastKiteEndTime;
     public State currentState = State.Idle;
     NavMeshAgent agent;
     float currentHealth;
@@ -14,9 +15,15 @@ public class EnemyFSM : MonoBehaviour
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
-        agent.stoppingDistance = stats.attackRange * 0.8f;
         agent.speed = stats.moveSpeed;
-        currentHealth = stats.maxHealth;    
+        currentHealth = stats.maxHealth;
+
+        if (stats.canKite)
+            agent.stoppingDistance = stats.fireRange * 0.8f;
+        else if (stats.useLunge)
+            agent.stoppingDistance = stats.lungeRange * 0.8f;
+        else
+            agent.stoppingDistance = stats.attackRange * 0.8f;
     }
     void Update()
     {
@@ -32,6 +39,12 @@ public class EnemyFSM : MonoBehaviour
                 HandleChase();
                 break;
             case State.Attack:
+                
+                Vector3 directionToPlayer = (player.position - transform.position).normalized;
+                directionToPlayer.y = 0f;
+                if (directionToPlayer != Vector3.zero)
+                    transform.rotation = Quaternion.LookRotation(directionToPlayer);
+
                 if (stats.canKite)
                 {
                     float distanceToPlayer = Vector3.Distance(transform.position, player.position);
@@ -63,7 +76,7 @@ public class EnemyFSM : MonoBehaviour
                              (stats.useLunge ? stats.lungeRange : stats.attackRange);
 
 
-        if (distance <= stats.lungeRange)
+        if (distance <= triggerRange)
         {
             agent.SetDestination(transform.position);
             agent.velocity = Vector3.zero;
@@ -81,14 +94,19 @@ public class EnemyFSM : MonoBehaviour
 
     void HandleKite()
     {
+        agent.stoppingDistance = 0f;
         Vector3 directionAwayFromPlayer = (transform.position - player.position).normalized;
         Vector3 kiteTarget = transform.position + directionAwayFromPlayer * 5f;
-
+        agent.SetDestination(kiteTarget);
         float distance = Vector3.Distance(transform.position, player.position);
         if (distance >= stats.kiteDistance * 2f)
         {
+            agent.stoppingDistance = stats.fireRange * 0.8f;
             currentState = State.Attack;
+            lastKiteEndTime = Time.time;
+            
         }
+        
     }
 
     public void TakeDamage(float amount)
