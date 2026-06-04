@@ -1,9 +1,10 @@
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class EnemyFSM : MonoBehaviour
 {
-    public enum State { Idle, Recover, Chase, Attack }
+    public enum State { Idle, Recover, Chase, Attack, Kite }
     [SerializeField] public EnemyStats stats;
     [SerializeField] public Transform player;
     public State currentState = State.Idle;
@@ -31,6 +32,17 @@ public class EnemyFSM : MonoBehaviour
                 HandleChase();
                 break;
             case State.Attack:
+                if (stats.canKite)
+                {
+                    float distanceToPlayer = Vector3.Distance(transform.position, player.position);
+                    if (distanceToPlayer <= stats.kiteDistance)
+                    {
+                        currentState = State.Kite;
+                    }
+                }
+                break;
+            case State.Kite:
+                HandleKite();
                 break;
         }
     }
@@ -47,7 +59,9 @@ public class EnemyFSM : MonoBehaviour
         agent.SetDestination(player.position);
         float distance =  Vector3.Distance(transform.position, player.position);
 
-        float triggerRange = stats.useLunge ? stats.lungeRange : stats.attackRange;
+        float triggerRange = stats.canKite ? stats.fireRange :
+                             (stats.useLunge ? stats.lungeRange : stats.attackRange);
+
 
         if (distance <= stats.lungeRange)
         {
@@ -64,6 +78,19 @@ public class EnemyFSM : MonoBehaviour
             currentState = State.Chase;
         }
     }
+
+    void HandleKite()
+    {
+        Vector3 directionAwayFromPlayer = (transform.position - player.position).normalized;
+        Vector3 kiteTarget = transform.position + directionAwayFromPlayer * 5f;
+
+        float distance = Vector3.Distance(transform.position, player.position);
+        if (distance >= stats.kiteDistance * 2f)
+        {
+            currentState = State.Attack;
+        }
+    }
+
     public void TakeDamage(float amount)
     {
         currentHealth -= amount;
