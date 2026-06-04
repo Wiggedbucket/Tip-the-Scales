@@ -22,7 +22,7 @@ public class RoomEntranceTrigger : MonoBehaviour
         EventBus<ChangeRoomStateEvent>.Raise(new ChangeRoomStateEvent
         {
             RoomId = roomId,
-            isPlayerInRoom = true
+            IsPlayerInRoom = true
         });
 
         Debug.Log($"Player has entered room {roomId}!");
