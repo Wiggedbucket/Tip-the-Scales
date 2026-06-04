@@ -1,0 +1,26 @@
+:root {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+
+    width: 300px;
+}
+
+#RankLabel
+{
+    unity-font-style: bold;
+    font-size: 40px;
+}
+
+#StyleFeed
+{
+    margin-top: 10px;
+
+    min-height: 120px;
+}
+
+#FreshnessLabel
+{
+    margin-top: 10px;
+    font-size: 16px;
+}
