@@ -19,9 +19,12 @@ public class StyleMeterUI : MonoBehaviour
 
     private VisualElement styleFeed;
 
+    private Label freshnessLabel;
+
     private readonly List<StyleFeedEntry> activeEntries = new();
 
     private EventBinding<StyleGainEvent> styleGainBinding;
+    private EventBinding<FreshnessChangedEvent> freshnessChangedBinding;
 
     private void Awake()
     {
@@ -30,26 +33,50 @@ public class StyleMeterUI : MonoBehaviour
         rankLabel = root.Q<Label>("RankLabel");
         styleBar = root.Q<ProgressBar>("StyleBar");
         styleFeed = root.Q<VisualElement>("StyleFeed");
+        freshnessLabel = root.Q<Label>("FreshnessLabel");
     }
 
     private void OnEnable()
     {
         styleGainBinding = new EventBinding<StyleGainEvent>(OnStyleGain);
         EventBus<StyleGainEvent>.Register(styleGainBinding);
+
+        freshnessChangedBinding = new EventBinding<FreshnessChangedEvent>(OnFreshnessChanged);
+        EventBus<FreshnessChangedEvent>.Register(freshnessChangedBinding);
     }
 
     private void OnDisable()
     {
         EventBus<StyleGainEvent>.Deregister(styleGainBinding);
+        EventBus<FreshnessChangedEvent>.Deregister(freshnessChangedBinding);
     }
 
     private void Update()
     {
         rankLabel.text = styleMeter.CurrentRank.ToString();
+        rankLabel.style.color = GetRankColor(styleMeter.CurrentRank);
 
         styleBar.value = styleMeter.CurrentStyle;
 
         UpdateFeed();
+    }
+
+    private StyleColor GetRankColor(StyleRank rank)
+    {
+        return rank switch
+        {
+            StyleRank.F => (StyleColor)Color.gray,
+            StyleRank.E => (StyleColor)Color.gray,
+            StyleRank.D => (StyleColor)Color.green,
+            StyleRank.C => (StyleColor)Color.cyan,
+            StyleRank.B => (StyleColor)Color.blue,
+            StyleRank.A => (StyleColor)Color.purple,
+            StyleRank.S => (StyleColor)Color.orange,
+            StyleRank.SS => (StyleColor)Color.red,
+            StyleRank.SSS => (StyleColor)Color.gold,
+            StyleRank.ImTippingIt => (StyleColor)Color.lightGoldenRodYellow,
+            _ => (StyleColor)Color.gray,
+        };
     }
 
     private void OnStyleGain(StyleGainEvent e)
@@ -69,6 +96,11 @@ public class StyleMeterUI : MonoBehaviour
                 Element = label,
                 RemainingTime = feedLifetime
             });
+    }
+
+    private void OnFreshnessChanged(FreshnessChangedEvent e)
+    {
+        freshnessLabel.text = $"{e.Multiplier:0.0}x {styleMeter.FreshnessState}";
     }
 
     private void UpdateFeed()
