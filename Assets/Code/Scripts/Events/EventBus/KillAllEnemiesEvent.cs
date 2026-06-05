@@ -1,4 +1,4 @@
 public class KillAllEnemiesEvent : IEvent
 {
-    public int roomId;
+    public int RoomId;
 }

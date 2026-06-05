@@ -11,6 +11,8 @@ public class HordeDirector : MonoBehaviour
 
     private EventBinding<ChangeRoomStateEvent> changeRoomStateEventBinding;
 
+    private EventBinding<AllEnemiesDeadEvent> allEnemiesDeadEventBinding;
+
     private CombatPoints combatPoints;
 
     public static int TotalCurrentWave = 0;
@@ -42,24 +44,29 @@ public class HordeDirector : MonoBehaviour
     {
         changeRoomStateEventBinding = new EventBinding<ChangeRoomStateEvent>(ChangeRoomState);
         EventBus<ChangeRoomStateEvent>.Register(changeRoomStateEventBinding);
+
+        allEnemiesDeadEventBinding = new EventBinding<AllEnemiesDeadEvent>(TryStartWave);
+        EventBus<AllEnemiesDeadEvent>.Register(allEnemiesDeadEventBinding);
     }
 
     private void OnDisable()
     {
         EventBus<ChangeRoomStateEvent>.Deregister(changeRoomStateEventBinding);
+
+        EventBus<AllEnemiesDeadEvent>.Deregister(allEnemiesDeadEventBinding);
     }
 
     private void ChangeRoomState(ChangeRoomStateEvent changeRoomStateEvent)
     {
         if (changeRoomStateEvent.RoomId != id)
         {
-            if (changeRoomStateEvent.isPlayerInRoom)
+            if (changeRoomStateEvent.IsPlayerInRoom)
                 isPlayerInRoom = false;
 
             return;
         }
 
-        isPlayerInRoom = changeRoomStateEvent.isPlayerInRoom;
+        isPlayerInRoom = changeRoomStateEvent.IsPlayerInRoom;
 
         if (isPlayerInRoom)
             StartWave();
@@ -78,7 +85,7 @@ public class HordeDirector : MonoBehaviour
         StartCoroutine(enemySpawner.SpawnWave(budget, CurrentWave));
     }
 
-    public void TryStartWave()
+    public void TryStartWave(AllEnemiesDeadEvent e)
     {
         if (!isPlayerInRoom)
             return;

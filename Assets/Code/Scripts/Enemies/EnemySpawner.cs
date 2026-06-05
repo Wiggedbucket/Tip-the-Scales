@@ -144,9 +144,12 @@ public class EnemySpawner : MonoBehaviour
 
     private void EnemyDied(EnemyDiedEvent enemyDiedEvent)
     {
-        aliveEnemies.Remove(enemyDiedEvent.enemyObject);
+        aliveEnemies.Remove(enemyDiedEvent.EnemyObject);
         if (aliveEnemies.Count == 0 && allEnemiesSpawned)
-            hordeDirector.TryStartWave();
+            EventBus<AllEnemiesDeadEvent>.Raise(new AllEnemiesDeadEvent()
+            {
+                IsFinalWave = false
+            });
     }
 
     [ContextMenu("Kill All Enemies")]
@@ -154,7 +157,7 @@ public class EnemySpawner : MonoBehaviour
     {
         EventBus<KillAllEnemiesEvent>.Raise(new KillAllEnemiesEvent()
         {
-            roomId = hordeDirector.id
+            RoomId = hordeDirector.id
         });
     }
 
