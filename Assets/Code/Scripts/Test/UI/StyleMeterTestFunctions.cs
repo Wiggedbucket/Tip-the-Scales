@@ -5,8 +5,11 @@ public class StyleMeterTestFunctions : MonoBehaviour
     [SerializeField]
     private int stylePoints = 50;
 
+    [SerializeField]
+    private string weapon = "Shotgun";
+
     [ContextMenu("Add Style Points")]
-    private void AddStylePoints()
+    public void AddStylePoints()
     {
         //Debug.Log("Raising StyleGainEvent");
 
@@ -15,6 +18,17 @@ public class StyleMeterTestFunctions : MonoBehaviour
             Amount = stylePoints,
             Reason = "TEST",
             TextColor = Color.orange,
+        });
+    }
+
+    [ContextMenu("Shoot weapon")]
+    public void ShootWeapon()
+    {
+        //Debug.Log("Shooting weapon");
+
+        EventBus<WeaponFiredEvent>.Raise(new WeaponFiredEvent()
+        {
+            Weapon = weapon,
         });
     }
 }

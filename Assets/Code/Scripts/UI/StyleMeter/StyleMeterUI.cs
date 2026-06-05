@@ -113,7 +113,7 @@ public class StyleMeterUI : MonoBehaviour
     {
         Label label = new()
         {
-            text = $"+{e.Amount:0} {e.Reason}"
+            text = $"+{e.Amount * styleMeter.CurrentFreshness:0} {e.Reason}"
         };
 
         label.style.color = e.TextColor;
