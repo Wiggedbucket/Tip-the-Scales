@@ -4,6 +4,8 @@ using UnityEngine.AI;
 
 public class EnemyAttack : MonoBehaviour
 {
+    [SerializeField] Material attackIndicator;
+    [SerializeField] Renderer rend;
     EnemyFSM fsm;
     EnemyStats stats;
     NavMeshAgent agent;
@@ -25,6 +27,7 @@ public class EnemyAttack : MonoBehaviour
     {
         isAttacking = true;
         Debug.Log(stats.enemyName + " winds up attack...");
+        rend.material = attackIndicator;
         //Debug.Log(stats.enemyName + " attack sequence STARTED");
         Vector3 directionToPLayer = (fsm.player.position - transform.position).normalized;
         yield return new WaitForSeconds(stats.anticipationTime);

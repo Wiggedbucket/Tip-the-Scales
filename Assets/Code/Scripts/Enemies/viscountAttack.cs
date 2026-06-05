@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class viscountAttack : MonoBehaviour
 {
+    [SerializeField] Material attackIndicator;
+    [SerializeField] Renderer rend;
     EnemyFSM fsm;
     EnemyStats stats;
     float lastFireTime;

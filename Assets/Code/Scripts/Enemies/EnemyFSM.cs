@@ -4,6 +4,8 @@ using UnityEngine.AI;
 
 public class EnemyFSM : MonoBehaviour
 {
+    [SerializeField] Material basecolour;
+    [SerializeField] Renderer rend;
     public enum State { Idle, Recover, Chase, Attack, Kite }
     [SerializeField] public EnemyStats stats;
     [SerializeField] public Transform player;
@@ -90,6 +92,7 @@ public class EnemyFSM : MonoBehaviour
         {
             currentState = State.Chase;
         }
+        rend.material = basecolour;
     }
 
     void HandleKite()

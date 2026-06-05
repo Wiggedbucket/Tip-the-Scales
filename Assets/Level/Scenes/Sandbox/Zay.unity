@@ -119,6 +119,11 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!23 &324073071 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 282447540969893893, guid: 22ac01472013d814b848508ca5ddef5c, type: 3}
+  m_PrefabInstance: {fileID: 2400343441598171842}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &414845549
 GameObject:
   m_ObjectHideFlags: 0
@@ -771,6 +776,14 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1941177658809118066, guid: 22ac01472013d814b848508ca5ddef5c, type: 3}
+      propertyPath: rend
+      value: 
+      objectReference: {fileID: 324073071}
+    - target: {fileID: 1941177658809118066, guid: 22ac01472013d814b848508ca5ddef5c, type: 3}
+      propertyPath: attackIndicator
+      value: 
+      objectReference: {fileID: 2100000, guid: c3f28fc08d1664b48b4107170256dbf9, type: 2}
     - target: {fileID: 6524462644637298300, guid: 22ac01472013d814b848508ca5ddef5c, type: 3}
       propertyPath: m_LocalPosition.x
       value: 2.3563323
@@ -812,9 +825,17 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8772806543695931058, guid: 22ac01472013d814b848508ca5ddef5c, type: 3}
+      propertyPath: rend
+      value: 
+      objectReference: {fileID: 324073071}
+    - target: {fileID: 8772806543695931058, guid: 22ac01472013d814b848508ca5ddef5c, type: 3}
       propertyPath: player
       value: 
       objectReference: {fileID: 5163002430064884402}
+    - target: {fileID: 8772806543695931058, guid: 22ac01472013d814b848508ca5ddef5c, type: 3}
+      propertyPath: basecolour
+      value: 
+      objectReference: {fileID: 2100000, guid: 4b233bb84f14e8d4695b15bed3ca5f98, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -869,9 +890,33 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3839556008265635549, guid: ed23e2a6e42cd1a459cd2ffc62fc9b87, type: 3}
+      propertyPath: rend
+      value: 
+      objectReference: {fileID: 2434386183234425444}
+    - target: {fileID: 3839556008265635549, guid: ed23e2a6e42cd1a459cd2ffc62fc9b87, type: 3}
+      propertyPath: orange
+      value: 
+      objectReference: {fileID: 2100000, guid: c3f28fc08d1664b48b4107170256dbf9, type: 2}
+    - target: {fileID: 3839556008265635549, guid: ed23e2a6e42cd1a459cd2ffc62fc9b87, type: 3}
       propertyPath: player
       value: 
       objectReference: {fileID: 5163002430064884402}
+    - target: {fileID: 3839556008265635549, guid: ed23e2a6e42cd1a459cd2ffc62fc9b87, type: 3}
+      propertyPath: lightgrey
+      value: 
+      objectReference: {fileID: 2100000, guid: 4b233bb84f14e8d4695b15bed3ca5f98, type: 2}
+    - target: {fileID: 3839556008265635549, guid: ed23e2a6e42cd1a459cd2ffc62fc9b87, type: 3}
+      propertyPath: basecolour
+      value: 
+      objectReference: {fileID: 2100000, guid: ecb4ab4f03005434981150ccc95d45d6, type: 2}
+    - target: {fileID: 6337713251244711541, guid: ed23e2a6e42cd1a459cd2ffc62fc9b87, type: 3}
+      propertyPath: rend
+      value: 
+      objectReference: {fileID: 2434386183234425444}
+    - target: {fileID: 6337713251244711541, guid: ed23e2a6e42cd1a459cd2ffc62fc9b87, type: 3}
+      propertyPath: attackIndicator
+      value: 
+      objectReference: {fileID: 2100000, guid: c3f28fc08d1664b48b4107170256dbf9, type: 2}
     - target: {fileID: 8276154443068584962, guid: ed23e2a6e42cd1a459cd2ffc62fc9b87, type: 3}
       propertyPath: m_Name
       value: Baron
@@ -885,6 +930,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ed23e2a6e42cd1a459cd2ffc62fc9b87, type: 3}
+--- !u!23 &2434386183234425444 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 7031152097463236565, guid: ed23e2a6e42cd1a459cd2ffc62fc9b87, type: 3}
+  m_PrefabInstance: {fileID: 2434386183234425443}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5163002430064884402 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8889431239431307539, guid: fbdc913076c9f704ab1fbcef2aa0339d, type: 3}
@@ -945,6 +995,10 @@ PrefabInstance:
     - target: {fileID: 8070420967922871306, guid: 026d0434f7d478442a7240d59b9812df, type: 3}
       propertyPath: m_Name
       value: Viscount
+      objectReference: {fileID: 0}
+    - target: {fileID: 8070420967922871306, guid: 026d0434f7d478442a7240d59b9812df, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
