@@ -59,6 +59,8 @@ public class UnityRequestFromServer : MonoBehaviour
         yield return StartCoroutine(
             SendGameData(gameData)
         );
+        Debug.Log("Reached after reset");
+
     }
     IEnumerator HeartbeatLoop()
     {
