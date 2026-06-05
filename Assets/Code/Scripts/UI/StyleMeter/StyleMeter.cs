@@ -79,6 +79,33 @@ public class StyleMeter : MonoBehaviour
         UpdateRank();
     }
 
+    public float GetCurrentRankThreshold()
+    {
+        foreach (var rank in config.ranks)
+        {
+            if (rank.rank == CurrentRank)
+                return rank.threshold;
+        }
+
+        return 0;
+    }
+
+    public float GetNextRankThreshold()
+    {
+        for (int i = 0; i < config.ranks.Count; i++)
+        {
+            if (config.ranks[i].rank == CurrentRank)
+            {
+                if (i + 1 < config.ranks.Count)
+                    return config.ranks[i + 1].threshold;
+
+                return config.maxStyle;
+            }
+        }
+
+        return config.maxStyle;
+    }
+
     private void GainStyle(StyleGainEvent e)
     {
         CurrentStyle += e.Amount * CurrentFreshness;

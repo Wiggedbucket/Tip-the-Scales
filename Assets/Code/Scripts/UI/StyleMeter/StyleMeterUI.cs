@@ -15,7 +15,9 @@ public class StyleMeterUI : MonoBehaviour
 
     private Label rankLabel;
 
-    private ProgressBar styleBar;
+    private VisualElement fillStyleBar;
+
+    private Label stylePointsLabel;
 
     private VisualElement styleFeed;
 
@@ -31,9 +33,15 @@ public class StyleMeterUI : MonoBehaviour
         var root = document.rootVisualElement;
 
         rankLabel = root.Q<Label>("RankLabel");
-        styleBar = root.Q<ProgressBar>("StyleBar");
+        fillStyleBar = root.Q<VisualElement>("FillStyleBar");
+        stylePointsLabel = root.Q<Label>("StylePointsLabel");
         styleFeed = root.Q<VisualElement>("StyleFeed");
         freshnessLabel = root.Q<Label>("FreshnessLabel");
+    }
+
+    private void Start()
+    {
+        freshnessLabel.text = $"{styleMeter.CurrentFreshness:0.0}x {styleMeter.FreshnessState}";
     }
 
     private void OnEnable()
@@ -56,7 +64,7 @@ public class StyleMeterUI : MonoBehaviour
         rankLabel.text = styleMeter.CurrentRank.ToString();
         rankLabel.style.color = GetRankColor(styleMeter.CurrentRank);
 
-        styleBar.value = styleMeter.CurrentStyle;
+        UpdateProgressBar();
 
         UpdateFeed();
     }
@@ -79,6 +87,28 @@ public class StyleMeterUI : MonoBehaviour
         };
     }
 
+    private void UpdateProgressBar()
+    {
+        if (styleMeter.CurrentRank == StyleRank.ImTippingIt)
+        {
+            fillStyleBar.style.width = Length.Percent(100);
+            stylePointsLabel.text = "Style Points: MAX";
+            return;
+        }
+
+        float currentThreshold = styleMeter.GetCurrentRankThreshold();
+        float nextThreshold = styleMeter.GetNextRankThreshold();
+
+        float pointsIntoRank = styleMeter.CurrentStyle - currentThreshold;
+        float pointsRequired = nextThreshold - currentThreshold;
+        float progress = pointsRequired <= 0 ? 1f : pointsIntoRank / pointsRequired;
+
+        progress = Mathf.Clamp01(progress);
+
+        fillStyleBar.style.width = Length.Percent(progress * 100f);
+        stylePointsLabel.text = $"Style Points: {Mathf.FloorToInt(pointsIntoRank)}/{Mathf.FloorToInt(pointsRequired)}";
+    }
+
     private void OnStyleGain(StyleGainEvent e)
     {
         Label label = new()
@@ -87,6 +117,7 @@ public class StyleMeterUI : MonoBehaviour
         };
 
         label.style.color = e.TextColor;
+        label.style.fontSize = 40f;
 
         styleFeed.Insert(0, label);
 
