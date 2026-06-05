@@ -177,10 +177,7 @@ public class UnityRequestFromServer : MonoBehaviour
                     request.downloadHandler.text
                 );
 
-            Debug.Log(
-                "New Score: " +
-                updatedData.score
-            );
+            Debug.Log("New Score: " + updatedData.score);
         }
     }
     private void ApplyToGameStateData(GameData data)
@@ -201,5 +198,6 @@ public class UnityRequestFromServer : MonoBehaviour
         room2.angelPoints = data.obj3.light;
         room2.demonPoints = data.obj3.dark;
         list[2] = room2;
+        return data;
     }
 }
