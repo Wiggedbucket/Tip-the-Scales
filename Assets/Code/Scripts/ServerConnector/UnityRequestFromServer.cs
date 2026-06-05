@@ -180,7 +180,7 @@ public class UnityRequestFromServer : MonoBehaviour
             Debug.Log("New Score: " + updatedData.score);
         }
     }
-    private void ApplyToGameStateData(GameData data)
+    private GameData ApplyToGameStateData(GameData data)
     {
         var list = GameState.Instance.RoomCombatPointsList;
 
@@ -198,6 +198,7 @@ public class UnityRequestFromServer : MonoBehaviour
         room2.angelPoints = data.obj3.light;
         room2.demonPoints = data.obj3.dark;
         list[2] = room2;
+
         return data;
     }
 }
