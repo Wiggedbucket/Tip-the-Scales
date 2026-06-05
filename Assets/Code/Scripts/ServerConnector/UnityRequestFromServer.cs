@@ -30,11 +30,12 @@ public class UnityRequestFromServer : MonoBehaviour
 {
     private string url = "http://localhost:8080";
     private string clientId = "unityClient1";
+    private float heartbeatInterval = 5f;
 
     IEnumerator Start()
     {
         yield return StartCoroutine(ResetGame());
-
+        StartCoroutine(HeartbeatLoop());
         yield return new WaitForSeconds(1);
 
         GameData gameData = new GameData();
@@ -59,6 +60,27 @@ public class UnityRequestFromServer : MonoBehaviour
             SendGameData(gameData)
         );
     }
+    IEnumerator HeartbeatLoop()
+    {
+        while (true)
+        {
+            yield return StartCoroutine(SendCurrentGameData());
+            yield return new WaitForSeconds(heartbeatInterval);
+        }
+    }
+
+    IEnumerator SendCurrentGameData()
+    {
+        GameData currentData = new GameData();
+        currentData.objectives = 3;
+        currentData.obj1 = new Objective();
+        currentData.obj2 = new Objective();
+        currentData.obj3 = new Objective();
+        var list = GameState.Instance.RoomCombatPointsList;
+        yield return StartCoroutine(
+            SendGameData(currentData)
+        );
+    }
 
     IEnumerator ResetGame()
     {
@@ -74,10 +96,7 @@ public class UnityRequestFromServer : MonoBehaviour
             Encoding.UTF8.GetBytes(json);
 
         UnityWebRequest request =
-            new UnityWebRequest(
-                url + "/reset/" + clientId,
-                "POST"
-            );
+            new UnityWebRequest(url + "/reset/" + clientId,"POST");
 
         request.uploadHandler =
             new UploadHandlerRaw(bodyRaw);
