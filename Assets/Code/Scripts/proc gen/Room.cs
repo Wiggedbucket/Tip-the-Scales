@@ -1,61 +1,39 @@
+using System.Threading;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class Room : MonoBehaviour
 {
-    bool hasGenerated = false;
     public GameObject[] roomPrefabs;
     public int width = 5;
     public int height = 5;
     public float tileSize = 1f;
 
-    public void Create(Vector3 position)
+    public async Task Create(Vector3 position)
     {
-        if (hasGenerated)
-            return;
-
-        hasGenerated = true;
-        transform.position = position;
-
-        // Remove previous children (useful for repeated testing)
-        for (int c = transform.childCount - 1; c >= 0; c--)
-        {
-            GameObject child = transform.GetChild(c).gameObject;
-            if (Application.isPlaying)
-                Destroy(child);
-            else
-                DestroyImmediate(child);
-        }
-
-        // Prepare a fallback cube prefab if none provided
-        GameObject fallback = null;
         bool hasValidPrefab = roomPrefabs != null && roomPrefabs.Length > 0 && roomPrefabs[0] != null;
         if (!hasValidPrefab)
         {
-            fallback = GameObject.CreatePrimitive(PrimitiveType.Cube);
-            fallback.transform.localScale = Vector3.one * tileSize;
-            fallback.SetActive(false);
+            return;
         }
 
         for (int y = 0; y < height; y++)
         {
             for (int x = 0; x < width; x++)
             {
-                GameObject prefab = hasValidPrefab ? roomPrefabs[0] : fallback;
-                tileSize = prefab.transform.localScale.x; // Ensure tileSize matches prefab scale
-                Vector3 spawnLocation = position + new Vector3(x * tileSize * 5, 0f, y * tileSize * 5);
-                GameObject instance = Instantiate(prefab, spawnLocation, Quaternion.identity, transform);
-                instance.name = "Tile_" + x + "_" + y;
-                if (fallback != null)
-                    instance.SetActive(true);
+                SpawnRoom(x, y, position);
+                await Task.Delay(500);
             }
         }
+    }
 
-        if (fallback != null)
-        {
-            if (Application.isPlaying)
-                Destroy(fallback);
-            else
-                DestroyImmediate(fallback);
-        }
+
+    private void SpawnRoom(int x, int y, Vector3 position)
+    {
+        GameObject prefab = roomPrefabs[0];
+        tileSize = prefab.transform.localScale.x;
+        Vector3 spawnLocation = position + new Vector3(x * tileSize * 6, 0f, y * tileSize * 6);
+        GameObject instance = Instantiate(prefab, spawnLocation, Quaternion.identity, transform);
+        instance.name = "Tile_" + x + "_" + y;
     }
 }
