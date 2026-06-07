@@ -71,6 +71,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StyleMeterTestFunctions
   stylePoints: 50
+  reason: TEST
+  textColor: {r: 1, g: 0.5895007, b: 0, a: 1}
+  weapon: Shotgun
 --- !u!114 &120475603001119490
 MonoBehaviour:
   m_ObjectHideFlags: 0

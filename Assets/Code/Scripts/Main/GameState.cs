@@ -29,9 +29,26 @@ public class GameState : MonoBehaviour
     }
     #endregion
 
+    public bool isServerConnected = false;
+
+    [Range(-1f, 1f)]
     public float Scale = 0f;
 
-    public CombatPoints GlobalCombatPoints;
+    public CombatPoints GlobalCombatPoints
+    {
+        get
+        {
+            CombatPoints total = new();
+
+            foreach (CombatPoints room in RoomCombatPointsList)
+            {
+                total.angelPoints += room.angelPoints;
+                total.demonPoints += room.demonPoints;
+            }
+
+            return total;
+        }
+    }
     public List<CombatPoints> RoomCombatPointsList;
 
     public float GameTime = 0f;
@@ -39,6 +56,21 @@ public class GameState : MonoBehaviour
     private void Update()
     {
         GameTime += Time.deltaTime;
+
+        CalculateScale();
+    }
+
+    private void CalculateScale()
+    {
+        float pointsLight = GlobalCombatPoints.angelPoints;
+        float pointsDark = GlobalCombatPoints.demonPoints;
+
+        float rawScore = (pointsLight - pointsDark) / 100f;
+
+        float clamped = Mathf.Clamp(rawScore, -1f, 1f);
+        float newScore = (float)System.Math.Round(clamped, 2);
+
+        Scale = newScore;
     }
 }
 
