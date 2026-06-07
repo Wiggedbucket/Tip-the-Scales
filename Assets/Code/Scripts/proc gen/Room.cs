@@ -41,15 +41,12 @@ public class Room : MonoBehaviour
             for (int x = 0; x < width; x++)
             {
                 GameObject prefab = hasValidPrefab ? roomPrefabs[0] : fallback;
-
-                Vector3 spawnLocation = position + new Vector3(x * tileSize, 0f, y * tileSize);
+                tileSize = prefab.transform.localScale.x; // Ensure tileSize matches prefab scale
+                Vector3 spawnLocation = position + new Vector3(x * tileSize * 5, 0f, y * tileSize * 5);
                 GameObject instance = Instantiate(prefab, spawnLocation, Quaternion.identity, transform);
                 instance.name = "Tile_" + x + "_" + y;
                 if (fallback != null)
                     instance.SetActive(true);
-
-                Destroy(instance.GetComponent<Room>());
-                Destroy(instance.GetComponent<testing>());
             }
         }
 
