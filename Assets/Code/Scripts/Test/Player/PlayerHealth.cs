@@ -6,6 +6,7 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField] Material red;
     [SerializeField] Material green;
     [SerializeField] Renderer rend;
+    bool isDead = false;
     float currentHealth;
     void Start()
     {
@@ -13,16 +14,19 @@ public class PlayerHealth : MonoBehaviour
     }
     public void TakeDamage(float damage)
     {
-        
-        Debug.Log("Player took " + damage + " damage. Health :" + currentHealth);
+        if (isDead) return;
+        currentHealth -= damage;
+
         if (currentHealth <= 0)
         {
             currentHealth = 0;
+            isDead = true;
             Debug.Log("Player is dead!");
             rend.material = red;
-        } else
+            Destroy(gameObject, 1f);
+        } else 
         {
-            currentHealth -= damage;
+            Debug.Log("Player took " + damage + " damage. Health :" + currentHealth);
         }
     }
     public float GetHealth()
