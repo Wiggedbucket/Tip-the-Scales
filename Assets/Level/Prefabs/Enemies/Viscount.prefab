@@ -183,8 +183,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38500b9ac39604146a1cae7f34f0d333, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyFSM
+  roomId: -1
+  basecolour: {fileID: 2100000, guid: 67217a4e1bd0ac8458b738cefa0b0fc2, type: 2}
+  rend: {fileID: 3808846423951590167}
   stats: {fileID: 11400000, guid: c7a55bbe91a7afc49a20388554c0b68c, type: 2}
-  player: {fileID: 8889431239431307539, guid: fbdc913076c9f704ab1fbcef2aa0339d, type: 3}
+  player: {fileID: 3303448573931772489, guid: 4cabece346617e940921f8d9aab73fa1, type: 3}
   lastKiteEndTime: 0
   currentState: 0
   lastAttackTime: 0
@@ -200,5 +203,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dae1ad76f62e8944f90fa1e51faffe14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MarquisAttack
+  attackIndicator: {fileID: 2100000, guid: c3f28fc08d1664b48b4107170256dbf9, type: 2}
+  rend: {fileID: 3808846423951590167}
   projectilePrefab: {fileID: 5948992545145951488, guid: 8db6cf505fccd414abe20b5ca580b7da, type: 3}
   firePoint: {fileID: 2151540951696254316}

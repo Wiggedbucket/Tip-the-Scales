@@ -12,7 +12,7 @@ public class EnemyFSM : MonoBehaviour
     public enum State { Idle, Recover, Chase, Attack, Kite }
 
     [SerializeField] public EnemyStats stats;
-    [SerializeField] public Transform player;
+    public Transform player;
 
     public float lastKiteEndTime;
     public State currentState = State.Idle;
@@ -24,6 +24,16 @@ public class EnemyFSM : MonoBehaviour
 
     void Start()
     {
+        GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
+        if (playerObj != null)
+        {
+            player = playerObj.transform;
+        }
+        else
+        {
+            Debug.LogError("Player object not found in the scene. Please ensure there is a GameObject tagged 'Player'.");
+        }
+
         agent = GetComponent<NavMeshAgent>();
         agent.speed = stats.moveSpeed;
         currentHealth = stats.maxHealth;
