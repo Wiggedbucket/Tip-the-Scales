@@ -28,12 +28,12 @@ public class TestDummyEnemy : MonoBehaviour
 
     private void Die(KillAllEnemiesEvent killAllEnemiesEvent)
     {
-        if (killAllEnemiesEvent.roomId != roomId)
+        if (killAllEnemiesEvent.RoomId != roomId)
             return;
 
         EventBus<EnemyDiedEvent>.Raise(new EnemyDiedEvent()
         {
-            enemyObject = gameObject
+            EnemyObject = gameObject
         });
         Destroy(gameObject);
     }
