@@ -1,0 +1,62 @@
+:root {
+}
+
+.panel-background {
+    flex-grow: 1;
+    background-color: rgba(0, 0, 0, 0.59);
+}
+
+.window {
+    flex-grow: 1;
+    background-color: rgb(93, 93, 93);
+    margin-left: 100px;
+    margin-right: 100px;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+.hidden {
+    display: none;
+}
+
+.title {
+    align-items: center;
+    -unity-text-align: middle-center;
+    font-size: 64px;
+    color: rgb(255, 255, 255);
+    -unity-font-style: bold;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.row {
+    flex-grow: 1;
+    flex-direction: row;
+    position: relative;
+    background-color: rgba(166, 166, 166, 0.55);
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+.row-label {
+    -unity-text-align: middle-center;
+    font-size: 38px;
+}
+
+
+
+.name-label {
+    -unity-text-align: middle-left;
+    margin-left: 20px;
+    -unity-font-style: bold;
+}
+
+.binding-button {
+    font-size: 40px;
+    width: auto;
+    align-self: center;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}

@@ -1,0 +1,35 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/Level/UI/StyleSheets/SettingsMenu.uss?fileID=7433441132597879392&amp;guid=52378744a486fa04ba01c34f0289cc4a&amp;type=3#SettingsMenu"/>
+    <ui:VisualElement name="Panel" class="panel-background">
+        <ui:VisualElement name="Window" class="window">
+            <ui:Label text="Adjust Bindings" name="Header" class="title"/>
+            <ui:VisualElement name="ToggleButtonGroup" style="flex-grow: initial; flex-direction: row; align-self: center;">
+                <ui:Button text="Delete Group" name="DeleteGroupButton" class="binding-button"/>
+                <ui:DropdownField label="Binding Group" name="BindingGroupDropdown" choices="" style="font-size: 40px; color: rgb(255, 255, 255); margin-left: 15px; margin-right: 15px;"/>
+            </ui:VisualElement>
+            <ui:VisualElement name="Entries" style="flex-grow: 1;">
+                <ui:ScrollView name="Entries">
+                    <ui:VisualElement name="Entry" data-source-type="UnityEngine.InputSystem.InputAction, Unity.InputSystem" class="row">
+                        <ui:VisualElement name="ControlName" style="flex-grow: 1;">
+                            <ui:Label text="CONTROL NAME" name="ControlNameLabel" class="row-label name-label">
+                                <Bindings>
+                                    <ui:DataBinding property="text" data-source-path="m_Name" binding-mode="ToTarget"/>
+                                </Bindings>
+                            </ui:Label>
+                        </ui:VisualElement>
+                        <ui:VisualElement name="Keyboard" style="flex-grow: 1;">
+                            <ui:Label text="Keyboard" name="KeyboardLabel" class="row-label"/>
+                        </ui:VisualElement>
+                        <ui:VisualElement name="Gamepad" style="flex-grow: 1;">
+                            <ui:Label text="Gamepad" name="GamepadLabel" class="row-label"/>
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                </ui:ScrollView>
+            </ui:VisualElement>
+            <ui:VisualElement name="Buttons" style="flex-grow: initial; flex-direction: row; align-self: center;">
+                <ui:Button text="Reset All Bindings" name="ResetAllBindingsButton" class="binding-button"/>
+                <ui:Button text="Save Bindings" name="SaveBindingsButton" class="binding-button"/>
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
