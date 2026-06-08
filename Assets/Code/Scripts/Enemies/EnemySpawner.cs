@@ -137,7 +137,10 @@ public class EnemySpawner : MonoBehaviour
     private void SpawnEnemy(EnemyData enemyData, Transform spawnPoint)
     {
         GameObject enemy = Instantiate(enemyData.enemy, spawnPoint.position, spawnPoint.rotation, transform);
-        enemy.GetComponent<TestDummyEnemy>().roomId = hordeDirector.id;
+        if (enemy.TryGetComponent<EnemyFSM>(out var enemyFSM))
+        {
+            enemyFSM.roomId = hordeDirector.id;
+        }
 
         aliveEnemies.Add(enemy);
     }

@@ -4,16 +4,24 @@ using UnityEngine.AI;
 
 public class EnemyFSM : MonoBehaviour
 {
+    public int roomId = -1;
+
     [SerializeField] Material basecolour;
     [SerializeField] Renderer rend;
+
     public enum State { Idle, Recover, Chase, Attack, Kite }
+
     [SerializeField] public EnemyStats stats;
     [SerializeField] public Transform player;
+
     public float lastKiteEndTime;
     public State currentState = State.Idle;
+
     NavMeshAgent agent;
+
     float currentHealth;
     public float lastAttackTime;
+
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -27,6 +35,7 @@ public class EnemyFSM : MonoBehaviour
         else
             agent.stoppingDistance = stats.attackRange * 0.8f;
     }
+
     void Update()
     {
         switch (currentState) 
@@ -69,6 +78,7 @@ public class EnemyFSM : MonoBehaviour
             currentState = State.Chase;
         }
     }
+
     void HandleChase()
     {
         agent.SetDestination(player.position);
@@ -85,6 +95,7 @@ public class EnemyFSM : MonoBehaviour
             currentState = State.Attack;
         }
     }
+
     void HandleRecover()
     {
         agent.velocity = Vector3.zero;
