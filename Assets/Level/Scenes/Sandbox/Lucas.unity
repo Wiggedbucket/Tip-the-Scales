@@ -699,11 +699,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 590830770}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1fa6a1ae4d186fb438cde04dcb4e8a6a, type: 3}
+  m_Script: {fileID: 11500000, guid: 278dd228d27b6524ab6dc2989fabec18, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::UIManager
+  m_EditorClassIdentifier: Assembly-CSharp::InputSettingsUI
   document: {fileID: 590830771}
-  asset: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  inputActions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  displayDatabase: {fileID: 11400000, guid: 64ad232533aacb748a85854ee3498b44, type: 2}
 --- !u!1001 &591851108
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2351,7 +2352,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1988728838
 MonoBehaviour:
   m_ObjectHideFlags: 0

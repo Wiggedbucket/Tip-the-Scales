@@ -45,8 +45,6 @@
     font-size: 38px;
 }
 
-
-
 .name-label {
     -unity-text-align: middle-left;
     margin-left: 20px;
@@ -59,4 +57,28 @@
     align-self: center;
     margin-bottom: 10px;
     margin-top: 10px;
+}
+
+.heading {
+    align-items: center;
+    -unity-text-align: middle-left;
+    font-size: 52px;
+    color: rgb(255, 255, 255);
+    -unity-font-style: bold;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.heading-two {
+    align-items: center;
+    -unity-text-align: middle-left;
+    font-size: 45px;
+    color: rgb(255, 255, 255);
+    -unity-font-style: normal;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.action-row {
+    flex-wrap: wrap;
 }
