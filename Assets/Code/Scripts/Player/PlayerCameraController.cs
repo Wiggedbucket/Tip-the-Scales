@@ -1,4 +1,3 @@
-using UnityEditor.Build.Content;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -12,6 +11,9 @@ public class PlayerCameraController : MonoBehaviour
 
     [Header("Input binding")]
     [SerializeField] private InputAction look;
+
+    [Header("Camera Mover")]
+    public Transform cameraPosition;
 
     float xRotation;
     float yRotation;
@@ -46,9 +48,6 @@ public class PlayerCameraController : MonoBehaviour
         transform.rotation = Quaternion.Euler(xRotation, yRotation, 0f);
         Orientation.rotation = Quaternion.Euler(0f, yRotation, 0f);
     }
-
-    [Header("Camera Mover")]
-    public Transform cameraPosition;
 
     private void LateUpdate()
     {

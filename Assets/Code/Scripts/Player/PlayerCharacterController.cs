@@ -58,7 +58,6 @@ public class PlayerMovement : MonoBehaviour
         readyToDash = true;
     }
 
-
     public void OnMove(InputAction.CallbackContext context)
     {
         moveInput = context.ReadValue<Vector2>();
@@ -83,8 +82,6 @@ public class PlayerMovement : MonoBehaviour
             Dash();
         }
     }
-
-
 
     private void Update()
     {
