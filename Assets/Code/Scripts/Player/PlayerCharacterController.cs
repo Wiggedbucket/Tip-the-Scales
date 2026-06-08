@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem; // Required for InputAction.CallbackContext
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerCharacterController : MonoBehaviour
 {
     [Header("Movement")]
     private float moveSpeed;
