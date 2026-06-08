@@ -100,6 +100,9 @@ public class InputSettingsUI : MonoBehaviour
         row.Add(actionLabel);
         row.AddToClassList("action-row");
 
+        VisualElement bindingButtonsContainer = new();
+        bindingButtonsContainer.AddToClassList("binding-buttons-container");
+
         for (int i = 0; i < action.bindings.Count; i++)
         {
             if (action.bindings[i].isComposite)
@@ -141,8 +144,10 @@ public class InputSettingsUI : MonoBehaviour
                         });
             };
 
-            row.Add(button);
+            bindingButtonsContainer.Add(button);
         }
+
+        row.Add(bindingButtonsContainer);
 
         container.Add(row);
     }

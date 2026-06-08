@@ -13,6 +13,14 @@
     margin-right: 100px;
     margin-top: 50px;
     margin-bottom: 50px;
+    border-bottom-color: rgb(0, 0, 0);
+    border-right-color: rgb(0, 0, 0);
+    border-top-color: rgb(0, 0, 0);
+    border-left-color: rgb(0, 0, 0);
+    border-top-width: 5px;
+    border-right-width: 5px;
+    border-bottom-width: 5px;
+    border-left-width: 5px;
 }
 
 .hidden {
@@ -77,8 +85,36 @@
     -unity-font-style: normal;
     margin-top: 5px;
     margin-bottom: 5px;
+    flex-grow: 1;
+    margin-right: 0;
+    width: 0;
 }
 
 .action-row {
+    flex-wrap: nowrap;
+    margin-left: 10px;
+    margin-right: 10px;
+    flex-grow: 1;
+    border-top-width: 5px;
+    border-bottom-width: 5px;
+    border-left-width: 5px;
+    border-right-width: 5px;
+    border-top-color: rgb(0, 0, 0);
+    border-left-color: rgb(0, 0, 0);
+    border-right-color: rgb(0, 0, 0);
+    border-bottom-color: rgb(0, 0, 0);
+    justify-content: flex-start;
+    align-items: stretch;
+    align-content: flex-start;
+    width: auto;
+    background-color: rgba(0, 0, 0, 0.39);
+}
+
+.binding-buttons-container {
+    margin-left: 0;
+    margin-right: 0;
+    flex-direction: row;
+    flex-grow: 1;
     flex-wrap: wrap;
+    margin-bottom: 0;
 }
