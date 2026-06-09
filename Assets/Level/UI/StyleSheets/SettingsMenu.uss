@@ -146,7 +146,7 @@
 
 .heading-three {
     align-items: center;
-    -unity-text-align: middle-left;
+    -unity-text-align: upper-left;
     font-size: 45px;
     color: rgb(255, 255, 255);
     -unity-font-style: normal;
@@ -161,5 +161,18 @@
 
 .binding-button-bundle {
     flex-grow: 1;
-    flex-direction: row-reverse;
+    flex-direction: row;
+    align-content: flex-end;
+    align-items: center;
+    width: 100%;
+}
+
+.binding-spacer {
+}
+
+.binding-part-label {
+    min-width: 100px;
+    color: rgb(255, 255, 255);
+    font-size: 36px;
+    -unity-text-align: middle-left;
 }

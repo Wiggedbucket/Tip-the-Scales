@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
@@ -17,8 +18,6 @@ public class InputSettingsUI : MonoBehaviour
 
     private Button saveButton;
 
-    private Button resetButton;
-
     private Label conflictLabel;
 
     private bool hasUnsavedChanges;
@@ -31,7 +30,7 @@ public class InputSettingsUI : MonoBehaviour
 
         container = root.Q<VisualElement>("BindingsContainer");
         saveButton = root.Q<Button>("SaveButton");
-        resetButton = root.Q<Button>("ResetBindingsButton");
+        Button resetButton = root.Q<Button>("ResetBindingsButton");
         conflictLabel = root.Q<Label>("ConflictLabel");
 
         saveButton.clicked += SaveChanges;
@@ -88,67 +87,174 @@ public class InputSettingsUI : MonoBehaviour
     private void CreateActionRow(InputAction action)
     {
         VisualElement row = new();
-
-        row.style.flexDirection = FlexDirection.Row;
-        row.style.marginBottom = 4;
-
-        Label actionLabel = new(displayDatabase.GetDisplayName(action.name));
-        actionLabel.AddToClassList("heading-two");
-
-        actionLabel.style.flexGrow = 1;
-
-        row.Add(actionLabel);
         row.AddToClassList("action-row");
 
-        VisualElement bindingButtonsContainer = new();
-        bindingButtonsContainer.AddToClassList("binding-buttons-container");
+        Label actionNameLabel = new(displayDatabase.GetDisplayName(action.name));
+
+        actionNameLabel.AddToClassList("heading-two");
+
+        row.Add(actionNameLabel);
+
+        VisualElement divider = new();
+        divider.AddToClassList("divider");
+
+        row.Add(divider);
+
+        VisualElement bindingGroupsContainer = new();
+        bindingGroupsContainer.AddToClassList("binding-groups-container");
+
+        row.Add(bindingGroupsContainer);
+
+        Dictionary<string, List<int>> bindingGroups = new();
 
         for (int i = 0; i < action.bindings.Count; i++)
         {
-            if (action.bindings[i].isComposite)
+            InputBinding binding = action.bindings[i];
+
+            if (binding.isComposite)
                 continue;
 
-            int bindingIndex = i;
+            string group = string.IsNullOrEmpty(binding.groups) ? "Other" : binding.groups;
 
-            Button button = new()
-            {
-                text = action.GetBindingDisplayString(bindingIndex)
-            };
+            if (!bindingGroups.ContainsKey(group))
+                bindingGroups[group] = new();
 
-            button.AddToClassList("binding-button");
-
-            button.clicked += () =>
-            {
-                conflictLabel.text = "";
-
-                button.text = "<...>";
-
-                InputRebindUtility
-                    .StartRebind(action, bindingIndex,
-
-                        conflictingAction =>
-                        {
-                            conflictLabel.text =
-                                $"{displayDatabase.GetDisplayName(action.name)} " +
-                                $"conflicts with " +
-                                $"{displayDatabase.GetDisplayName(conflictingAction.name)}";
-                        },
-
-                        () =>
-                        {
-                            button.text = action.GetBindingDisplayString(bindingIndex);
-
-                            hasUnsavedChanges = true;
-
-                            UpdateSaveButton();
-                        });
-            };
-
-            bindingButtonsContainer.Add(button);
+            bindingGroups[group].Add(i);
         }
 
-        row.Add(bindingButtonsContainer);
+        foreach (var group in bindingGroups)
+        {
+            CreateBindingGroup(action, group.Key, group.Value, bindingGroupsContainer);
+        }
 
         container.Add(row);
+    }
+
+    private void CreateBindingGroup(InputAction action, string groupName, List<int> bindingIndices, VisualElement parent)
+    {
+        VisualElement bindingGroup = new();
+        bindingGroup.AddToClassList("binding-group");
+
+        parent.Add(bindingGroup);
+
+        VisualElement labelContainer = new();
+        labelContainer.AddToClassList("binding-group-label-container");
+
+        bindingGroup.Add(labelContainer);
+
+        Debug.Log($"Group name: {groupName}");
+        Label groupLabel = new(GetReadableGroupName(groupName));
+
+        groupLabel.AddToClassList("heading-three");
+
+        labelContainer.Add(groupLabel);
+
+        VisualElement buttonsContainer = new();
+        buttonsContainer.AddToClassList("binding-group-buttons-container");
+
+        bindingGroup.Add(buttonsContainer);
+
+        foreach (int bindingIndex in bindingIndices)
+        {
+            CreateBindingButtonBundle(action, bindingIndex, buttonsContainer);
+        }
+    }
+
+    private string GetReadableGroupName(string group)
+    {
+        return group switch
+        {
+            ";Keyboard&Mouse" => "Keyboard",
+            "Keyboard&Mouse" => "Keyboard",
+            "Keyboard&Mouse;Gamepad;Touch;Joystick;XR" => "Any",
+            ";Gamepad" => "Controller",
+            _ => group
+        };
+    }
+
+    private void CreateBindingButtonBundle(InputAction action, int bindingIndex, VisualElement parent)
+    {
+        InputBinding binding = action.bindings[bindingIndex];
+
+        VisualElement bundle = new();
+        bundle.AddToClassList("binding-button-bundle");
+
+        // Composite part label (Up, Down, Left, Right, etc.)
+        Label partLabel = new();
+
+        if (binding.isPartOfComposite)
+        {
+            partLabel.text = binding.name;
+        }
+        else
+        {
+            partLabel.text = string.Empty;
+        }
+
+        partLabel.AddToClassList("binding-part-label");
+
+        Button bindingButton = new()
+        {
+            text = action.GetBindingDisplayString(bindingIndex)
+        };
+
+        bindingButton.AddToClassList("binding-button");
+
+        // Spacer pushes reset button to the right
+        VisualElement spacer = new();
+        spacer.AddToClassList("binding-spacer");
+
+        Button resetButton = new()
+        {
+            text = "Reset"
+        };
+
+        resetButton.AddToClassList("binding-button");
+
+        resetButton.clicked += () =>
+        {
+            action.RemoveBindingOverride(bindingIndex);
+
+            bindingButton.text = action.GetBindingDisplayString(bindingIndex);
+
+            hasUnsavedChanges = true;
+
+            UpdateSaveButton();
+
+            conflictLabel.text = "";
+        };
+
+        bindingButton.clicked += () =>
+        {
+            conflictLabel.text = "";
+
+            bindingButton.text = "<...>";
+
+            InputRebindUtility.StartRebind(action, bindingIndex,
+
+                conflictingAction =>
+                {
+                    conflictLabel.text =
+                        $"{displayDatabase.GetDisplayName(action.name)} " +
+                        $"conflicts with " +
+                        $"{displayDatabase.GetDisplayName(conflictingAction.name)}";
+                },
+
+                () =>
+                {
+                    bindingButton.text = action.GetBindingDisplayString(bindingIndex);
+
+                    hasUnsavedChanges = true;
+
+                    UpdateSaveButton();
+                });
+        };
+
+        bundle.Add(partLabel);
+        bundle.Add(bindingButton);
+        bundle.Add(spacer);
+        bundle.Add(resetButton);
+        
+        parent.Add(bundle);
     }
 }
