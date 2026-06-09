@@ -28,7 +28,6 @@ public class EnemyAttack : MonoBehaviour
         isAttacking = true;
         Debug.Log(stats.enemyName + " winds up attack...");
         rend.material = attackIndicator;
-        //Debug.Log(stats.enemyName + " attack sequence STARTED");
         Vector3 directionToPLayer = (fsm.player.position - transform.position).normalized;
         yield return new WaitForSeconds(stats.anticipationTime);
 
