@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class viscountAttack : MonoBehaviour
+public class ViscountAttack : MonoBehaviour
 {
     [SerializeField] Material attackIndicator;
     [SerializeField] Renderer rend;
