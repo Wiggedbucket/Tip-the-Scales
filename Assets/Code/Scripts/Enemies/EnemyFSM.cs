@@ -69,6 +69,12 @@ public class EnemyFSM : MonoBehaviour
                 if (stats.canKite)
                 {
                     float distanceToPlayer = Vector3.Distance(transform.position, player.position);
+                    if (distanceToPlayer > stats.fireRange)
+                    {
+                        currentState = State.Chase;
+                        break;
+                    }
+
                     if (distanceToPlayer <= stats.kiteDistance)
                     {
                         currentState = State.Kite;
