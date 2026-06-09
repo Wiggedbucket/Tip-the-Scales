@@ -121,7 +121,7 @@ public class InputSettingsUI : MonoBehaviour
             {
                 conflictLabel.text = "";
 
-                button.text = "Press a key...";
+                button.text = "<...>";
 
                 InputRebindUtility
                     .StartRebind(action, bindingIndex,

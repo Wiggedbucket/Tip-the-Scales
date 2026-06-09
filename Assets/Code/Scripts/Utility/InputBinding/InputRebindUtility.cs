@@ -11,6 +11,7 @@ public static class InputRebindUtility
 
         action.PerformInteractiveRebinding(bindingIndex)
             .WithCancelingThrough("<Keyboard>/escape")
+            .WithTimeout(10f)
             .OnComplete(operation =>
             {
                 operation.Dispose();
