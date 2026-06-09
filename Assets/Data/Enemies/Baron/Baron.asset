@@ -18,9 +18,9 @@ MonoBehaviour:
   attackDamage: 20
   attackRange: 2.25
   attackCooldown: 2.5
-  anticipationTime: 0.4
+  anticipationTime: 0.6
   useLunge: 1
-  lungeForce: 18
+  lungeForce: 20
   lungeRange: 4
   damageRange: 2
   canKite: 0
