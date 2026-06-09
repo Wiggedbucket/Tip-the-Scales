@@ -18,6 +18,8 @@ public class InputSettingsUI : MonoBehaviour
 
     private Button saveButton;
 
+    private Button resetAllButton;
+
     private Label conflictLabel;
 
     private bool hasUnsavedChanges;
@@ -30,15 +32,15 @@ public class InputSettingsUI : MonoBehaviour
 
         container = root.Q<VisualElement>("BindingsContainer");
         saveButton = root.Q<Button>("SaveButton");
-        Button resetButton = root.Q<Button>("ResetBindingsButton");
+        resetAllButton = root.Q<Button>("ResetBindingsButton");
         conflictLabel = root.Q<Label>("ConflictLabel");
 
         saveButton.clicked += SaveChanges;
-        resetButton.clicked += ResetBindings;
+        resetAllButton.clicked += ResetBindings;
 
         BuildUI();
 
-        UpdateSaveButton();
+        UpdateButtons();
     }
 
     private void SaveChanges()
@@ -47,7 +49,7 @@ public class InputSettingsUI : MonoBehaviour
 
         hasUnsavedChanges = false;
 
-        UpdateSaveButton();
+        UpdateButtons();
     }
 
     private void ResetBindings()
@@ -58,12 +60,14 @@ public class InputSettingsUI : MonoBehaviour
 
         hasUnsavedChanges = true;
 
-        UpdateSaveButton();
+        UpdateButtons();
     }
 
-    private void UpdateSaveButton()
+    private void UpdateButtons()
     {
         saveButton.SetEnabled(hasUnsavedChanges);
+
+        resetAllButton.SetEnabled(InputRebindUtility.HasAnyOverrides(inputActions));
     }
 
     private void BuildUI()
@@ -200,16 +204,14 @@ public class InputSettingsUI : MonoBehaviour
 
         bindingButton.AddToClassList("binding-button");
 
-        // Spacer pushes reset button to the right
-        VisualElement spacer = new();
-        spacer.AddToClassList("binding-spacer");
-
         Button resetButton = new()
         {
             text = "Reset"
         };
 
-        resetButton.AddToClassList("binding-button");
+        resetButton.AddToClassList("reset-binding-button");
+
+        resetButton.SetEnabled(InputRebindUtility.HasBindingOverride(action, bindingIndex));
 
         resetButton.clicked += () =>
         {
@@ -219,7 +221,9 @@ public class InputSettingsUI : MonoBehaviour
 
             hasUnsavedChanges = true;
 
-            UpdateSaveButton();
+            resetButton.SetEnabled(false);
+
+            UpdateButtons();
 
             conflictLabel.text = "";
         };
@@ -246,13 +250,14 @@ public class InputSettingsUI : MonoBehaviour
 
                     hasUnsavedChanges = true;
 
-                    UpdateSaveButton();
+                    resetButton.SetEnabled(InputRebindUtility.HasBindingOverride(action, bindingIndex));
+
+                    UpdateButtons();
                 });
         };
 
         bundle.Add(partLabel);
         bundle.Add(bindingButton);
-        bundle.Add(spacer);
         bundle.Add(resetButton);
         
         parent.Add(bundle);

@@ -61,4 +61,28 @@ public static class InputRebindUtility
         conflictingAction = null;
         return false;
     }
+
+    public static bool HasBindingOverride(InputAction action, int bindingIndex)
+    {
+        InputBinding binding = action.bindings[bindingIndex];
+
+        return !string.IsNullOrEmpty(binding.overridePath);
+    }
+
+    public static bool HasAnyOverrides(InputActionAsset inputActions)
+    {
+        foreach (InputActionMap map in inputActions.actionMaps)
+        {
+            foreach (InputAction action in map.actions)
+            {
+                foreach (InputBinding binding in action.bindings)
+                {
+                    if (!string.IsNullOrEmpty(binding.overridePath))
+                        return true;
+                }
+            }
+        }
+
+        return false;
+    }
 }
