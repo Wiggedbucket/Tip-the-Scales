@@ -727,6 +727,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Viscount
       objectReference: {fileID: 0}
+    - target: {fileID: 8070420967922871306, guid: 026d0434f7d478442a7240d59b9812df, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -868,7 +872,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2039620525408451144, guid: ee710e444b195604eb818521ef1441cf, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2
+      value: 1.782
       objectReference: {fileID: 0}
     - target: {fileID: 2039620525408451144, guid: ee710e444b195604eb818521ef1441cf, type: 3}
       propertyPath: m_LocalPosition.z
