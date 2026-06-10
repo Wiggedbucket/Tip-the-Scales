@@ -24,7 +24,7 @@ MonoBehaviour:
   lungeRange: 2
   damageRange: 1.5
   canKite: 1
-  kiteDistance: 3
-  fireRange: 8
-  projectileSpeed: 8
+  kiteDistance: 5
+  fireRange: 16
+  projectileSpeed: 12
   homingStrength: 2

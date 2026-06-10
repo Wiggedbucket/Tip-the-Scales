@@ -89,7 +89,7 @@ public class EnemyFSM : MonoBehaviour
     void HandleIdle()
     {
         float distance =  Vector3.Distance(transform.position, player.position);
-        if (distance < 10f)
+        if (distance < 100f)
         {             
             currentState = State.Chase;
         }
