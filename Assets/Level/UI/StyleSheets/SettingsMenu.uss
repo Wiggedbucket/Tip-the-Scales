@@ -4,6 +4,9 @@
 .panel-background {
     flex-grow: 1;
     background-color: rgba(0, 0, 0, 0.59);
+    width: 100%;
+    height: 100%;
+    position: absolute;
 }
 
 .window {
@@ -172,8 +175,6 @@
     border-bottom-color: rgba(0, 0, 0, 0.51);
     border-top-color: rgba(0, 0, 0, 0.51);
 }
-
-
 
 .binding-part-label {
     min-width: 100px;

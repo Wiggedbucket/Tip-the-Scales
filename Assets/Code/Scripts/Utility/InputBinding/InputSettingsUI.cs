@@ -14,16 +14,12 @@ public class InputSettingsUI : MonoBehaviour
     [SerializeField]
     private InputDisplayDatabase displayDatabase;
 
-    public bool isHidden = false;
-
     private VisualElement root;
-
     private VisualElement panelBackground;
-
     private VisualElement container;
 
+    private Button closeButton;
     private Button saveButton;
-
     private Button resetAllButton;
 
     private Label conflictLabel;
@@ -38,10 +34,14 @@ public class InputSettingsUI : MonoBehaviour
 
         panelBackground = root.Q<VisualElement>("PanelBackground");
         container = root.Q<VisualElement>("BindingsContainer");
+
+        closeButton = root.Q<Button>("CloseButton");
         saveButton = root.Q<Button>("SaveButton");
         resetAllButton = root.Q<Button>("ResetBindingsButton");
+
         conflictLabel = root.Q<Label>("ConflictLabel");
 
+        closeButton.clicked += () => panelBackground.AddToClassList("hidden");
         saveButton.clicked += SaveChanges;
         resetAllButton.clicked += ResetBindings;
 
@@ -63,14 +63,9 @@ public class InputSettingsUI : MonoBehaviour
         EventBus<PauseGameStateChangedEvent>.Deregister(pauseGameStateChangedBinding);
     }
 
-    private void OnPauseGameStateChanged()
+    private void OnPauseGameStateChanged(PauseGameStateChangedEvent e)
     {
-        if (isHidden)
-            panelBackground.RemoveFromClassList("hidden");
-        else
-            panelBackground.AddToClassList("hidden");
-
-        isHidden = !isHidden;
+        panelBackground.AddToClassList("hidden");
     }
 
     private void SaveChanges()
