@@ -3210,6 +3210,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5514952863428335759, guid: 54311cca4eb382a4fbb3d4762d1deac4, type: 3}
+      propertyPath: menuAction.m_Name
+      value: Menu
+      objectReference: {fileID: 0}
+    - target: {fileID: 5514952863428335759, guid: 54311cca4eb382a4fbb3d4762d1deac4, type: 3}
       propertyPath: RoomCombatPointsList.Array.size
       value: 3
       objectReference: {fileID: 0}
