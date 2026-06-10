@@ -53,6 +53,8 @@ public class GameState : MonoBehaviour
 
     public float GameTime = 0f;
 
+    public bool IsPaused = false;
+
     private void Update()
     {
         GameTime += Time.deltaTime;
@@ -71,6 +73,19 @@ public class GameState : MonoBehaviour
         float newScore = (float)System.Math.Round(clamped, 2);
 
         Scale = newScore;
+    }
+
+    [ContextMenu("Toggle Paused State")]
+    public void TogglePauseGame()
+    {
+        IsPaused = !IsPaused;
+
+        EventBus<PauseGameStateChangedEvent>.Raise(new PauseGameStateChangedEvent()
+        {
+            IsPaused = IsPaused,
+        });
+
+        Time.timeScale = IsPaused ? 0f : 1f;
     }
 }
 

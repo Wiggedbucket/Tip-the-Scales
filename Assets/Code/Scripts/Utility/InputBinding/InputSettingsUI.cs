@@ -14,6 +14,12 @@ public class InputSettingsUI : MonoBehaviour
     [SerializeField]
     private InputDisplayDatabase displayDatabase;
 
+    public bool isHidden = false;
+
+    private VisualElement root;
+
+    private VisualElement panelBackground;
+
     private VisualElement container;
 
     private Button saveButton;
@@ -28,8 +34,9 @@ public class InputSettingsUI : MonoBehaviour
     {
         InputBindingSaveSystem.Load(inputActions);
 
-        var root = document.rootVisualElement;
+        root = document.rootVisualElement;
 
+        panelBackground = root.Q<VisualElement>("PanelBackground");
         container = root.Q<VisualElement>("BindingsContainer");
         saveButton = root.Q<Button>("SaveButton");
         resetAllButton = root.Q<Button>("ResetBindingsButton");
@@ -41,6 +48,29 @@ public class InputSettingsUI : MonoBehaviour
         BuildUI();
 
         UpdateButtons();
+    }
+
+    private EventBinding<PauseGameStateChangedEvent> pauseGameStateChangedBinding;
+
+    private void OnEnable()
+    {
+        pauseGameStateChangedBinding = new EventBinding<PauseGameStateChangedEvent>(OnPauseGameStateChanged);
+        EventBus<PauseGameStateChangedEvent>.Register(pauseGameStateChangedBinding);
+    }
+
+    private void OnDisable()
+    {
+        EventBus<PauseGameStateChangedEvent>.Deregister(pauseGameStateChangedBinding);
+    }
+
+    private void OnPauseGameStateChanged()
+    {
+        if (isHidden)
+            panelBackground.RemoveFromClassList("hidden");
+        else
+            panelBackground.AddToClassList("hidden");
+
+        isHidden = !isHidden;
     }
 
     private void SaveChanges()
@@ -146,7 +176,7 @@ public class InputSettingsUI : MonoBehaviour
 
         bindingGroup.Add(labelContainer);
 
-        Debug.Log($"Group name: {groupName}");
+        //Debug.Log($"Group name: {groupName}");
         Label groupLabel = new(GetReadableGroupName(groupName));
 
         groupLabel.AddToClassList("heading-three");
