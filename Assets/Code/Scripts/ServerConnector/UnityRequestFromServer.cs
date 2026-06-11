@@ -31,13 +31,15 @@ public class UnityRequestFromServer : MonoBehaviour
     private string url = "http://localhost:8080";
     private string clientId = "unityClient1";
     private float heartbeatInterval = 5f;
+    private bool serverConnected = false;
+    private bool mockDataStart = false;
+
 
     IEnumerator Start()
     {
         yield return StartCoroutine(ResetGame());
         StartCoroutine(HeartbeatLoop());
         yield return new WaitForSeconds(1);
-
         GameData gameData = new GameData();
 
         gameData.score = 0;
@@ -79,6 +81,23 @@ public class UnityRequestFromServer : MonoBehaviour
         currentData.obj2 = new Objective();
         currentData.obj3 = new Objective();
         var list = GameState.Instance.RoomCombatPointsList;
+        for (int i = 0; i < list.Count; i++)
+        {
+            CombatPoints room = list[i];
+            Debug.Log("Room " + i + " Angel: " + room.angelPoints + " Demon: " + room.demonPoints);
+        }
+        CombatPoints room0 = list[0];
+        CombatPoints room1 = list[1];
+        CombatPoints room2 = list[2];
+
+        currentData.obj1.light = room0.angelPoints;
+        currentData.obj1.dark = room0.demonPoints;
+
+        currentData.obj2.light = room1.angelPoints;
+        currentData.obj2.dark = room1.demonPoints;
+
+        currentData.obj3.light = room2.angelPoints;
+        currentData.obj3.dark = room2.demonPoints;
         yield return StartCoroutine(
             SendGameData(currentData)
         );
@@ -129,6 +148,32 @@ public class UnityRequestFromServer : MonoBehaviour
         }
     }
 
+    IEnumerator MockScoreDarkIncrease()
+    {
+        Debug.Log("Offline Mode Started");
+        while (!serverConnected)
+        {
+            if (GameState.Instance == null)
+            {
+                yield return new WaitForSeconds(1f);
+                continue;
+            }
+
+            var rooms = GameState.Instance.RoomCombatPointsList;
+            for (int i = 0; i < rooms.Count; i++)
+            {
+                CombatPoints room = rooms[i];
+
+                room.demonPoints += Random.Range(1, 6);
+
+                rooms[i] = room;
+            }
+            yield return new WaitForSeconds(3f);
+        }
+        Debug.Log("Offline Mode Disabled");
+        mockDataStart = false;
+    }
+
     IEnumerator SendGameData(GameData gameData)
     {
         string json =
@@ -162,6 +207,12 @@ public class UnityRequestFromServer : MonoBehaviour
 
         if (request.result != UnityWebRequest.Result.Success)
         {
+            serverConnected = false;
+            if(!mockDataStart)
+            {
+                StartCoroutine(MockScoreDarkIncrease());
+                mockDataStart = true;
+            }
             Debug.LogError(
                 "POST Failed: " +
                 request.error
@@ -169,6 +220,7 @@ public class UnityRequestFromServer : MonoBehaviour
         }
         else
         {
+            serverConnected = true;
             Debug.Log(
                 "Server Response: " +
                 request.downloadHandler.text
@@ -180,9 +232,10 @@ public class UnityRequestFromServer : MonoBehaviour
                 );
 
             Debug.Log("New Score: " + updatedData.score);
+            ApplyToGameStateData(updatedData);
         }
     }
-    private GameData ApplyToGameStateData(GameData data)
+    private void ApplyToGameStateData(GameData data)
     {
         var list = GameState.Instance.RoomCombatPointsList;
 
@@ -201,6 +254,5 @@ public class UnityRequestFromServer : MonoBehaviour
         room2.demonPoints = data.obj3.dark;
         list[2] = room2;
 
-        return data;
     }
 }
