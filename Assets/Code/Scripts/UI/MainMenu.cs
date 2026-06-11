@@ -17,6 +17,9 @@ public class MainMenu : MonoBehaviour
     private VisualElement settingsRoot;
     private VisualElement creditsRoot;
 
+    private VisualElement settingsContainer;
+    private VisualElement creditsContainer;
+
     private Button singleplayerButton;
     private Button multiplayerButton;
     private Button settingsButton;
@@ -28,6 +31,9 @@ public class MainMenu : MonoBehaviour
         mainMenuRoot = mainMenuDocument.rootVisualElement;
         settingsRoot = settingsDocument.rootVisualElement;
         creditsRoot = creditsDocument.rootVisualElement;
+
+        settingsContainer = settingsRoot.Q<VisualElement>("Container");
+        creditsContainer = creditsRoot.Q<VisualElement>("Container");
 
         singleplayerButton = mainMenuRoot.Q<Button>("SingleplayerButton");
         multiplayerButton = mainMenuRoot.Q<Button>("MultiplayerButton");
@@ -56,12 +62,12 @@ public class MainMenu : MonoBehaviour
 
     public void OpenSettings()
     {
-
+        settingsContainer.RemoveFromClassList("hidden");
     }
 
     public void OpenCredits()
     {
-
+        creditsContainer.RemoveFromClassList("hidden");
     }
 
     public void QuitGame()

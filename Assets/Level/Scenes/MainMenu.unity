@@ -464,6 +464,7 @@ GameObject:
   m_Component:
   - component: {fileID: 526315958}
   - component: {fileID: 526315959}
+  - component: {fileID: 526315960}
   m_Layer: 0
   m_Name: Settings
   m_TagString: Untagged
@@ -509,6 +510,20 @@ MonoBehaviour:
   m_PivotReferenceSize: 0
   m_Pivot: 0
   m_WorldSpaceCollider: {fileID: 0}
+--- !u!114 &526315960
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 526315957}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d213a99b75f2a14ca6c59aaa7e3c822, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SettingsMenu
+  settingsDocument: {fileID: 526315959}
+  bindingsDocument: {fileID: 733347950}
 --- !u!1001 &733347948
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -571,6 +586,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8090159203187823856, guid: d26d34895cc0d704e94c45ad2f7ef1b7, type: 3}
   m_PrefabInstance: {fileID: 733347948}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &733347950 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 313109304805674790, guid: d26d34895cc0d704e94c45ad2f7ef1b7, type: 3}
+  m_PrefabInstance: {fileID: 733347948}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 19102, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.dll::UnityEngine.UIElements.UIDocument
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -665,6 +691,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1040175574}
   - component: {fileID: 1040175575}
+  - component: {fileID: 1040175576}
   m_Layer: 0
   m_Name: Credits
   m_TagString: Untagged
@@ -710,6 +737,19 @@ MonoBehaviour:
   m_PivotReferenceSize: 0
   m_Pivot: 0
   m_WorldSpaceCollider: {fileID: 0}
+--- !u!114 &1040175576
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1040175573}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 732bb89a43254f34ba17b487952d606a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CreditsMenu
+  creditsDocument: {fileID: 1040175575}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
