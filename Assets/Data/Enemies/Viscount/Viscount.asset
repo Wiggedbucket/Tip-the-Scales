@@ -10,12 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4568c7b4c6923724eb36957a67157dd8, type: 3}
-  m_Name: Knight
+  m_Name: Viscount
   m_EditorClassIdentifier: Assembly-CSharp::EnemyStats
-  enemyName: Knight
-  maxHealth: 50
+  enemyName: Viscount
+  maxHealth: 60
   moveSpeed: 4
   attackDamage: 10
-  attackRange: 1.5
+  attackRange: 2
   attackCooldown: 2
   anticipationTime: 0.4
+  useLunge: 0
+  lungeForce: 8
+  lungeRange: 2
+  damageRange: 1.5
+  canKite: 1
+  kiteDistance: 5
+  fireRange: 16
+  projectileSpeed: 12
+  homingStrength: 2
