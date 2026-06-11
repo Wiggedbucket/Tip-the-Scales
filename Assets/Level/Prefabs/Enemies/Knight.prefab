@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 4512355573024880114}
   - component: {fileID: 1941177658809118066}
   - component: {fileID: 8772806543695931058}
+  - component: {fileID: 4497885199475217975}
   m_Layer: 7
   m_Name: Knight
   m_TagString: Enemy
@@ -173,3 +174,16 @@ MonoBehaviour:
   lastKiteEndTime: 0
   currentState: 0
   lastAttackTime: 0
+--- !u!114 &4497885199475217975
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1523946893141706178}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e1ca5ca67a68394db06e3193cbfd030, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Health
+  maxHealth: 50

@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 7079413246601626511}
   - component: {fileID: 7319473751774553187}
   - component: {fileID: 5653098967525542709}
+  - component: {fileID: 2458329371496355470}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -142,10 +143,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4037c60b08d80344c8b7ae8d2f2b2572, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerHealth
-  maxHealth: 100
-  red: {fileID: 2100000, guid: 6892cdeb9f231a145944dce098585cf3, type: 2}
-  green: {fileID: 2100000, guid: 5d114d57e57f5214a8e4f23ba6379abc, type: 2}
-  rend: {fileID: 4114877816358681979}
 --- !u!54 &5653098967525542709
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -173,3 +170,16 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!114 &2458329371496355470
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9114820013931771620}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e1ca5ca67a68394db06e3193cbfd030, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Health
+  maxHealth: 100

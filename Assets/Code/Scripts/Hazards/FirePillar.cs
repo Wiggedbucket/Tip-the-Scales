@@ -48,10 +48,10 @@ public class FirePillar : MonoBehaviour
         if(!other.CompareTag("Player")) return;
         if(Time.time < nextDamageTime) return;
 
-        PlayerHealth playerHealth = other.GetComponentInParent<PlayerHealth>();
-        if (playerHealth != null)
+        Health health = other.GetComponentInParent<Health>();
+        if (health != null)
         {
-            playerHealth.TakeDamage(damagePerTick);
+            health.TakeDamage(damagePerTick);
             nextDamageTime = Time.time + damageInterval;
         }
     }

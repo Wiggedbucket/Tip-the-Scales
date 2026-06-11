@@ -47,10 +47,10 @@ public class EnemyAttack : MonoBehaviour
             float distanceAfterLunge = Vector3.Distance(transform.position, fsm.player.position);
             if (distanceAfterLunge <= stats.damageRange)
             {
-                PlayerHealth playerHealth = fsm.player.GetComponent<PlayerHealth>();
-                if (playerHealth != null)
+                Health health = fsm.player.GetComponent<Health>();
+                if (health != null)
                 {
-                    playerHealth.TakeDamage(stats.attackDamage);
+                    health.TakeDamage(stats.attackDamage);
                     Debug.Log(stats.enemyName + " lunge hit! Distance was: " + distanceAfterLunge);
                 }
             }
@@ -66,10 +66,10 @@ public class EnemyAttack : MonoBehaviour
             foreach (Collider hit in hits)
             {
                 Debug.Log("Hit: " + hit.gameObject.name);
-                PlayerHealth playerHealth = hit.GetComponent<PlayerHealth>();
-                if (playerHealth != null)
+                Health health = hit.GetComponent<Health>();
+                if (health != null)
                 {
-                    playerHealth.TakeDamage(stats.attackDamage);
+                    health.TakeDamage(stats.attackDamage);
                 }
             }
         }

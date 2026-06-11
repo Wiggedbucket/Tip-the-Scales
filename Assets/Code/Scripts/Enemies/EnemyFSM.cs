@@ -19,11 +19,13 @@ public class EnemyFSM : MonoBehaviour
 
     NavMeshAgent agent;
 
-    float currentHealth;
     public float lastAttackTime;
-
+    Health health;
     void Start()
     {
+        health = GetComponent<Health>();
+        health.OnDeath += HandleDeath;
+
         GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
         if (playerObj != null)
         {
@@ -36,7 +38,6 @@ public class EnemyFSM : MonoBehaviour
 
         agent = GetComponent<NavMeshAgent>();
         agent.speed = stats.moveSpeed;
-        currentHealth = stats.maxHealth;
 
         if (stats.canKite)
             agent.stoppingDistance = stats.fireRange * 0.8f;
@@ -48,8 +49,8 @@ public class EnemyFSM : MonoBehaviour
 
     void Update()
     {
-        switch (currentState) 
-        { 
+        switch (currentState)
+        {
             case State.Idle:
                 HandleIdle();
                 break;
@@ -60,7 +61,7 @@ public class EnemyFSM : MonoBehaviour
                 HandleChase();
                 break;
             case State.Attack:
-                
+
                 Vector3 directionToPlayer = (player.position - transform.position).normalized;
                 directionToPlayer.y = 0f;
                 if (directionToPlayer != Vector3.zero)
@@ -88,9 +89,9 @@ public class EnemyFSM : MonoBehaviour
     }
     void HandleIdle()
     {
-        float distance =  Vector3.Distance(transform.position, player.position);
+        float distance = Vector3.Distance(transform.position, player.position);
         if (distance < 100f)
-        {             
+        {
             currentState = State.Chase;
         }
     }
@@ -98,7 +99,7 @@ public class EnemyFSM : MonoBehaviour
     void HandleChase()
     {
         agent.SetDestination(player.position);
-        float distance =  Vector3.Distance(transform.position, player.position);
+        float distance = Vector3.Distance(transform.position, player.position);
 
         float triggerRange = stats.canKite ? stats.fireRange :
                              (stats.useLunge ? stats.lungeRange : stats.attackRange);
@@ -134,15 +135,12 @@ public class EnemyFSM : MonoBehaviour
             agent.stoppingDistance = stats.fireRange * 0.8f;
             currentState = State.Attack;
             lastKiteEndTime = Time.time;
-            
-        }
-        
-    }
 
-    public void TakeDamage(float amount)
+        }
+
+    }
+    void HandleDeath()
     {
-        currentHealth -= amount;
-        if (currentHealth <= 0)
         {
             Debug.Log(stats.enemyName + " has died.");
             Destroy(gameObject);

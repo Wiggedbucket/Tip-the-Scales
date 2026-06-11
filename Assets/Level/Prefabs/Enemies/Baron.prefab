@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 3824286376280548890}
   - component: {fileID: 6337713251244711541}
   - component: {fileID: 3839556008265635549}
+  - component: {fileID: 675626188008713168}
   m_Layer: 7
   m_Name: Baron
   m_TagString: Enemy
@@ -173,3 +174,16 @@ MonoBehaviour:
   lastKiteEndTime: 0
   currentState: 0
   lastAttackTime: 0
+--- !u!114 &675626188008713168
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8276154443068584962}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e1ca5ca67a68394db06e3193cbfd030, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Health
+  maxHealth: 80

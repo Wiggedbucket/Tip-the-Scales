@@ -29,10 +29,10 @@ public class Projectile : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            PlayerHealth playerHealth = other.GetComponent<PlayerHealth>();
-            if (playerHealth != null)
+            Health health = other.GetComponent<Health>();
+            if (health != null)
             {
-                playerHealth.TakeDamage(damage);
+                health.TakeDamage(damage);
             }
             Destroy(gameObject);
         }

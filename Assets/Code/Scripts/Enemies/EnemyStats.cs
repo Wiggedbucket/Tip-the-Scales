@@ -3,7 +3,6 @@ using UnityEngine;
 public class EnemyStats : ScriptableObject
 {
     [SerializeField] public string enemyName = "Knight";
-    [SerializeField] public float maxHealth = 50f;
     [SerializeField] public float moveSpeed = 4f;
     [SerializeField] public float attackDamage = 10f;
     [SerializeField] public float attackRange = 1.5f;
