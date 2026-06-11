@@ -14,6 +14,9 @@ public class PlayerShooting : MonoBehaviour
     public float range = 100f;
     public float firerate = 0.2f;
     private float nextTimeToFire = 0f;
+    public int maxAmmo = 24;
+    public int currentAmmo;
+    public float reloadTime = 0.8f;
 
     [Header("Firing Mode Settings")]
     public fireMode currentFireMode = fireMode.Automatic;
@@ -22,27 +25,51 @@ public class PlayerShooting : MonoBehaviour
     [Header("References")]
     public Camera playerCam;
     private bool isShooting = false;
+    private bool hasAmmo = true;
+    private bool isReloading = false;
 
     private void Awake()
     {
+        currentAmmo = maxAmmo;
         audioSource = GetComponent<AudioSource>();
         weaponAnimator = GetComponentInChildren<Animator>();
     }
     void Update()
     {
+        AmmoCheck();
         ShootCheck();
+    }
+
+    public void AmmoCheck()
+    {
+        if (currentAmmo <= 0)
+        {
+            hasAmmo = false;
+        }
+    }
+
+    public void OnReload(InputAction.CallbackContext context)
+    {
+        if (hasAmmo == false || currentAmmo < maxAmmo)
+        {
+            currentAmmo = maxAmmo;
+            hasAmmo = true;
+        }
     }
 
     public void OnShoot(InputAction.CallbackContext context)
     {
-        if(context.started)
-        {
-            isShooting=true;
-        }
-        else if(context.canceled)
-        {
-            isShooting=false;
-            hasFiredSingle = false;
+        if (hasAmmo == true)
+        { 
+            if (context.started)
+            {
+                isShooting = true;
+            }
+            else if (context.canceled)
+            {
+                isShooting = false;
+                hasFiredSingle = false;
+            }
         }
     }
 
@@ -53,13 +80,15 @@ public class PlayerShooting : MonoBehaviour
             if (currentFireMode == fireMode.Automatic )
             {
                 ExecuteShot();
+                currentAmmo -= 1;
             }
             else if (currentFireMode == fireMode.SingleShot)
             {
                 if (!hasFiredSingle)
                 {
                     ExecuteShot();
-                    hasFiredSingle=true;
+                    currentAmmo -= 1;
+                    hasFiredSingle =true;
                 }
             }
         }
@@ -67,19 +96,26 @@ public class PlayerShooting : MonoBehaviour
 
     public void ExecuteShot()
     {
-        nextTimeToFire = Time.time + firerate;
-
-        RaycastHit hit;
-
-        if (Physics.Raycast(playerCam.transform.position, playerCam.transform.forward, out hit, range))
+        if (hasAmmo == true)
         {
-            Debug.Log(hit.transform.name);
+            nextTimeToFire = Time.time + firerate;
 
-            Target target = hit.transform.GetComponent<Target>();
-            if (target != null)
+            RaycastHit hit;
+
+            if (Physics.Raycast(playerCam.transform.position, playerCam.transform.forward, out hit, range))
             {
-                target.takeDamage(damage);
+                Debug.Log(hit.transform.name);
+
+                Target target = hit.transform.GetComponent<Target>();
+                if (target != null)
+                {
+                    target.takeDamage(damage);
+                }
             }
+        }
+        else
+        {
+            Debug.Log("No ammo");
         }
     }
 }
