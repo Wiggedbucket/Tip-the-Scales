@@ -14,7 +14,6 @@ public class InputSettingsUI : MonoBehaviour
     [SerializeField]
     private InputDisplayDatabase displayDatabase;
 
-    private VisualElement root;
     private VisualElement panelBackground;
     private VisualElement container;
 
@@ -26,11 +25,13 @@ public class InputSettingsUI : MonoBehaviour
 
     private bool hasUnsavedChanges;
 
+    private EventBinding<PauseGameStateChangedEvent> pauseGameStateChangedBinding;
+
     private void Awake()
     {
         InputBindingSaveSystem.Load(inputActions);
 
-        root = document.rootVisualElement;
+        VisualElement root = document.rootVisualElement;
 
         panelBackground = root.Q<VisualElement>("PanelBackground");
         container = root.Q<VisualElement>("BindingsContainer");
@@ -41,7 +42,7 @@ public class InputSettingsUI : MonoBehaviour
 
         conflictLabel = root.Q<Label>("ConflictLabel");
 
-        closeButton.clicked += () => panelBackground.AddToClassList("hidden");
+        closeButton.clicked += Hide;
         saveButton.clicked += SaveChanges;
         resetAllButton.clicked += ResetBindings;
 
@@ -50,11 +51,10 @@ public class InputSettingsUI : MonoBehaviour
         UpdateButtons();
     }
 
-    private EventBinding<PauseGameStateChangedEvent> pauseGameStateChangedBinding;
-
     private void OnEnable()
     {
         pauseGameStateChangedBinding = new EventBinding<PauseGameStateChangedEvent>(OnPauseGameStateChanged);
+
         EventBus<PauseGameStateChangedEvent>.Register(pauseGameStateChangedBinding);
     }
 
@@ -64,6 +64,11 @@ public class InputSettingsUI : MonoBehaviour
     }
 
     private void OnPauseGameStateChanged(PauseGameStateChangedEvent e)
+    {
+        Hide();
+    }
+
+    private void Hide()
     {
         panelBackground.AddToClassList("hidden");
     }
@@ -88,11 +93,26 @@ public class InputSettingsUI : MonoBehaviour
         UpdateButtons();
     }
 
+    private void MarkDirty()
+    {
+        hasUnsavedChanges = true;
+
+        UpdateButtons();
+    }
+
     private void UpdateButtons()
     {
         saveButton.SetEnabled(hasUnsavedChanges);
 
         resetAllButton.SetEnabled(InputRebindUtility.HasAnyOverrides(inputActions));
+    }
+
+    private void ShowConflict(InputAction action, InputAction conflictingAction)
+    {
+        conflictLabel.text =
+            $"{displayDatabase.GetDisplayName(action.name)} " +
+            $"conflicts with " +
+            $"{displayDatabase.GetDisplayName(conflictingAction.name)}";
     }
 
     private void BuildUI()
@@ -101,40 +121,54 @@ public class InputSettingsUI : MonoBehaviour
 
         foreach (InputActionMap map in inputActions.actionMaps)
         {
-            Label mapLabel = new(map.name);
-            mapLabel.AddToClassList("heading");
-
-            container.Add(mapLabel);
-
-            foreach (InputAction action in map.actions)
-            {
-                CreateActionRow(action);
-            }
+            BuildMap(map);
         }
     }
 
-    private void CreateActionRow(InputAction action)
+    private void BuildMap(InputActionMap map)
+    {
+        Label mapLabel = new(map.name);
+
+        mapLabel.AddToClassList("heading");
+
+        container.Add(mapLabel);
+
+        foreach (InputAction action in map.actions)
+        {
+            BuildAction(action);
+        }
+    }
+
+    private void BuildAction(InputAction action)
     {
         VisualElement row = new();
         row.AddToClassList("action-row");
 
-        Label actionNameLabel = new(displayDatabase.GetDisplayName(action.name));
-
-        actionNameLabel.AddToClassList("heading-two");
-
-        row.Add(actionNameLabel);
+        Label actionLabel = new(displayDatabase.GetDisplayName(action.name));
+        actionLabel.AddToClassList("heading-two");
+        row.Add(actionLabel);
 
         VisualElement divider = new();
         divider.AddToClassList("divider");
-
         row.Add(divider);
 
-        VisualElement bindingGroupsContainer = new();
-        bindingGroupsContainer.AddToClassList("binding-groups-container");
+        VisualElement groupsContainer = new();
+        groupsContainer.AddToClassList("binding-groups-container");
+        row.Add(groupsContainer);
 
-        row.Add(bindingGroupsContainer);
+        Dictionary<string, List<int>> groups = BuildBindingGroups(action);
 
-        Dictionary<string, List<int>> bindingGroups = new();
+        foreach (var group in groups)
+        {
+            BuildGroup(action, group.Key, group.Value, groupsContainer);
+        }
+
+        container.Add(row);
+    }
+
+    private Dictionary<string, List<int>> BuildBindingGroups(InputAction action)
+    {
+        Dictionary<string, List<int>> groups = new();
 
         for (int i = 0; i < action.bindings.Count; i++)
         {
@@ -145,47 +179,42 @@ public class InputSettingsUI : MonoBehaviour
 
             string group = string.IsNullOrEmpty(binding.groups) ? "Other" : binding.groups;
 
-            if (!bindingGroups.ContainsKey(group))
-                bindingGroups[group] = new();
+            if (!groups.ContainsKey(group))
+                groups[group] = new();
 
-            bindingGroups[group].Add(i);
+            groups[group].Add(i);
         }
 
-        foreach (var group in bindingGroups)
-        {
-            CreateBindingGroup(action, group.Key, group.Value, bindingGroupsContainer);
-        }
-
-        container.Add(row);
+        return groups;
     }
 
-    private void CreateBindingGroup(InputAction action, string groupName, List<int> bindingIndices, VisualElement parent)
+    private void BuildGroup(InputAction action, string groupName, List<int> bindingIndices, VisualElement parent)
     {
-        VisualElement bindingGroup = new();
-        bindingGroup.AddToClassList("binding-group");
-
-        parent.Add(bindingGroup);
+        VisualElement group = new();
+        group.AddToClassList("binding-group");
+        parent.Add(group);
 
         VisualElement labelContainer = new();
         labelContainer.AddToClassList("binding-group-label-container");
+        group.Add(labelContainer);
 
-        bindingGroup.Add(labelContainer);
-
-        //Debug.Log($"Group name: {groupName}");
-        Label groupLabel = new(GetReadableGroupName(groupName));
-
-        groupLabel.AddToClassList("heading-three");
-
-        labelContainer.Add(groupLabel);
+        Label label = new(GetReadableGroupName(groupName));
+        label.AddToClassList("heading-three");
+        labelContainer.Add(label);
 
         VisualElement buttonsContainer = new();
         buttonsContainer.AddToClassList("binding-group-buttons-container");
-
-        bindingGroup.Add(buttonsContainer);
+        group.Add(buttonsContainer);
 
         foreach (int bindingIndex in bindingIndices)
         {
-            CreateBindingButtonBundle(action, bindingIndex, buttonsContainer);
+            InputBindingElement element = new(action, bindingIndex, MarkDirty,
+                    conflictingAction =>
+                    {
+                        ShowConflict(action, conflictingAction);
+                    });
+
+            buttonsContainer.Add(element.Root);
         }
     }
 
@@ -199,92 +228,5 @@ public class InputSettingsUI : MonoBehaviour
             ";Gamepad" => "Controller",
             _ => group
         };
-    }
-
-    private void CreateBindingButtonBundle(InputAction action, int bindingIndex, VisualElement parent)
-    {
-        InputBinding binding = action.bindings[bindingIndex];
-
-        VisualElement bundle = new();
-        bundle.AddToClassList("binding-button-bundle");
-
-        // Composite part label (Up, Down, Left, Right, etc.)
-        Label partLabel = new();
-
-        if (binding.isPartOfComposite)
-        {
-            partLabel.text = binding.name;
-        }
-        else
-        {
-            partLabel.text = string.Empty;
-        }
-
-        partLabel.AddToClassList("binding-part-label");
-
-        Button bindingButton = new()
-        {
-            text = action.GetBindingDisplayString(bindingIndex)
-        };
-
-        bindingButton.AddToClassList("binding-button");
-
-        Button resetButton = new()
-        {
-            text = "Reset"
-        };
-
-        resetButton.AddToClassList("reset-binding-button");
-
-        resetButton.SetEnabled(InputRebindUtility.HasBindingOverride(action, bindingIndex));
-
-        resetButton.clicked += () =>
-        {
-            action.RemoveBindingOverride(bindingIndex);
-
-            bindingButton.text = action.GetBindingDisplayString(bindingIndex);
-
-            hasUnsavedChanges = true;
-
-            resetButton.SetEnabled(false);
-
-            UpdateButtons();
-
-            conflictLabel.text = "";
-        };
-
-        bindingButton.clicked += () =>
-        {
-            conflictLabel.text = "";
-
-            bindingButton.text = "<...>";
-
-            InputRebindUtility.StartRebind(action, bindingIndex,
-
-                conflictingAction =>
-                {
-                    conflictLabel.text =
-                        $"{displayDatabase.GetDisplayName(action.name)} " +
-                        $"conflicts with " +
-                        $"{displayDatabase.GetDisplayName(conflictingAction.name)}";
-                },
-
-                () =>
-                {
-                    bindingButton.text = action.GetBindingDisplayString(bindingIndex);
-
-                    hasUnsavedChanges = true;
-
-                    resetButton.SetEnabled(InputRebindUtility.HasBindingOverride(action, bindingIndex));
-
-                    UpdateButtons();
-                });
-        };
-
-        bundle.Add(partLabel);
-        bundle.Add(bindingButton);
-        bundle.Add(resetButton);
-        
-        parent.Add(bundle);
     }
 }
