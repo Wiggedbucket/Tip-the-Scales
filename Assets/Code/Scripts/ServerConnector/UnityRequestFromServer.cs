@@ -32,7 +32,6 @@ public class UnityRequestFromServer : MonoBehaviour
     private string clientId = "unityClient1";
     private float heartbeatInterval = 5f;
     private bool serverConnected = false;
-    private bool mockDataStart = false;
     public GameObject Room1;
     public GameObject Room2;
     public GameObject Room3;
@@ -50,14 +49,14 @@ public class UnityRequestFromServer : MonoBehaviour
         gameData.obj2 = new Objective();
         gameData.obj3 = new Objective();
 
-        gameData.obj1.light = 7;
+        gameData.obj1.light = 0;
         gameData.obj1.dark = 0;
 
-        gameData.obj2.light = 7;
+        gameData.obj2.light = 0;
         gameData.obj2.dark = 0;
 
-        gameData.obj3.light = 2;
-        gameData.obj3.dark = 1;
+        gameData.obj3.light = 0;
+        gameData.obj3.dark = 0;
 
         yield return StartCoroutine(
             SendGameData(gameData)
@@ -81,24 +80,19 @@ public class UnityRequestFromServer : MonoBehaviour
         currentData.obj1 = new Objective();
         currentData.obj2 = new Objective();
         currentData.obj3 = new Objective();
-        var list = GameState.Instance.RoomCombatPointsList;
-        for (int i = 0; i < list.Count; i++)
-        {
-            CombatPoints room = list[i];
-            Debug.Log("Room " + i + " Angel: " + room.angelPoints + " Demon: " + room.demonPoints);
-        }
-        CombatPoints room0 = list[0];
-        CombatPoints room1 = list[1];
-        CombatPoints room2 = list[2];
 
-        currentData.obj1.light = room0.angelPoints;
-        currentData.obj1.dark = room0.demonPoints;
+        RoomData room1 = Room1.GetComponent<RoomData>();
+        RoomData room2 = Room2.GetComponent<RoomData>();
+        RoomData room3 = Room3.GetComponent<RoomData>();
 
-        currentData.obj2.light = room1.angelPoints;
-        currentData.obj2.dark = room1.demonPoints;
+        currentData.obj1.light = room1.angelPoints;
+        currentData.obj1.dark = room1.demonPoints;
 
-        currentData.obj3.light = room2.angelPoints;
-        currentData.obj3.dark = room2.demonPoints;
+        currentData.obj2.light = room2.angelPoints;
+        currentData.obj2.dark = room2.demonPoints;
+
+        currentData.obj3.light = room3.angelPoints;
+        currentData.obj3.dark = room3.demonPoints;
         yield return StartCoroutine(
             SendGameData(currentData)
         );
@@ -202,12 +196,6 @@ public class UnityRequestFromServer : MonoBehaviour
 
         if (request.result != UnityWebRequest.Result.Success)
         {
-            serverConnected = false;
-            if(!mockDataStart)
-            {
-                StartCoroutine(MockScoreDarkIncrease());
-                mockDataStart = true;
-            }
             Debug.LogError(
                 "POST Failed: " +
                 request.error
@@ -215,7 +203,6 @@ public class UnityRequestFromServer : MonoBehaviour
         }
         else
         {
-            serverConnected = true;
             Debug.Log(
                 "Server Response: " +
                 request.downloadHandler.text
