@@ -33,8 +33,9 @@ public class UnityRequestFromServer : MonoBehaviour
     private float heartbeatInterval = 5f;
     private bool serverConnected = false;
     private bool mockDataStart = false;
-
-
+    public GameObject Room1;
+    public GameObject Room2;
+    public GameObject Room3;
     IEnumerator Start()
     {
         yield return StartCoroutine(ResetGame());
@@ -150,28 +151,22 @@ public class UnityRequestFromServer : MonoBehaviour
 
     IEnumerator MockScoreDarkIncrease()
     {
-        Debug.Log("Offline Mode Started");
         while (!serverConnected)
         {
-            if (GameState.Instance == null)
+            RoomData[] rooms =
             {
-                yield return new WaitForSeconds(1f);
-                continue;
-            }
+            Room1.GetComponent<RoomData>(),
+            Room2.GetComponent<RoomData>(),
+            Room3.GetComponent<RoomData>()
+        };
 
-            var rooms = GameState.Instance.RoomCombatPointsList;
-            for (int i = 0; i < rooms.Count; i++)
+            foreach (RoomData room in rooms)
             {
-                CombatPoints room = rooms[i];
-
                 room.demonPoints += Random.Range(1, 6);
-
-                rooms[i] = room;
             }
+
             yield return new WaitForSeconds(3f);
         }
-        Debug.Log("Offline Mode Disabled");
-        mockDataStart = false;
     }
 
     IEnumerator SendGameData(GameData gameData)
@@ -237,22 +232,22 @@ public class UnityRequestFromServer : MonoBehaviour
     }
     private void ApplyToGameStateData(GameData data)
     {
-        var list = GameState.Instance.RoomCombatPointsList;
+        RoomData room1 =
+            Room1.GetComponent<RoomData>();
 
-        CombatPoints room0 = list[0];
-        room0.angelPoints = data.obj1.light;
-        room0.demonPoints = data.obj1.dark;
-        list[0] = room0;
+        RoomData room2 =
+            Room2.GetComponent<RoomData>();
 
-        CombatPoints room1 = list[1];
-        room1.angelPoints = data.obj2.light;
-        room1.demonPoints = data.obj2.dark;
-        list[1] = room1;
+        RoomData room3 =
+            Room3.GetComponent<RoomData>();
 
-        CombatPoints room2 = list[2];
-        room2.angelPoints = data.obj3.light;
-        room2.demonPoints = data.obj3.dark;
-        list[2] = room2;
+        room1.angelPoints = data.obj1.light;
+        room1.demonPoints = data.obj1.dark;
 
+        room2.angelPoints = data.obj2.light;
+        room2.demonPoints = data.obj2.dark;
+
+        room3.angelPoints = data.obj3.light;
+        room3.demonPoints = data.obj3.dark;
     }
 }
