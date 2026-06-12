@@ -26,7 +26,7 @@ public class PlayerShooting : MonoBehaviour
     public Camera playerCam;
     private bool isShooting = false;
     private bool hasAmmo = true;
-    private bool isReloading = false; //still need to use so can't shoot while reloading & add reloading time.
+    //private bool isReloading = false; //still need to use so can't shoot while reloading & add reloading time.
 
     private void Awake()
     {
