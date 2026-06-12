@@ -19,13 +19,14 @@ public class Tile : MonoBehaviour
 
     public void PlaceHazards(RoomCreatedEvent roomCreatedEvent)
     {
-        foreach (Vector3 spawnPoint in roomCreatedEvent.HazardSpawnPoints)
+        foreach (Transform spawnPoint in roomCreatedEvent.HazardSpawnPoints)
         {
             int hazardIndex = Random.Range(0, hazards.Count);
             GameObject hazardPrefab = hazards[hazardIndex];
             if (hazardPrefab != null)
             {
-                Instantiate(hazardPrefab, spawnPoint, Quaternion.identity);
+                GameObject hazard = Instantiate(hazardPrefab, spawnPoint.position, Quaternion.identity, spawnPoint);
+                hazard.transform.localScale = hazardPrefab.transform.localScale/25;
             }
         }
     }

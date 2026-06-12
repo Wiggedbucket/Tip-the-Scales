@@ -7,8 +7,8 @@ public class RoomGenerator : MonoBehaviour
     public int width = 5;
     public int height = 5;
     public float tileSize = 1f;
-    private List<Vector3> enemySpawnPoints = new();
-    private List<Vector3> hazardSpawnPoints = new();
+    private List<Transform> enemySpawnPoints = new();
+    private List<Transform> hazardSpawnPoints = new();
     private int roomID;
 
     public void Initialize(int id)
@@ -48,25 +48,27 @@ public class RoomGenerator : MonoBehaviour
         int prefabIndex = Random.Range(0, roomPrefabs.Length);
         GameObject prefab = roomPrefabs[prefabIndex];
 
-        if (prefab.transform.Find("EnemySpawnPoints") != null)
-        {
-            foreach (Transform spawnPoint in prefab.transform.Find("EnemySpawnPoints"))
-            {
-                Vector3 worldSpawnPoint = room_position + new Vector3(coord_x * tileSize, 0f, coord_y * tileSize) + spawnPoint.localPosition;
-                enemySpawnPoints.Add(worldSpawnPoint);
-            }
-        }
-        if (prefab.transform.Find("HazardSpawnPoints") != null)
-        {
-            foreach (Transform spawnPoint in prefab.transform.Find("HazardSpawnPoints"))
-            {
-                Vector3 worldSpawnPoint = room_position + new Vector3(coord_x * tileSize, 0f, coord_y * tileSize) + spawnPoint.localPosition;
-                hazardSpawnPoints.Add(worldSpawnPoint);
-            }
-        }
-
         Vector3 spawnLocation = room_position + new Vector3(coord_x * tileSize, 0f, coord_y * tileSize);
         GameObject instance = Instantiate(prefab, spawnLocation, Quaternion.identity, transform);
         instance.name = "Tile_" + coord_x + "_" + coord_y;
+        instance.transform.localScale = new Vector3(tileSize, 0.1f, tileSize);
+
+        Transform enemyRoot = instance.transform.Find("EnemySpawnPoints");
+        if (enemyRoot != null)
+        {
+            foreach (Transform spawnPoint in enemyRoot)
+            {
+                enemySpawnPoints.Add(spawnPoint);
+            }
+        }
+
+        Transform hazardRoot = instance.transform.Find("HazardSpawnPoints");
+        if (hazardRoot != null)
+        {
+            foreach (Transform spawnPoint in hazardRoot)
+            {
+                hazardSpawnPoints.Add(spawnPoint);
+            }
+        }
     }
 }
