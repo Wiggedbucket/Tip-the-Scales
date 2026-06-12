@@ -44,13 +44,15 @@ public class PlayerShooting : MonoBehaviour
     {
         if (currentAmmo <= 0)
         {
+            currentAmmo = 0;
             hasAmmo = false;
         }
     }
 
     public void OnReload(InputAction.CallbackContext context)
     {
-        if (hasAmmo == false || currentAmmo < maxAmmo)
+
+        if (context.performed && currentAmmo < maxAmmo)
         {
             currentAmmo = maxAmmo;
             hasAmmo = true;
@@ -59,7 +61,7 @@ public class PlayerShooting : MonoBehaviour
 
     public void OnShoot(InputAction.CallbackContext context)
     {
-        if (hasAmmo == true)
+
         { 
             if (context.started)
             {
@@ -75,7 +77,7 @@ public class PlayerShooting : MonoBehaviour
 
     public void ShootCheck()
     {
-        if (!isShooting || Time.time < nextTimeToFire) return;
+        if (!isShooting || Time.time < nextTimeToFire || !hasAmmo) return;
         {
             if (currentFireMode == fireMode.Automatic )
             {
@@ -95,9 +97,7 @@ public class PlayerShooting : MonoBehaviour
     }
 
     public void ExecuteShot()
-    {
-        if (hasAmmo == true)
-        {
+    {   
             nextTimeToFire = Time.time + firerate;
 
             RaycastHit hit;
@@ -112,7 +112,7 @@ public class PlayerShooting : MonoBehaviour
                     target.takeDamage(damage);
                 }
             }
-        }
+        
         else
         {
             Debug.Log("No ammo");

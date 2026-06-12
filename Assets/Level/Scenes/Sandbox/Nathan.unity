@@ -1314,6 +1314,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8399585526834241200, guid: 4cabece346617e940921f8d9aab73fa1, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1537248024}
+    - targetCorrespondingSourceObject: {fileID: 8399585526834241200, guid: 4cabece346617e940921f8d9aab73fa1, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1537248031}
+    - targetCorrespondingSourceObject: {fileID: 8399585526834241200, guid: 4cabece346617e940921f8d9aab73fa1, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1537248030}
   m_SourcePrefab: {fileID: 100100000, guid: 4cabece346617e940921f8d9aab73fa1, type: 3}
 --- !u!20 &932302030 stripped
 Camera:
@@ -1419,10 +1425,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.CanvasScaler
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
@@ -1611,6 +1617,31 @@ MonoBehaviour:
   reloadTime: 0.8
   currentFireMode: 0
   playerCam: {fileID: 932302030}
+--- !u!114 &1537248030
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1537248022}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4037c60b08d80344c8b7ae8d2f2b2572, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerHealth
+--- !u!114 &1537248031
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1537248022}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e1ca5ca67a68394db06e3193cbfd030, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Health
+  maxHealth: 100
 --- !u!1 &1539426063
 GameObject:
   m_ObjectHideFlags: 0
@@ -1906,13 +1937,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d466c9554aea2d41902e3815cfc3668, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerShooting
-  damage: 40
-  range: 20
+  damage: 10
+  range: 40
   firerate: 0.2
-  maxAmmo: 5
+  maxAmmo: 22
   currentAmmo: 0
   reloadTime: 0.8
-  currentFireMode: 1
+  currentFireMode: 0
   playerCam: {fileID: 932302030}
 --- !u!1 &2085479996
 GameObject:
