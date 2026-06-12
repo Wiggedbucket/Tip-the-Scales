@@ -3,7 +3,8 @@ using UnityEngine;
 [RequireComponent(typeof(Collider))]
 public class RoomEntranceTrigger : MonoBehaviour
 {
-    [SerializeField] private int roomId = -1;
+    [SerializeField]
+    private int roomId = -1;
 
     private void OnTriggerEnter(Collider other)
     {

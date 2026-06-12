@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class StyleMeter : MonoBehaviour
@@ -6,34 +7,58 @@ public class StyleMeter : MonoBehaviour
     private StyleMeterConfig config;
 
     public float CurrentStyle { get; private set; }
-
     public StyleRank CurrentRank { get; private set; }
 
-    public float DamageMultiplier
+    public bool hasEnemiesAlive = true;
+
+    public float DamageMultiplier => GetCurrentRankData().damageMultiplier;
+
+    private float lastGainTime;
+    private bool decayPaused;
+
+    private string currentWeapon;
+
+    [SerializeField]
+    private float maxFreshness = 2f;
+
+    [SerializeField]
+    private float minFreshness = 0.5f;
+
+    [SerializeField]
+    private float freshnessLossPerShot = 0.1f;
+
+    public float CurrentFreshness { get; private set; } = 2f;
+
+    public string FreshnessState
     {
         get
         {
-            return GetCurrentRankData().damageMultiplier;
+            if (CurrentFreshness >= 1.5f)
+                return "FRESH";
+
+            if (CurrentFreshness >= 1.0f)
+                return "NORMAL";
+
+            return "STALE";
         }
     }
 
-    public bool HasEnemiesAlive { get; set; } = true;
-
-    private float lastGainTime;
-
-    private bool decayPaused;
-
     private EventBinding<StyleGainEvent> styleGainEventBinding;
+    private EventBinding<WeaponFiredEvent> weaponFiredEventBinding;
 
     private void OnEnable()
     {
         styleGainEventBinding = new EventBinding<StyleGainEvent>(GainStyle);
         EventBus<StyleGainEvent>.Register(styleGainEventBinding);
+
+        weaponFiredEventBinding = new EventBinding<WeaponFiredEvent>(UpdateFreshness);
+        EventBus<WeaponFiredEvent>.Register(weaponFiredEventBinding);
     }
 
     private void OnDisable()
     {
         EventBus<StyleGainEvent>.Deregister(styleGainEventBinding);
+        EventBus<WeaponFiredEvent>.Deregister(weaponFiredEventBinding);
     }
 
     private StyleRankData GetCurrentRankData()
@@ -54,15 +79,66 @@ public class StyleMeter : MonoBehaviour
         UpdateRank();
     }
 
+    public float GetCurrentRankThreshold()
+    {
+        foreach (var rank in config.ranks)
+        {
+            if (rank.rank == CurrentRank)
+                return rank.threshold;
+        }
+
+        return 0;
+    }
+
+    public float GetNextRankThreshold()
+    {
+        for (int i = 0; i < config.ranks.Count; i++)
+        {
+            if (config.ranks[i].rank == CurrentRank)
+            {
+                if (i + 1 < config.ranks.Count)
+                    return config.ranks[i + 1].threshold;
+
+                return config.maxStyle;
+            }
+        }
+
+        return config.maxStyle;
+    }
+
     private void GainStyle(StyleGainEvent e)
     {
-        CurrentStyle += e.Amount;
+        CurrentStyle += e.Amount * CurrentFreshness;
 
         CurrentStyle = Mathf.Clamp(CurrentStyle, 0, config.maxStyle);
 
         lastGainTime = Time.time;
+    }
 
-        // TODO: Show e.Reason in the style meter list
+    private void UpdateFreshness(WeaponFiredEvent e)
+    {
+        // Weapon swap
+        if (currentWeapon != e.Weapon)
+        {
+            currentWeapon = e.Weapon;
+            CurrentFreshness = maxFreshness;
+
+            EventBus<FreshnessChangedEvent>.Raise(new FreshnessChangedEvent
+            {
+                Multiplier = CurrentFreshness
+            });
+
+            return;
+        }
+
+        // Same weapon used again
+        CurrentFreshness -= freshnessLossPerShot;
+        CurrentFreshness = Mathf.Clamp(CurrentFreshness, minFreshness, maxFreshness);
+
+        EventBus<FreshnessChangedEvent>.Raise(new FreshnessChangedEvent
+        {
+            Multiplier = CurrentFreshness
+        });
     }
 
     private void UpdateDecay()
@@ -89,7 +165,7 @@ public class StyleMeter : MonoBehaviour
                 ? config.normalDecay
                 : config.floorDecay;
 
-        if (!HasEnemiesAlive)
+        if (!hasEnemiesAlive)
         {
             decay *= config.noEnemyDecayMultiplier;
         }
@@ -99,29 +175,16 @@ public class StyleMeter : MonoBehaviour
 
     private float GetFloorThreshold()
     {
-        switch (CurrentRank)
+        return CurrentRank switch
         {
-            case StyleRank.ImTippingIt:
-                return GetThreshold(StyleRank.SSS);
-
-            case StyleRank.SSS:
-                return GetThreshold(StyleRank.SS);
-
-            case StyleRank.SS:
-                return GetThreshold(StyleRank.S);
-
-            case StyleRank.S:
-                return GetThreshold(StyleRank.A);
-
-            case StyleRank.A:
-                return GetThreshold(StyleRank.B);
-
-            case StyleRank.B:
-                return GetThreshold(StyleRank.C);
-
-            default:
-                return 0;
-        }
+            StyleRank.ImTippingIt => GetThreshold(StyleRank.SSS),
+            StyleRank.SSS => GetThreshold(StyleRank.SS),
+            StyleRank.SS => GetThreshold(StyleRank.S),
+            StyleRank.S => GetThreshold(StyleRank.A),
+            StyleRank.A => GetThreshold(StyleRank.B),
+            StyleRank.B => GetThreshold(StyleRank.C),
+            _ => 0,
+        };
     }
 
     private void UpdateRank()
