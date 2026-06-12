@@ -18,14 +18,39 @@ public class PlayerCameraController : MonoBehaviour
     float xRotation;
     float yRotation;
 
+    private EventBinding<PauseGameStateChangedEvent> pauseGameStateChangedBinding;
+
     private void OnEnable()
     {
+        pauseGameStateChangedBinding = new EventBinding<PauseGameStateChangedEvent>(OnPauseGameStateChanged);
+        EventBus<PauseGameStateChangedEvent>.Register(pauseGameStateChangedBinding);
+
         look.Enable();
     }
 
     private void OnDisable()
     {
+        EventBus<PauseGameStateChangedEvent>.Deregister(pauseGameStateChangedBinding);
+
         look.Disable();
+    }
+
+    private void OnPauseGameStateChanged(PauseGameStateChangedEvent e)
+    {
+        if (e.IsPaused)
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+
+            look.Disable();
+        }
+        else
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+
+            look.Enable();
+        }
     }
 
     private void Start()

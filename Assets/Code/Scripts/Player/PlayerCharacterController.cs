@@ -43,10 +43,29 @@ public class PlayerCharacterController : MonoBehaviour
     private Vector3 moveDirection;
 
     public MovementState state;
+
     public enum MovementState
     {
-        walking,
-        air
+        Walking,
+        Air,
+    }
+
+    private EventBinding<PauseGameStateChangedEvent> pauseGameStateChangedBinding;
+
+    private void OnEnable()
+    {
+        pauseGameStateChangedBinding = new EventBinding<PauseGameStateChangedEvent>(OnPauseGameStateChanged);
+        EventBus<PauseGameStateChangedEvent>.Register(pauseGameStateChangedBinding);
+    }
+
+    private void OnDisable()
+    {
+        EventBus<PauseGameStateChangedEvent>.Deregister(pauseGameStateChangedBinding);
+    }
+
+    private void OnPauseGameStateChanged(PauseGameStateChangedEvent e)
+    {
+        //
     }
 
     private void Start()
@@ -155,13 +174,13 @@ public class PlayerCharacterController : MonoBehaviour
         // Mode - Walking
         if (grounded)
         {
-            state = MovementState.walking;
+            state = MovementState.Walking;
             moveSpeed = walkSpeed;
         }
         // Mode - Air
         else
         {
-            state = MovementState.air;
+            state = MovementState.Air;
             moveSpeed = walkSpeed;
         }
     }
