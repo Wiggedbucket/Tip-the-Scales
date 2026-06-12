@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(Collider))]
-public class RoomEntranceTrigger : MonoBehaviour
+public class RoomExitTrigger : MonoBehaviour
 {
     [SerializeField] private int roomId = -1;
 
@@ -22,9 +22,9 @@ public class RoomEntranceTrigger : MonoBehaviour
         EventBus<ChangeRoomStateEvent>.Raise(new ChangeRoomStateEvent
         {
             RoomId = roomId,
-            IsPlayerInRoom = true,
+            IsPlayerInRoom = false,
         });
 
-        Debug.Log($"Player has entered room {roomId}!");
+        Debug.Log($"Player has exited room {roomId}!");
     }
 }

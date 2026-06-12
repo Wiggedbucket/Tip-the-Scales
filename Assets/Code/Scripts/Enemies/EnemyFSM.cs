@@ -9,7 +9,7 @@ public class EnemyFSM : MonoBehaviour
     [SerializeField] private Material basecolour;
     [SerializeField] private Renderer rend;
 
-    public enum State { Idle, Recover, Chase, Attack, Kite }
+    public enum State { Idle, Recover, Chase, Attack, Kite, ReturnHome }
 
     public EnemyStats stats;
     public Transform player;
@@ -21,9 +21,12 @@ public class EnemyFSM : MonoBehaviour
 
     public float lastAttackTime;
     private Health health;
+    
+    Vector3 HomePosition;
 
     private void Start()
     {
+        HomePosition = transform.position;
         health = GetComponent<Health>();
         health.OnDeath += HandleDeath;
 
@@ -52,6 +55,9 @@ public class EnemyFSM : MonoBehaviour
     {
         switch (currentState)
         {
+            case State.ReturnHome:
+                HandleReturnHome();
+                break;
             case State.Idle:
                 HandleIdle();
                 break;
@@ -86,6 +92,18 @@ public class EnemyFSM : MonoBehaviour
             case State.Kite:
                 HandleKite();
                 break;
+        }
+    }
+
+
+    private void HandleReturnHome()
+    {
+        agent.SetDestination(HomePosition);
+        float distanceToHome = Vector3.Distance(transform.position, HomePosition);
+        if (distanceToHome < 0.5f)
+        {
+            agent.SetDestination(transform.position);
+            currentState = State.Idle;
         }
     }
 
@@ -151,5 +169,10 @@ public class EnemyFSM : MonoBehaviour
             Debug.Log(stats.enemyName + " has died.");
             Destroy(gameObject);
         }
+    }
+
+    public void GoHome()
+    {
+        currentState = State.ReturnHome;
     }
 }

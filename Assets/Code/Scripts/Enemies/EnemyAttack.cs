@@ -61,12 +61,10 @@ public class EnemyAttack : MonoBehaviour
         }
         else
         {
-            Collider[] hits = Physics.OverlapSphere(transform.position, stats.attackRange);
-            //Debug.Log("OverlapSphere found: " + hits.Length + " colliders");
-            foreach (Collider hit in hits)
+            float distanceToPlayer = Vector3.Distance(transform.position, fsm.player.position);
+            if (distanceToPlayer <= stats.attackRange)
             {
-                Debug.Log("Hit: " + hit.gameObject.name);
-                Health health = hit.GetComponent<Health>();
+                Health health = fsm.player.GetComponent<Health>();
                 if (health != null)
                 {
                     health.TakeDamage(stats.attackDamage);

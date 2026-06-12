@@ -10,7 +10,7 @@ public class EnemySpawner : MonoBehaviour
 
     [SerializeField] private List<Transform> spawnPoints;
 
-    [SerializeField] private bool allEnemiesSpawned = false;
+    [SerializeField] private bool allEnemiesSpawned = true;
 
     [SerializeField] private float spawnDelay = 0.2f;
 
@@ -30,6 +30,8 @@ public class EnemySpawner : MonoBehaviour
     {
         EventBus<EnemyDiedEvent>.Deregister(enemyDiedEventBinding);
     }
+
+    public bool IsWaveOver() => allEnemiesSpawned && aliveEnemies.Count == 0;
 
     public IEnumerator SpawnWave(int budget, int wave)
     {

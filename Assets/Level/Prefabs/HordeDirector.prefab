@@ -64,5 +64,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemySpawner
   hordeDirector: {fileID: 1216991767141128025}
   spawnPoints: []
+  allEnemiesSpawned: 1
   spawnDelay: 0.2
   maxEnemiesAlive: 500
