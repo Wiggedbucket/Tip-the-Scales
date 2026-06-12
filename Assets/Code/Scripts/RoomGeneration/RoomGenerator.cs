@@ -6,7 +6,7 @@ public class RoomGenerator : MonoBehaviour
     public GameObject[] roomPrefabs;
     public int width = 5;
     public int height = 5;
-    public float tileSize = 1f;
+    public float tileSize = 5f;
     private List<Transform> enemySpawnPoints = new();
     private List<Transform> hazardSpawnPoints = new();
     private int roomID;

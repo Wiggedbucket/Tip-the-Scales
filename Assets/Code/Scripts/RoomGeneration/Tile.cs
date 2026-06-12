@@ -26,7 +26,7 @@ public class Tile : MonoBehaviour
             if (hazardPrefab != null)
             {
                 GameObject hazard = Instantiate(hazardPrefab, spawnPoint.position, Quaternion.identity, spawnPoint);
-                hazard.transform.localScale = hazardPrefab.transform.localScale/25;
+                hazard.transform.localScale = hazardPrefab.transform.localScale/10;
             }
         }
     }
