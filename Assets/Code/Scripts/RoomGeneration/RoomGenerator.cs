@@ -16,6 +16,11 @@ public class RoomGenerator : MonoBehaviour
         roomID = id;
     }
 
+    void Start()
+    {
+        Create(transform.position);
+    }
+
     public void Create(Vector3 position)
     {
         bool hasValidPrefab = roomPrefabs != null && roomPrefabs.Length > 0 && roomPrefabs[0] != null;
