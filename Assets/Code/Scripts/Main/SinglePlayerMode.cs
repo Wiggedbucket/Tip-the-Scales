@@ -14,6 +14,7 @@ public class SinglePlayerMode : MonoBehaviour
             Room1.GetComponent<RoomData>().demonPoints += 1;
             Room2.GetComponent<RoomData>().demonPoints += 1;
             Room3.GetComponent<RoomData>().demonPoints += 1;
+
             yield return new WaitForSeconds(5f);
         }
     }

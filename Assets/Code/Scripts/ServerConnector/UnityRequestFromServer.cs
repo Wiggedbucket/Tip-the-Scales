@@ -32,22 +32,28 @@ public class UnityRequestFromServer : MonoBehaviour
     private string clientId = "unityClient1";
     private float heartbeatInterval = 5f;
     private bool serverConnected = false;
+
     public GameObject Room1;
     public GameObject Room2;
     public GameObject Room3;
-    IEnumerator Start()
+
+    private IEnumerator Start()
     {
         yield return StartCoroutine(ResetGame());
+
         StartCoroutine(HeartbeatLoop());
+
         yield return new WaitForSeconds(1);
-        GameData gameData = new GameData();
 
-        gameData.score = 0;
-        gameData.objectives = 3;
+        GameData gameData = new()
+        {
+            score = 0,
+            objectives = 3,
 
-        gameData.obj1 = new Objective();
-        gameData.obj2 = new Objective();
-        gameData.obj3 = new Objective();
+            obj1 = new Objective(),
+            obj2 = new Objective(),
+            obj3 = new Objective()
+        };
 
         gameData.obj1.light = 0;
         gameData.obj1.dark = 0;
@@ -58,13 +64,11 @@ public class UnityRequestFromServer : MonoBehaviour
         gameData.obj3.light = 0;
         gameData.obj3.dark = 0;
 
-        yield return StartCoroutine(
-            SendGameData(gameData)
-        );
-        Debug.Log("Reached after reset");
-
+        yield return StartCoroutine(SendGameData(gameData));
+        //Debug.Log("Reached after reset");
     }
-    IEnumerator HeartbeatLoop()
+
+    private IEnumerator HeartbeatLoop()
     {
         while (true)
         {
@@ -73,13 +77,15 @@ public class UnityRequestFromServer : MonoBehaviour
         }
     }
 
-    IEnumerator SendCurrentGameData()
+    private IEnumerator SendCurrentGameData()
     {
-        GameData currentData = new GameData();
-        currentData.objectives = 3;
-        currentData.obj1 = new Objective();
-        currentData.obj2 = new Objective();
-        currentData.obj3 = new Objective();
+        GameData currentData = new()
+        {
+            objectives = 3,
+            obj1 = new Objective(),
+            obj2 = new Objective(),
+            obj3 = new Objective(),
+        };
 
         RoomData room1 = Room1.GetComponent<RoomData>();
         RoomData room2 = Room2.GetComponent<RoomData>();
@@ -93,66 +99,51 @@ public class UnityRequestFromServer : MonoBehaviour
 
         currentData.obj3.light = room3.angelPoints;
         currentData.obj3.dark = room3.demonPoints;
-        yield return StartCoroutine(
-            SendGameData(currentData)
-        );
+
+        yield return StartCoroutine(SendGameData(currentData));
     }
 
     IEnumerator ResetGame()
     {
-        ResetRequest resetData =
-            new ResetRequest();
+        ResetRequest resetData = new()
+        {
+            objectives = 3
+        };
 
-        resetData.objectives = 3;
+        string json = JsonUtility.ToJson(resetData);
 
-        string json =
-            JsonUtility.ToJson(resetData);
+        byte[] bodyRaw = Encoding.UTF8.GetBytes(json);
 
-        byte[] bodyRaw =
-            Encoding.UTF8.GetBytes(json);
+        UnityWebRequest request = new(url + "/reset/" + clientId, "POST")
+        {
+            uploadHandler = new UploadHandlerRaw(bodyRaw),
+            downloadHandler = new DownloadHandlerBuffer()
+        };
 
-        UnityWebRequest request =
-            new UnityWebRequest(url + "/reset/" + clientId,"POST");
-
-        request.uploadHandler =
-            new UploadHandlerRaw(bodyRaw);
-
-        request.downloadHandler =
-            new DownloadHandlerBuffer();
-
-        request.SetRequestHeader(
-            "Content-Type",
-            "application/json"
-        );
+        request.SetRequestHeader("Content-Type", "application/json");
 
         yield return request.SendWebRequest();
 
         if (request.result != UnityWebRequest.Result.Success)
         {
-            Debug.LogError(
-                "Reset Failed: " +
-                request.error
-            );
+            Debug.LogError("Reset Failed: " + request.error);
         }
         else
         {
-            Debug.Log(
-                "Reset Response: " +
-                request.downloadHandler.text
-            );
+            Debug.Log("Reset Response: " + request.downloadHandler.text);
         }
     }
 
-    IEnumerator MockScoreDarkIncrease()
+    private IEnumerator MockScoreDarkIncrease()
     {
         while (!serverConnected)
         {
             RoomData[] rooms =
             {
-            Room1.GetComponent<RoomData>(),
-            Room2.GetComponent<RoomData>(),
-            Room3.GetComponent<RoomData>()
-        };
+                Room1.GetComponent<RoomData>(),
+                Room2.GetComponent<RoomData>(),
+                Room3.GetComponent<RoomData>(),
+            };
 
             foreach (RoomData room in rooms)
             {
@@ -163,55 +154,34 @@ public class UnityRequestFromServer : MonoBehaviour
         }
     }
 
-    IEnumerator SendGameData(GameData gameData)
+    private IEnumerator SendGameData(GameData gameData)
     {
-        string json =
-            JsonUtility.ToJson(gameData);
+        string json = JsonUtility.ToJson(gameData);
 
-        Debug.Log(
-            "Sending: " + json
-        );
+        Debug.Log("Sending: " + json);
 
-        byte[] bodyRaw =
-            Encoding.UTF8.GetBytes(json);
+        byte[] bodyRaw = Encoding.UTF8.GetBytes(json);
 
-        UnityWebRequest request =
-            new UnityWebRequest(
-                url + "/" + clientId,
-                "POST"
-            );
+        UnityWebRequest request = new(url + "/" + clientId, "POST")
+        {
+            uploadHandler = new UploadHandlerRaw(bodyRaw),
 
-        request.uploadHandler =
-            new UploadHandlerRaw(bodyRaw);
+            downloadHandler = new DownloadHandlerBuffer()
+        };
 
-        request.downloadHandler =
-            new DownloadHandlerBuffer();
-
-        request.SetRequestHeader(
-            "Content-Type",
-            "application/json"
-        );
+        request.SetRequestHeader("Content-Type", "application/json");
 
         yield return request.SendWebRequest();
 
         if (request.result != UnityWebRequest.Result.Success)
         {
-            Debug.LogError(
-                "POST Failed: " +
-                request.error
-            );
+            Debug.LogError("POST Failed: " + request.error);
         }
         else
         {
-            Debug.Log(
-                "Server Response: " +
-                request.downloadHandler.text
-            );
+            Debug.Log("Server Response: " + request.downloadHandler.text);
 
-            GameData updatedData =
-                JsonUtility.FromJson<GameData>(
-                    request.downloadHandler.text
-                );
+            GameData updatedData = JsonUtility.FromJson<GameData>(request.downloadHandler.text);
 
             Debug.Log("New Score: " + updatedData.score);
             ApplyToGameStateData(updatedData);
@@ -219,14 +189,9 @@ public class UnityRequestFromServer : MonoBehaviour
     }
     private void ApplyToGameStateData(GameData data)
     {
-        RoomData room1 =
-            Room1.GetComponent<RoomData>();
-
-        RoomData room2 =
-            Room2.GetComponent<RoomData>();
-
-        RoomData room3 =
-            Room3.GetComponent<RoomData>();
+        RoomData room1 = Room1.GetComponent<RoomData>();
+        RoomData room2 = Room2.GetComponent<RoomData>();
+        RoomData room3 = Room3.GetComponent<RoomData>();
 
         room1.angelPoints = data.obj1.light;
         room1.demonPoints = data.obj1.dark;

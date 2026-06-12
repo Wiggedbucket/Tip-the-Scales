@@ -1,15 +1,14 @@
 using System.Collections.Generic;
-using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
 
-public class Room : MonoBehaviour
+public class RoomGenerator : MonoBehaviour
 {
     public GameObject[] roomPrefabs;
     public int width = 5;
     public int height = 5;
     public float tileSize = 1f;
-    private List<Vector3> enemySpawnPoints = new List<Vector3>();
+    private List<Vector3> enemySpawnPoints = new();
     private int roomID;
 
     public void Initialize(int id)
@@ -37,10 +36,9 @@ public class Room : MonoBehaviour
         EventBus<RoomCreatedEvent>.Raise(new RoomCreatedEvent
         {
             ID = roomID,
-            EnemeySpawnPoints = enemySpawnPoints
+            EnemySpawnPoints = enemySpawnPoints
         });
     }
-
 
     private void SpawnRoom(int x, int y, Vector3 position)
     {
