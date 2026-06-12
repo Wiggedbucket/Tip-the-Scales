@@ -1,3 +1,6 @@
+using System.Collections.Generic;
+using UnityEngine;
+
 public class RoomGenerator : MonoBehaviour
 {
     public GameObject[] roomPrefabs;
