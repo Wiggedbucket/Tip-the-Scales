@@ -8,6 +8,7 @@ public class RoomGenerator : MonoBehaviour
     public int height = 5;
     public float tileSize = 1f;
     private List<Vector3> enemySpawnPoints = new();
+    private List<Vector3> hazardSpawnPoints = new();
     private int roomID;
 
     public void Initialize(int id)
@@ -31,7 +32,8 @@ public class RoomGenerator : MonoBehaviour
         EventBus<RoomCreatedEvent>.Raise(new RoomCreatedEvent
         {
             ID = roomID,
-            EnemySpawnPoints = enemySpawnPoints
+            EnemySpawnPoints = enemySpawnPoints,
+            HazardSpawnPoints = hazardSpawnPoints,
         });
     }
 
@@ -47,6 +49,14 @@ public class RoomGenerator : MonoBehaviour
             {
                 Vector3 worldSpawnPoint = room_position + new Vector3(coord_x * tileSize, 0f, coord_y * tileSize) + spawnPoint.localPosition;
                 enemySpawnPoints.Add(worldSpawnPoint);
+            }
+        }
+        if (prefab.transform.Find("HazardSpawnPoints") != null)
+        {
+            foreach (Transform spawnPoint in prefab.transform.Find("HazardSpawnPoints"))
+            {
+                Vector3 worldSpawnPoint = room_position + new Vector3(coord_x * tileSize, 0f, coord_y * tileSize) + spawnPoint.localPosition;
+                hazardSpawnPoints.Add(worldSpawnPoint);
             }
         }
 

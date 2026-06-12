@@ -5,4 +5,5 @@ public struct RoomCreatedEvent : IEvent
 {
     public int ID;
     public List<Vector3> EnemySpawnPoints;
+    public List<Vector3> HazardSpawnPoints;
 }
