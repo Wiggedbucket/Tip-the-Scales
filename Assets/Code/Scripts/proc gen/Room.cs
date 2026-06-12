@@ -1,6 +1,4 @@
 using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
 using UnityEngine;
 
 public class Room : MonoBehaviour
@@ -21,10 +19,7 @@ public class Room : MonoBehaviour
     public void Create(Vector3 position)
     {
         bool hasValidPrefab = roomPrefabs != null && roomPrefabs.Length > 0 && roomPrefabs[0] != null;
-        if (!hasValidPrefab)
-        {
-            return;
-        }
+        if (!hasValidPrefab) { return; }
 
         for (int y = 0; y < height; y++)
         {
@@ -42,7 +37,7 @@ public class Room : MonoBehaviour
     }
 
 
-    private void SpawnRoom(int x, int y, Vector3 position)
+    private void SpawnRoom(int coord_x, int coord_y, Vector3 room_position)
     {
         int prefabIndex = Random.Range(0, roomPrefabs.Length);
         GameObject prefab = roomPrefabs[prefabIndex];
@@ -51,14 +46,13 @@ public class Room : MonoBehaviour
         {
             foreach (Transform spawnPoint in prefab.transform.Find("EnemySpawnPoints"))
             {
-                Vector3 worldSpawnPoint = position + new Vector3(x * tileSize, 0f, y * tileSize) + spawnPoint.localPosition;
+                Vector3 worldSpawnPoint = room_position + new Vector3(coord_x * tileSize, 0f, coord_y * tileSize) + spawnPoint.localPosition;
                 enemySpawnPoints.Add(worldSpawnPoint);
             }
         }
 
-        tileSize = prefab.transform.localScale.x;
-        Vector3 spawnLocation = position + new Vector3(x * tileSize, 0f, y * tileSize);
+        Vector3 spawnLocation = room_position + new Vector3(coord_x * tileSize, 0f, coord_y * tileSize);
         GameObject instance = Instantiate(prefab, spawnLocation, Quaternion.identity, transform);
-        instance.name = "Tile_" + x + "_" + y;
+        instance.name = "Tile_" + coord_x + "_" + coord_y;
     }
 }
