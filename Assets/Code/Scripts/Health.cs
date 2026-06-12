@@ -5,10 +5,10 @@ public class Health : MonoBehaviour
 {
     [SerializeField] float maxHealth = 100f;
     float currentHealth;
-    bool isDead = false;
+    private bool isDead = false;
     public event Action OnDeath;
 
-    void Start()
+    private void Start()
     {
         currentHealth = maxHealth;
     }

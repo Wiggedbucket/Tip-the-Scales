@@ -6,22 +6,23 @@ public class EnemyFSM : MonoBehaviour
 {
     public int roomId = -1;
 
-    [SerializeField] Material basecolour;
-    [SerializeField] Renderer rend;
+    [SerializeField] private Material basecolour;
+    [SerializeField] private Renderer rend;
 
     public enum State { Idle, Recover, Chase, Attack, Kite }
 
-    [SerializeField] public EnemyStats stats;
+    public EnemyStats stats;
     public Transform player;
 
     public float lastKiteEndTime;
     public State currentState = State.Idle;
 
-    NavMeshAgent agent;
+    private NavMeshAgent agent;
 
     public float lastAttackTime;
-    Health health;
-    void Start()
+    private Health health;
+
+    private void Start()
     {
         health = GetComponent<Health>();
         health.OnDeath += HandleDeath;
@@ -47,7 +48,7 @@ public class EnemyFSM : MonoBehaviour
             agent.stoppingDistance = stats.attackRange * 0.8f;
     }
 
-    void Update()
+    private void Update()
     {
         switch (currentState)
         {
@@ -87,7 +88,8 @@ public class EnemyFSM : MonoBehaviour
                 break;
         }
     }
-    void HandleIdle()
+
+    private void HandleIdle()
     {
         float distance = Vector3.Distance(transform.position, player.position);
         if (distance < 100f)
@@ -96,8 +98,11 @@ public class EnemyFSM : MonoBehaviour
         }
     }
 
-    void HandleChase()
+    private void HandleChase()
     {
+        if (player == null)
+            return;
+
         agent.SetDestination(player.position);
         float distance = Vector3.Distance(transform.position, player.position);
 
@@ -113,7 +118,7 @@ public class EnemyFSM : MonoBehaviour
         }
     }
 
-    void HandleRecover()
+    private void HandleRecover()
     {
         agent.velocity = Vector3.zero;
         if (Time.time >= lastAttackTime + stats.attackCooldown)
@@ -123,7 +128,7 @@ public class EnemyFSM : MonoBehaviour
         rend.material = basecolour;
     }
 
-    void HandleKite()
+    private void HandleKite()
     {
         agent.stoppingDistance = 0f;
         Vector3 directionAwayFromPlayer = (transform.position - player.position).normalized;
@@ -139,7 +144,8 @@ public class EnemyFSM : MonoBehaviour
         }
 
     }
-    void HandleDeath()
+
+    private void HandleDeath()
     {
         {
             Debug.Log(stats.enemyName + " has died.");

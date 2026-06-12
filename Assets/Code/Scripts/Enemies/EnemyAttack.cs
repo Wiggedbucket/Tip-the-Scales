@@ -9,8 +9,8 @@ public class EnemyAttack : MonoBehaviour
     EnemyFSM fsm;
     EnemyStats stats;
     NavMeshAgent agent;
-    bool isAttacking = false;
-    void Start()
+    private bool isAttacking = false;
+    private void Start()
     {
         fsm = GetComponent<EnemyFSM>();
         stats = fsm.stats;
@@ -23,7 +23,7 @@ public class EnemyAttack : MonoBehaviour
             StartCoroutine(AttackSequence());
         }
     }
-    IEnumerator AttackSequence()
+    private IEnumerator AttackSequence()
     {
         isAttacking = true;
         Debug.Log(stats.enemyName + " winds up attack...");
