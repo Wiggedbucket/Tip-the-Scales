@@ -1193,8 +1193,24 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3826034135207146176, guid: 4cabece346617e940921f8d9aab73fa1, type: 3}
+      propertyPath: m_ActionEvents.Array.size
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 3826034135207146176, guid: 4cabece346617e940921f8d9aab73fa1, type: 3}
+      propertyPath: m_ActionEvents.Array.data[19].m_ActionId
+      value: 072874e9-af04-44a2-90a9-c268df918c75
+      objectReference: {fileID: 0}
+    - target: {fileID: 3826034135207146176, guid: 4cabece346617e940921f8d9aab73fa1, type: 3}
+      propertyPath: m_ActionEvents.Array.data[19].m_ActionName
+      value: 'Player/Reload[/Keyboard/r]'
+      objectReference: {fileID: 0}
+    - target: {fileID: 3826034135207146176, guid: 4cabece346617e940921f8d9aab73fa1, type: 3}
       propertyPath: m_ActionEvents.Array.data[2].m_PersistentCalls.m_Calls.Array.size
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3826034135207146176, guid: 4cabece346617e940921f8d9aab73fa1, type: 3}
+      propertyPath: m_ActionEvents.Array.data[19].m_PersistentCalls.m_Calls.Array.size
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3826034135207146176, guid: 4cabece346617e940921f8d9aab73fa1, type: 3}
       propertyPath: m_ActionEvents.Array.data[2].m_PersistentCalls.m_Calls.Array.data[0].m_Mode
@@ -1209,11 +1225,19 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3826034135207146176, guid: 4cabece346617e940921f8d9aab73fa1, type: 3}
+      propertyPath: m_ActionEvents.Array.data[19].m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3826034135207146176, guid: 4cabece346617e940921f8d9aab73fa1, type: 3}
       propertyPath: m_ActionEvents.Array.data[2].m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1537248024}
     - target: {fileID: 3826034135207146176, guid: 4cabece346617e940921f8d9aab73fa1, type: 3}
       propertyPath: m_ActionEvents.Array.data[2].m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 2083863247}
+    - target: {fileID: 3826034135207146176, guid: 4cabece346617e940921f8d9aab73fa1, type: 3}
+      propertyPath: m_ActionEvents.Array.data[19].m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 2083863247}
     - target: {fileID: 3826034135207146176, guid: 4cabece346617e940921f8d9aab73fa1, type: 3}
@@ -1229,12 +1253,20 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3826034135207146176, guid: 4cabece346617e940921f8d9aab73fa1, type: 3}
+      propertyPath: m_ActionEvents.Array.data[19].m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3826034135207146176, guid: 4cabece346617e940921f8d9aab73fa1, type: 3}
       propertyPath: m_ActionEvents.Array.data[2].m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: OnShoot
       objectReference: {fileID: 0}
     - target: {fileID: 3826034135207146176, guid: 4cabece346617e940921f8d9aab73fa1, type: 3}
       propertyPath: m_ActionEvents.Array.data[2].m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
       value: OnShoot
+      objectReference: {fileID: 0}
+    - target: {fileID: 3826034135207146176, guid: 4cabece346617e940921f8d9aab73fa1, type: 3}
+      propertyPath: m_ActionEvents.Array.data[19].m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnReload
       objectReference: {fileID: 0}
     - target: {fileID: 3826034135207146176, guid: 4cabece346617e940921f8d9aab73fa1, type: 3}
       propertyPath: m_ActionEvents.Array.data[2].m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
@@ -1249,11 +1281,19 @@ PrefabInstance:
       value: PlayerShooting, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 3826034135207146176, guid: 4cabece346617e940921f8d9aab73fa1, type: 3}
+      propertyPath: m_ActionEvents.Array.data[19].m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: PlayerShooting, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 3826034135207146176, guid: 4cabece346617e940921f8d9aab73fa1, type: 3}
       propertyPath: m_ActionEvents.Array.data[2].m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 3826034135207146176, guid: 4cabece346617e940921f8d9aab73fa1, type: 3}
       propertyPath: m_ActionEvents.Array.data[2].m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 3826034135207146176, guid: 4cabece346617e940921f8d9aab73fa1, type: 3}
+      propertyPath: m_ActionEvents.Array.data[19].m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 4003600715651693401, guid: 4cabece346617e940921f8d9aab73fa1, type: 3}
@@ -1566,6 +1606,9 @@ MonoBehaviour:
   damage: 10
   range: 100
   firerate: 0.2
+  maxAmmo: 24
+  currentAmmo: 0
+  reloadTime: 0.8
   currentFireMode: 0
   playerCam: {fileID: 932302030}
 --- !u!1 &1539426063
@@ -1866,7 +1909,10 @@ MonoBehaviour:
   damage: 40
   range: 20
   firerate: 0.2
-  currentFireMode: 0
+  maxAmmo: 5
+  currentAmmo: 0
+  reloadTime: 0.8
+  currentFireMode: 1
   playerCam: {fileID: 932302030}
 --- !u!1 &2085479996
 GameObject:
