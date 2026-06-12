@@ -435,7 +435,7 @@ MonoBehaviour:
   - {fileID: 6355746928543442483, guid: 8aab7c52423c09c498642e26ad45e299, type: 3}
   width: 5
   height: 5
-  tileSize: 1
+  tileSize: 6
 --- !u!1001 &7963376269715263771
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -9,6 +9,7 @@ public class Room : MonoBehaviour
     public int width = 5;
     public int height = 5;
     public float tileSize = 1f;
+
     private List<Vector3> enemySpawnPoints = new List<Vector3>();
     private int roomID;
 
@@ -43,17 +44,20 @@ public class Room : MonoBehaviour
 
     private void SpawnRoom(int x, int y, Vector3 position)
     {
-        GameObject prefab = roomPrefabs[0];
+        int prefabIndex = Random.Range(0, roomPrefabs.Length);
+        GameObject prefab = roomPrefabs[prefabIndex];
+
         if (prefab.transform.Find("EnemySpawnPoints") != null)
         {
             foreach (Transform spawnPoint in prefab.transform.Find("EnemySpawnPoints"))
             {
-                Vector3 worldSpawnPoint = position + new Vector3(x * tileSize * 6, 0f, y * tileSize * 6) + spawnPoint.localPosition;
+                Vector3 worldSpawnPoint = position + new Vector3(x * tileSize, 0f, y * tileSize) + spawnPoint.localPosition;
                 enemySpawnPoints.Add(worldSpawnPoint);
             }
         }
+
         tileSize = prefab.transform.localScale.x;
-        Vector3 spawnLocation = position + new Vector3(x * tileSize * 6, 0f, y * tileSize * 6);
+        Vector3 spawnLocation = position + new Vector3(x * tileSize, 0f, y * tileSize);
         GameObject instance = Instantiate(prefab, spawnLocation, Quaternion.identity, transform);
         instance.name = "Tile_" + x + "_" + y;
     }
