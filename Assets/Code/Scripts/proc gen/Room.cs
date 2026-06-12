@@ -17,7 +17,7 @@ public class Room : MonoBehaviour
         roomID = id;
     }
 
-    public async Task Create(Vector3 position)
+    public void Create(Vector3 position)
     {
         bool hasValidPrefab = roomPrefabs != null && roomPrefabs.Length > 0 && roomPrefabs[0] != null;
         if (!hasValidPrefab)
@@ -30,7 +30,6 @@ public class Room : MonoBehaviour
             for (int x = 0; x < width; x++)
             {
                 SpawnRoom(x, y, position);
-                await Task.Delay(500);
             }
         }
 
