@@ -77,8 +77,6 @@ GameObject:
   - component: {fileID: 656645658249047089}
   - component: {fileID: 705700531240658165}
   - component: {fileID: 390052993943389849}
-  - component: {fileID: 8340147581777586759}
-  - component: {fileID: 7707798151949986909}
   m_Layer: 0
   m_Name: PlayerObject
   m_TagString: Player
@@ -347,31 +345,6 @@ MonoBehaviour:
   reloadTime: 0.8
   currentFireMode: 0
   playerCam: {fileID: 1329407062800773401}
---- !u!114 &8340147581777586759
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3016535209961589408}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9e1ca5ca67a68394db06e3193cbfd030, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Health
-  maxHealth: 100
---- !u!114 &7707798151949986909
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3016535209961589408}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4037c60b08d80344c8b7ae8d2f2b2572, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerHealth
 --- !u!1 &5686094593700950779
 GameObject:
   m_ObjectHideFlags: 0
@@ -381,6 +354,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2684918215128439172}
+  - component: {fileID: 3585482613974724569}
+  - component: {fileID: 7383733740544774614}
   m_Layer: 0
   m_Name: PlayerWithGun
   m_TagString: Untagged
@@ -405,6 +380,31 @@ Transform:
   - {fileID: 2739024507760053265}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3585482613974724569
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5686094593700950779}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e1ca5ca67a68394db06e3193cbfd030, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Health
+  maxHealth: 100
+--- !u!114 &7383733740544774614
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5686094593700950779}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4037c60b08d80344c8b7ae8d2f2b2572, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerHealth
 --- !u!1 &6611337521277578877
 GameObject:
   m_ObjectHideFlags: 0
@@ -667,7 +667,7 @@ GameObject:
   - component: {fileID: 4186948462841393628}
   m_Layer: 0
   m_Name: Player Camera
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

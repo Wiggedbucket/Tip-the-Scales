@@ -27,7 +27,7 @@ public class EnemyFSM : MonoBehaviour
     private void Start()
     {
         HomePosition = transform.position;
-        health = GetComponent<Health>();
+        health = GetComponentInParent<Health>();
         health.OnDeath += HandleDeath;
 
         GameObject playerObj = GameObject.FindGameObjectWithTag("Player");

@@ -170,7 +170,7 @@ MonoBehaviour:
   basecolour: {fileID: 2100000, guid: ecb4ab4f03005434981150ccc95d45d6, type: 2}
   rend: {fileID: 7031152097463236565}
   stats: {fileID: 11400000, guid: 5db69f74584c7b14cb6724053722041c, type: 2}
-  player: {fileID: 3303448573931772489, guid: 4cabece346617e940921f8d9aab73fa1, type: 3}
+  player: {fileID: 2684918215128439172, guid: bead593ec3e94af4eb6e7a33fa464198, type: 3}
   lastKiteEndTime: 0
   currentState: 0
   lastAttackTime: 0

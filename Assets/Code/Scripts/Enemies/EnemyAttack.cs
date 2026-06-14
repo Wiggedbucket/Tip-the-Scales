@@ -47,7 +47,7 @@ public class EnemyAttack : MonoBehaviour
             float distanceAfterLunge = Vector3.Distance(transform.position, fsm.player.position);
             if (distanceAfterLunge <= stats.damageRange)
             {
-                Health health = fsm.player.GetComponent<Health>();
+                Health health = fsm.player.GetComponentInParent<Health>();
                 if (health != null)
                 {
                     health.TakeDamage(stats.attackDamage);
@@ -64,10 +64,14 @@ public class EnemyAttack : MonoBehaviour
             float distanceToPlayer = Vector3.Distance(transform.position, fsm.player.position);
             if (distanceToPlayer <= stats.attackRange)
             {
-                Health health = fsm.player.GetComponent<Health>();
+                Health health = fsm.player.GetComponentInParent<Health>();
                 if (health != null)
                 {
                     health.TakeDamage(stats.attackDamage);
+                }
+                else
+                {
+                    Debug.LogError("Health component NOT found on " + fsm.player.name);
                 }
             }
         }

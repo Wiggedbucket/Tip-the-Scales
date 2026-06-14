@@ -106,10 +106,10 @@ public class PlayerShooting : MonoBehaviour
             {
                 Debug.Log(hit.transform.name);
 
-                Target target = hit.transform.GetComponent<Target>();
-                if (target != null)
+                Health health = hit.transform.GetComponentInParent<Health>();
+                if (health != null)
                 {
-                    target.takeDamage(damage);
+                    health.TakeDamage(damage);
                 }
             }
         
