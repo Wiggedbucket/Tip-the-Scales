@@ -141,9 +141,10 @@ public class EnemyFSM : MonoBehaviour
     }
     void HandleDeath()
     {
+        EventBus<EnemyDiedEvent>.Raise(new EnemyDiedEvent()
         {
-            Debug.Log(stats.enemyName + " has died.");
-            Destroy(gameObject);
-        }
+            EnemyObject = gameObject
+        });
+        Destroy(gameObject);
     }
 }
