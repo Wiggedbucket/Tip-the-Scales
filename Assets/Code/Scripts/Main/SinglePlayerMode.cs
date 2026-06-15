@@ -3,19 +3,24 @@ using System.Collections;
 
 public class SinglePlayerMode : MonoBehaviour
 {
-    public GameObject Room1;
-    public GameObject Room2;
-    public GameObject Room3;
+    public int demonModifier = 0;
+    public int demonTimerAdder = 0;
 
     private IEnumerator Start()
     {
         while (true)
         {
-            Room1.GetComponent<RoomData>().demonPoints += 1;
-            Room2.GetComponent<RoomData>().demonPoints += 1;
-            Room3.GetComponent<RoomData>().demonPoints += 1;
+            var rooms = GameState.Instance.RoomCombatPointsList;
 
-            yield return new WaitForSeconds(5f);
+            for (int i = 0; i < rooms.Count; i++)
+            {
+                CombatPoints room = rooms[i];
+
+                room.demonPoints += demonModifier;
+
+                rooms[i] = room;
+            }
+            yield return new WaitForSeconds(demonTimerAdder);
         }
     }
 }
