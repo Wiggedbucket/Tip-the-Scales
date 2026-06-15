@@ -9,8 +9,8 @@ public class EnemyAttack : MonoBehaviour
     EnemyFSM fsm;
     EnemyStats stats;
     NavMeshAgent agent;
-    bool isAttacking = false;
-    void Start()
+    private bool isAttacking = false;
+    private void Start()
     {
         fsm = GetComponent<EnemyFSM>();
         stats = fsm.stats;
@@ -23,7 +23,7 @@ public class EnemyAttack : MonoBehaviour
             StartCoroutine(AttackSequence());
         }
     }
-    IEnumerator AttackSequence()
+    private IEnumerator AttackSequence()
     {
         isAttacking = true;
         Debug.Log(stats.enemyName + " winds up attack...");
@@ -47,7 +47,7 @@ public class EnemyAttack : MonoBehaviour
             float distanceAfterLunge = Vector3.Distance(transform.position, fsm.player.position);
             if (distanceAfterLunge <= stats.damageRange)
             {
-                Health health = fsm.player.GetComponent<Health>();
+                Health health = fsm.player.GetComponentInParent<Health>();
                 if (health != null)
                 {
                     health.TakeDamage(stats.attackDamage);
@@ -61,15 +61,17 @@ public class EnemyAttack : MonoBehaviour
         }
         else
         {
-            Collider[] hits = Physics.OverlapSphere(transform.position, stats.attackRange);
-            //Debug.Log("OverlapSphere found: " + hits.Length + " colliders");
-            foreach (Collider hit in hits)
+            float distanceToPlayer = Vector3.Distance(transform.position, fsm.player.position);
+            if (distanceToPlayer <= stats.attackRange)
             {
-                Debug.Log("Hit: " + hit.gameObject.name);
-                Health health = hit.GetComponent<Health>();
+                Health health = fsm.player.GetComponentInParent<Health>();
                 if (health != null)
                 {
                     health.TakeDamage(stats.attackDamage);
+                }
+                else
+                {
+                    Debug.LogError("Health component NOT found on " + fsm.player.name);
                 }
             }
         }

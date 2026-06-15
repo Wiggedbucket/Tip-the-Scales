@@ -4,13 +4,13 @@ public class PlayerHealth : MonoBehaviour
 {
     Health health;
 
-    void Start()
+    private void Start()
     {
         health = GetComponent<Health>();
         health.OnDeath += HandleDeath;
     }
 
-    void HandleDeath()
+    private void HandleDeath()
     {
         Destroy(gameObject);
     }

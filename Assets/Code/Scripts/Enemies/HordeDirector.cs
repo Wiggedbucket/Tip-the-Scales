@@ -52,29 +52,37 @@ public class HordeDirector : MonoBehaviour
     private void OnDisable()
     {
         EventBus<ChangeRoomStateEvent>.Deregister(changeRoomStateEventBinding);
-
         EventBus<AllEnemiesDeadEvent>.Deregister(allEnemiesDeadEventBinding);
     }
 
-    private void ChangeRoomState(ChangeRoomStateEvent changeRoomStateEvent)
+    private void ChangeRoomState(ChangeRoomStateEvent e)
     {
-        if (changeRoomStateEvent.RoomId != id)
-        {
-            if (changeRoomStateEvent.IsPlayerInRoom)
-                isPlayerInRoom = false;
-
+        if (id != e.RoomId)
             return;
-        }
 
-        isPlayerInRoom = changeRoomStateEvent.IsPlayerInRoom;
+        isPlayerInRoom = e.IsPlayerInRoom;
 
         if (isPlayerInRoom)
+        {
             StartWave();
+        }
+        else
+        {
+            EnemyFSM[] enemies = FindObjectsByType<EnemyFSM>(FindObjectsSortMode.None);
+            foreach (EnemyFSM enemy in enemies)
+            {
+                if (enemy.roomId == id)
+                    enemy.GoHome();
+            }
+        }
     }
 
     [ContextMenu("Start Wave")]
     private void StartWave()
     {
+        if (!isPlayerInRoom || !enemySpawner.IsWaveOver())
+            return;
+
         currentWave++;
         TotalCurrentWave++;
 
@@ -87,9 +95,6 @@ public class HordeDirector : MonoBehaviour
 
     public void TryStartWave(AllEnemiesDeadEvent e)
     {
-        if (!isPlayerInRoom)
-            return;
-
         StartWave();
     }
 

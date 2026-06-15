@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1814181702564155049}
   - component: {fileID: 3951377138580951084}
   - component: {fileID: 994445815322710245}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: visual floor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -123,7 +123,7 @@ GameObject:
   - component: {fileID: 5573611362571877623}
   - component: {fileID: 7041565140360111305}
   - component: {fileID: 8304506925187897688}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: WarningParticles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4961,7 +4961,7 @@ GameObject:
   - component: {fileID: 2450978270603136940}
   - component: {fileID: 1385006278835396159}
   - component: {fileID: 7163036596152101179}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: FirePillar_Ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5096,7 +5096,7 @@ GameObject:
   - component: {fileID: 8715754057212299580}
   - component: {fileID: 7774714011081236725}
   - component: {fileID: 3510051016153849102}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: ActiveParticles
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -5,10 +5,10 @@ public class Health : MonoBehaviour
 {
     [SerializeField] float maxHealth = 100f;
     float currentHealth;
-    bool isDead = false;
+    private bool isDead = false;
     public event Action OnDeath;
 
-    void Start()
+    private void Start()
     {
         currentHealth = maxHealth;
     }
@@ -17,6 +17,7 @@ public class Health : MonoBehaviour
     {
         if (isDead) return;
         currentHealth -= amount;
+        Debug.Log(gameObject.name + " took " + amount + " damage. Current health: " + currentHealth);
         if (currentHealth <= 0)
         {
             currentHealth = 0;

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1121980644296605689}
   - component: {fileID: 7757036684671303238}
   - component: {fileID: 4366020825025388242}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -125,7 +125,7 @@ GameObject:
   - component: {fileID: 25756342176410040}
   - component: {fileID: 3968558455636316138}
   - component: {fileID: 5088650247279827890}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: FirePillar_Geyser
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -222,7 +222,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -260,7 +260,7 @@ GameObject:
   - component: {fileID: 2657174616174117700}
   - component: {fileID: 7046198279892410095}
   - component: {fileID: 8412965050137547420}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: WarningParticles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5096,7 +5096,7 @@ GameObject:
   - component: {fileID: 1773420317092881012}
   - component: {fileID: 205701000584425351}
   - component: {fileID: 2774964087082056196}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: ActiveParticles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
