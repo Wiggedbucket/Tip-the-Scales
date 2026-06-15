@@ -30,6 +30,7 @@ public class FirePillar : MonoBehaviour
 
     private IEnumerator FireCycle()
     {
+        yield return new WaitForSeconds(Random.Range(0f, maxInterval)); // Randomize initial delay to desync multiple pillars
         while (true)
         {
             //rest phase
