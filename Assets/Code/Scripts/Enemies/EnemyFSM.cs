@@ -21,7 +21,8 @@ public class EnemyFSM : MonoBehaviour
 
     public float lastAttackTime;
     private Health health;
-    
+    private float combatStoppingDistance;
+
     Vector3 HomePosition;
 
     private void Start()
@@ -49,6 +50,8 @@ public class EnemyFSM : MonoBehaviour
             agent.stoppingDistance = stats.lungeRange * 0.8f;
         else
             agent.stoppingDistance = stats.attackRange * 0.8f;
+
+        agent.stoppingDistance = combatStoppingDistance;
     }
 
     private void Update()
@@ -165,14 +168,16 @@ public class EnemyFSM : MonoBehaviour
 
     private void HandleDeath()
     {
+        EventBus<EnemyDiedEvent>.Raise(new EnemyDiedEvent()
         {
-            Debug.Log(stats.enemyName + " has died.");
-            Destroy(gameObject);
-        }
+            EnemyObject = gameObject
+        });
+        Destroy(gameObject);
     }
 
     public void GoHome()
     {
+        agent.stoppingDistance = 0f;
         currentState = State.ReturnHome;
     }
 }
