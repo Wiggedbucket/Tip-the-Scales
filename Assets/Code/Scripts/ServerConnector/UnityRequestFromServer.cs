@@ -33,10 +33,6 @@ public class UnityRequestFromServer : MonoBehaviour
     private float heartbeatInterval = 5f;
     private bool serverConnected = false;
 
-    public GameObject Room1;
-    public GameObject Room2;
-    public GameObject Room3;
-
     private IEnumerator Start()
     {
         yield return StartCoroutine(ResetGame());
@@ -79,6 +75,12 @@ public class UnityRequestFromServer : MonoBehaviour
 
     private IEnumerator SendCurrentGameData()
     {
+        var rooms = GameState.Instance.RoomCombatPointsList;
+        if(rooms.Count < 3)
+        {
+            Debug.LogError("Not enough rooms, need to be 3");
+            yield break;
+        }
         GameData currentData = new()
         {
             objectives = 3,
@@ -87,18 +89,14 @@ public class UnityRequestFromServer : MonoBehaviour
             obj3 = new Objective(),
         };
 
-        RoomData room1 = Room1.GetComponent<RoomData>();
-        RoomData room2 = Room2.GetComponent<RoomData>();
-        RoomData room3 = Room3.GetComponent<RoomData>();
+        currentData.obj1.light = rooms[0].angelPoints;
+        currentData.obj1.dark = rooms[0].demonPoints;
 
-        currentData.obj1.light = room1.angelPoints;
-        currentData.obj1.dark = room1.demonPoints;
+        currentData.obj2.light = rooms[1].angelPoints;
+        currentData.obj2.dark = rooms[1].demonPoints;
 
-        currentData.obj2.light = room2.angelPoints;
-        currentData.obj2.dark = room2.demonPoints;
-
-        currentData.obj3.light = room3.angelPoints;
-        currentData.obj3.dark = room3.demonPoints;
+        currentData.obj3.light = rooms[2].angelPoints;
+        currentData.obj3.dark = rooms[2].demonPoints;
 
         yield return StartCoroutine(SendGameData(currentData));
     }
@@ -170,6 +168,18 @@ public class UnityRequestFromServer : MonoBehaviour
     private void ApplyToGameStateData(GameData data)
     {
         var rooms = GameState.Instance.RoomCombatPointsList;
+        if (GameState.Instance == null)
+        {
+            Debug.LogError("GameState.Instance is NULL");
+            return;
+        }
+    Debug.Log("RoomCombatPointsList Count = " + rooms.Count);
+    
+
+    while (rooms.Count < 3)
+    {
+        rooms.Add(new CombatPoints());
+    }
         CombatPoints room0 = rooms[0];
         room0.angelPoints = data.obj1.light;
         room0.demonPoints = data.obj1.dark;
@@ -183,6 +193,6 @@ public class UnityRequestFromServer : MonoBehaviour
         CombatPoints room2 = rooms[2];
         room2.angelPoints = data.obj3.light;
         room2.demonPoints = data.obj3.dark;
-        rooms[3] = room2;
+        rooms[2] = room2;
     }
 }
