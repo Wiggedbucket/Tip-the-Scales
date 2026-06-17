@@ -50,13 +50,15 @@ public class MainMenu : MonoBehaviour
 
     public void StartSingleplayer()
     {
-        // Set up singleplayer game state
+        // Sets up a SinglePlayer game state
+        GameMode.IsMultiplayer = false;
         SceneManager.LoadScene("Dungeon");
     }
 
     public void StartMultiplayer()
     {
-        // Set up multiplayer game state
+        // Sets up multiplayer game state
+        GameMode.IsMultiplayer = true;
         SceneManager.LoadScene("Dungeon");
     }
 
