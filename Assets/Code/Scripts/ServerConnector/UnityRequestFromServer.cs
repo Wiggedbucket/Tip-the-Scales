@@ -134,26 +134,6 @@ public class UnityRequestFromServer : MonoBehaviour
         }
     }
 
-    private IEnumerator MockScoreDarkIncrease()
-    {
-        while (!serverConnected)
-        {
-            RoomData[] rooms =
-            {
-                Room1.GetComponent<RoomData>(),
-                Room2.GetComponent<RoomData>(),
-                Room3.GetComponent<RoomData>(),
-            };
-
-            foreach (RoomData room in rooms)
-            {
-                room.demonPoints += Random.Range(1, 6);
-            }
-
-            yield return new WaitForSeconds(3f);
-        }
-    }
-
     private IEnumerator SendGameData(GameData gameData)
     {
         string json = JsonUtility.ToJson(gameData);
@@ -189,17 +169,20 @@ public class UnityRequestFromServer : MonoBehaviour
     }
     private void ApplyToGameStateData(GameData data)
     {
-        RoomData room1 = Room1.GetComponent<RoomData>();
-        RoomData room2 = Room2.GetComponent<RoomData>();
-        RoomData room3 = Room3.GetComponent<RoomData>();
+        var rooms = GameState.Instance.RoomCombatPointsList;
+        CombatPoints room0 = rooms[0];
+        room0.angelPoints = data.obj1.light;
+        room0.demonPoints = data.obj1.dark;
+        rooms[0] = room0;
 
-        room1.angelPoints = data.obj1.light;
-        room1.demonPoints = data.obj1.dark;
-
-        room2.angelPoints = data.obj2.light;
-        room2.demonPoints = data.obj2.dark;
-
-        room3.angelPoints = data.obj3.light;
-        room3.demonPoints = data.obj3.dark;
+        CombatPoints room1 = rooms[1];
+        room1.angelPoints = data.obj2.light;
+        room1.demonPoints = data.obj2.dark;
+        rooms[1] = room1;
+        
+        CombatPoints room2 = rooms[2];
+        room2.angelPoints = data.obj3.light;
+        room2.demonPoints = data.obj3.dark;
+        rooms[3] = room2;
     }
 }
