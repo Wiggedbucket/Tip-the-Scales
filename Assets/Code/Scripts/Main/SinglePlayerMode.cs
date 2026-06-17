@@ -3,10 +3,18 @@ using System.Collections;
 
 public class SinglePlayerMode : MonoBehaviour
 {
+    private bool IsMultiplayer;
     public int demonModifier = 0;
     public int demonTimerAdder = 0;
-
-    private IEnumerator Start()
+    private void Start()
+    {
+        IsMultiplayer = GameMode.IsMultiplayer;
+        if (!IsMultiplayer)
+        {
+            StartCoroutine(SinglePlayer());
+        }
+    }
+    private IEnumerator SinglePlayer()
     {
         while (true)
         {

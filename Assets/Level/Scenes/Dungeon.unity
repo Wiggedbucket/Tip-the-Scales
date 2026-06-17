@@ -962,8 +962,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12b47a9259b86014f9fd34e0d98e24a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SinglePlayerMode
-  demonModifier: 0
-  demonTimerAdder: 0
+  demonModifier: 1
+  demonTimerAdder: 1
 --- !u!4 &2008298038
 Transform:
   m_ObjectHideFlags: 0

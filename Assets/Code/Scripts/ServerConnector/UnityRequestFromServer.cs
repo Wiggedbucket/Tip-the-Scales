@@ -31,10 +31,16 @@ public class UnityRequestFromServer : MonoBehaviour
     private string url = "http://localhost:8080";
     private string clientId = "unityClient1";
     private float heartbeatInterval = 5f;
-    private bool serverConnected = false;
-
+    private bool IsMultiplayer = GameMode.IsMultiplayer;
     private IEnumerator Start()
     {
+        if(!IsMultiplayer)
+        {
+            Debug.Log("Server off, Singleplayer On");
+            //if Multiplayer's off, it won't start.
+            yield break;
+        }
+        Debug.Log("Server on, Singleplayer Off");
         yield return StartCoroutine(ResetGame());
 
         StartCoroutine(HeartbeatLoop());
@@ -66,6 +72,7 @@ public class UnityRequestFromServer : MonoBehaviour
 
     private IEnumerator HeartbeatLoop()
     {
+
         while (true)
         {
             yield return StartCoroutine(SendCurrentGameData());
