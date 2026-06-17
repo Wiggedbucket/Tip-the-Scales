@@ -1,8 +1,11 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-
-public enum fireMode {Automatic, SingleShot}
+public enum FireMode
+{
+    Automatic,
+    SingleShot
+}
 
 public class PlayerShooting : MonoBehaviour
 {
@@ -19,7 +22,7 @@ public class PlayerShooting : MonoBehaviour
     public float reloadTime = 0.8f;
 
     [Header("Firing Mode Settings")]
-    public fireMode currentFireMode = fireMode.Automatic;
+    public FireMode currentFireMode = FireMode.Automatic;
     private bool hasFiredSingle = false;
 
     [Header("References")]
@@ -79,12 +82,12 @@ public class PlayerShooting : MonoBehaviour
     {
         if (!isShooting || Time.time < nextTimeToFire || !hasAmmo) return;
         {
-            if (currentFireMode == fireMode.Automatic )
+            if (currentFireMode == FireMode.Automatic )
             {
                 ExecuteShot();
                 currentAmmo -= 1;
             }
-            else if (currentFireMode == fireMode.SingleShot)
+            else if (currentFireMode == FireMode.SingleShot)
             {
                 if (!hasFiredSingle)
                 {
