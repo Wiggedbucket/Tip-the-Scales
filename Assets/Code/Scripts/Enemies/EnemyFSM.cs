@@ -25,7 +25,7 @@ public class EnemyFSM : MonoBehaviour
 
     Vector3 HomePosition;
 
-    public int points;
+    public int points = 20;
 
     private void Start()
     {
@@ -170,10 +170,12 @@ public class EnemyFSM : MonoBehaviour
 
     private void HandleDeath()
     {
+        Debug.Log($"[EnemyFSM] DIED → RoomID: {roomId}, Points: {points}");
         EventBus<EnemyDiedEvent>.Raise(new EnemyDiedEvent()
         {
             EnemyObject = gameObject,
             Points = points,
+            RoomID = roomId,
         });
         Destroy(gameObject);
     }
