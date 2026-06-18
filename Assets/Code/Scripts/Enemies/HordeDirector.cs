@@ -106,11 +106,9 @@ public class HordeDirector : MonoBehaviour
 
         int scoreDifference = Mathf.Abs(combatPoints.demonPoints - combatPoints.angelPoints);
 
-        int pressureScaling = Mathf.Clamp(scoreDifference / 10, 0, 10);
-
         return baseBudget
                + timeScaling
                + waveScaling
-               + pressureScaling;
+               + scoreDifference;
     }
 }
