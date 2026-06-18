@@ -25,6 +25,8 @@ public class EnemyFSM : MonoBehaviour
 
     Vector3 HomePosition;
 
+    public int points;
+
     private void Start()
     {
         HomePosition = transform.position;
@@ -171,6 +173,7 @@ public class EnemyFSM : MonoBehaviour
         EventBus<EnemyDiedEvent>.Raise(new EnemyDiedEvent()
         {
             EnemyObject = gameObject
+            Points = points,
         });
         Destroy(gameObject);
     }
