@@ -28,7 +28,7 @@ public class ResetRequest
 
 public class UnityRequestFromServer : MonoBehaviour
 {
-    private string url = "http://localhost:8080";
+    private string url = "http://145.93.81.29:8080";
     private string clientId = "unityClient1";
     private float heartbeatInterval = 5f;
     private bool IsMultiplayer = GameMode.IsMultiplayer;
