@@ -192,6 +192,7 @@ MonoBehaviour:
   lastKiteEndTime: 0
   currentState: 0
   lastAttackTime: 0
+  points: 6
 --- !u!114 &4088735915963769310
 MonoBehaviour:
   m_ObjectHideFlags: 0
