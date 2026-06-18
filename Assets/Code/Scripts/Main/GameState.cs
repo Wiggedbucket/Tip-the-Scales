@@ -91,14 +91,15 @@ public class GameState : MonoBehaviour
 
     private void EnemyDeath(EnemyDiedEvent e)
     {
-        Debug.Log("GameState received enemy death event");
+        //Debug.Log("GameState received enemy death event");
         if(e.RoomID < 0 || e.RoomID >= RoomCombatPointsList.Count)
         {
-        return;
+            return;
         }
-            CombatPoints room = RoomCombatPointsList[e.RoomID];
-            room.angelPoints += e.Points;
-            RoomCombatPointsList[e.RoomID] = room;
+
+        CombatPoints room = RoomCombatPointsList[e.RoomID];
+        room.angelPoints += e.Points;
+        RoomCombatPointsList[e.RoomID] = room;
     }
 
     [ContextMenu("Toggle Paused State")]
