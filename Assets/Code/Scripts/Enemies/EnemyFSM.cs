@@ -172,7 +172,7 @@ public class EnemyFSM : MonoBehaviour
     {
         EventBus<EnemyDiedEvent>.Raise(new EnemyDiedEvent()
         {
-            EnemyObject = gameObject
+            EnemyObject = gameObject,
             Points = points,
         });
         Destroy(gameObject);
