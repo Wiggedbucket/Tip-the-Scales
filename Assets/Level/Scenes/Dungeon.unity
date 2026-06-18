@@ -963,7 +963,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SinglePlayerMode
   demonModifier: 1
-  demonTimerAdder: 1
+  demonTimerAdder: 10
 --- !u!4 &2008298038
 Transform:
   m_ObjectHideFlags: 0
