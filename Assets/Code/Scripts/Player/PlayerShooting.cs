@@ -34,6 +34,7 @@ public class PlayerShooting : MonoBehaviour
     private bool hasFiredSingle = false;
 
     [Header("References")]
+    public LayerMask enemyLayer;
     public Camera playerCam;
     private bool isShooting = false;
     private bool hasAmmo = true;
@@ -182,7 +183,7 @@ public class PlayerShooting : MonoBehaviour
 
         RaycastHit hit;
 
-            if (Physics.Raycast(playerCam.transform.position, direction, out hit, range))
+            if (Physics.Raycast(playerCam.transform.position, direction, out hit, range, enemyLayer))
             {
                 Debug.Log(hit.transform.name);
 
