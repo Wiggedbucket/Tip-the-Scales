@@ -64,6 +64,13 @@ public class HordeDirector : MonoBehaviour
 
         if (isPlayerInRoom)
         {
+            // Re-alert enemies that are still walking home
+            EnemyFSM[] enemies = FindObjectsByType<EnemyFSM>(FindObjectsSortMode.None);
+            foreach (EnemyFSM enemy in enemies)
+            {
+                if (enemy.roomId == id)
+                    enemy.ResumeChase();
+            }
             StartWave();
         }
         else

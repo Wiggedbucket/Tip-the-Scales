@@ -112,7 +112,8 @@ public class GameState : MonoBehaviour
             IsPaused = IsPaused,
         });
 
-        Time.timeScale = IsPaused ? 0f : 1f;
+        if (!GameMode.IsMultiplayer)
+            Time.timeScale = IsPaused ? 0f : 1f;
     }
 }
 

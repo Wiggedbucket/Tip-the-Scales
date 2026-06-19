@@ -191,4 +191,12 @@ public class EnemyFSM : MonoBehaviour
         agent.stoppingDistance = 0f;
         currentState = State.ReturnHome;
     }
+    public void ResumeChase()
+    {
+        if (currentState == State.ReturnHome)
+        {
+            agent.stoppingDistance = combatStoppingDistance;
+            currentState = State.Chase;
+        }
+    }
 }
