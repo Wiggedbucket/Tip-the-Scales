@@ -38,7 +38,7 @@ public class RoomGenerator : MonoBehaviour
         {
             for (int x = 0; x < width; x++)
             {
-                SpawnRoom(x, y, position);
+                SpawnRoom(x-2.5f, y-2.5f, position);
             }
         }
 
@@ -51,7 +51,7 @@ public class RoomGenerator : MonoBehaviour
     }
 
 
-    private void SpawnRoom(int coord_x, int coord_y, Vector3 room_position)
+    private void SpawnRoom(float coord_x, float coord_y, Vector3 room_position)
     {
         int prefabIndex = Random.Range(0, roomPrefabs.Length);
         GameObject prefab = roomPrefabs[prefabIndex];
