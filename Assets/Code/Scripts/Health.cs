@@ -1,5 +1,6 @@
 using UnityEngine;
 using System;
+using AudioSystem;
 
 public class Health : MonoBehaviour
 {
@@ -14,6 +15,9 @@ public class Health : MonoBehaviour
     
     public event Action OnDeath;
 
+    public string hitSound = "";
+    public string deathSound = "";
+
     private void Start()
     {
         currentHealth = maxHealth;
@@ -24,15 +28,20 @@ public class Health : MonoBehaviour
         if (isDead) return;
         
         currentHealth -= amount;
-        
-        //Debug.Log(gameObject.name + " took " + amount + " damage. Current health: " + currentHealth);
-        
-        if (currentHealth <= 0)
+
+        if(hitSound != "")
+			SoundManager.instance.CreateSound().WithSoundData(hitSound).WithPosition(transform.position).WithrandomPitch().Play();
+
+		//Debug.Log(gameObject.name + " took " + amount + " damage. Current health: " + currentHealth);
+
+		if (currentHealth <= 0)
         {
             currentHealth = 0;
             isDead = true;
             OnDeath?.Invoke();
-        }
+            if(deathSound != "")
+				SoundManager.instance.CreateSound().WithSoundData(deathSound).WithPosition(transform.position).WithrandomPitch().Play();
+		}
 
         EventBus<TookDamageEvent>.Raise(new TookDamageEvent()
         {
