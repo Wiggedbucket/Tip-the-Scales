@@ -20,6 +20,7 @@ public class PlayerShooting : MonoBehaviour
     public int maxAmmo = 24;
     public int currentAmmo;
     public float reloadTime = 0.8f;
+    public float bulletSpread = 0.1f;
 
     [Header("Firing Mode Settings")]
     public FireMode currentFireMode = FireMode.Automatic;
@@ -103,9 +104,13 @@ public class PlayerShooting : MonoBehaviour
     {   
             nextTimeToFire = Time.time + firerate;
 
+        Vector2 shotSpread = Random.insideUnitCircle * bulletSpread;
+        Vector3 direction = playerCam.transform.forward + (playerCam.transform.right * shotSpread.x) + (playerCam.transform.up * shotSpread.y);
+        
+
             RaycastHit hit;
 
-            if (Physics.Raycast(playerCam.transform.position, playerCam.transform.forward, out hit, range))
+            if (Physics.Raycast(playerCam.transform.position, direction, out hit, range))
             {
                 Debug.Log(hit.transform.name);
 
@@ -118,7 +123,7 @@ public class PlayerShooting : MonoBehaviour
         
         else
         {
-            Debug.Log("No ammo");
+            Debug.Log("Miss");
         }
     }
 }
