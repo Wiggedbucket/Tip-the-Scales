@@ -89,6 +89,11 @@ public class GameState : MonoBehaviour
         GameTime += Time.deltaTime;
         CalculateScale();
         TickPassiveGeneration();
+
+        if (!GameMode.IsMultiplayer && Scale >= 1f)
+        {
+            MatchEndMenu.Instance.OpenMenu(true);
+        }
     }
 
     private void TickPassiveGeneration()
