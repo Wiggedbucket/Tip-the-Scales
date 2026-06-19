@@ -19,17 +19,28 @@ public class EnemySpawner : MonoBehaviour
 
     private readonly HashSet<GameObject> aliveEnemies = new();
 
+    private EventBinding<RoomCreatedEvent> roomCreatedBinding;
+
     private EventBinding<EnemyDiedEvent> enemyDiedEventBinding;
 
     private void OnEnable()
     {
+        roomCreatedBinding = new EventBinding<RoomCreatedEvent>(RoomCreated);
+        EventBus<RoomCreatedEvent>.Register(roomCreatedBinding);
+
         enemyDiedEventBinding = new EventBinding<EnemyDiedEvent>(EnemyDied);
         EventBus<EnemyDiedEvent>.Register(enemyDiedEventBinding);
     }
 
     private void OnDisable()
     {
+        EventBus<RoomCreatedEvent>.Deregister(roomCreatedBinding);
         EventBus<EnemyDiedEvent>.Deregister(enemyDiedEventBinding);
+    }
+
+    private void RoomCreated(RoomCreatedEvent e)
+    {
+        spawnPoints = e.EnemySpawnPoints;
     }
 
     public bool IsWaveOver() => allEnemiesSpawned && aliveEnemies.Count == 0;
