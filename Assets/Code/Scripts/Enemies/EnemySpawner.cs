@@ -1,3 +1,4 @@
+using AudioSystem;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -145,6 +146,7 @@ public class EnemySpawner : MonoBehaviour
         }
 
         aliveEnemies.Add(enemy);
+        SoundManager.instance.CreateSound().WithSoundData("EnemySpawn").WithPosition(spawnPoint.position).Play();
     }
 
     private void EnemyDied(EnemyDiedEvent enemyDiedEvent)

@@ -1,3 +1,4 @@
+using AudioSystem;
 using UnityEngine;
 using UnityEngine.InputSystem; // Required for InputAction.CallbackContext
 
@@ -145,6 +146,8 @@ public class PlayerCharacterController : MonoBehaviour
         rb.useGravity = false;
 
         dashCooldownTimer = Time.time + dashCooldown;
+
+        SoundManager.instance.CreateSound().WithSoundData("Dash").WithrandomPitch().Play();
 
         Invoke(nameof(StopDash), dashDuration);
     }
