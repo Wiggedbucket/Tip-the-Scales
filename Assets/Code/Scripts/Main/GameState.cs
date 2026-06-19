@@ -4,6 +4,13 @@ using UnityEngine.InputSystem;
 
 public class GameState : MonoBehaviour
 {
+    [Header("Passive Generation")]
+    public int passiveThreshold = 80;
+    public float passiveInterval = 5f;
+    public int passivePointsPerInterval = 2;
+    private float passiveTimer = 0f;
+
+
     #region Singleton Setup
     public static GameState Instance { get; private set; }
     public static bool InstanceExists => Instance != null;
@@ -77,8 +84,29 @@ public class GameState : MonoBehaviour
     private void Update()
     {
         GameTime += Time.deltaTime;
-
         CalculateScale();
+        TickPassiveGeneration();
+    }
+
+    private void TickPassiveGeneration()
+    {
+        passiveTimer += Time.deltaTime;
+
+        if (passiveTimer < passiveInterval) return;
+        passiveTimer = 0f;
+
+        for (int i = 0; i < RoomCombatPointsList.Count; i++)
+        {
+            CombatPoints room = RoomCombatPointsList[i];
+            int difference = room.angelPoints - room.demonPoints;
+
+            if (difference >= passiveThreshold)
+                room.angelPoints += passivePointsPerInterval;
+            else if (difference <= -passiveThreshold)
+                room.demonPoints += passivePointsPerInterval;
+
+            RoomCombatPointsList[i] = room;
+        }
     }
 
     private void CalculateScale()
