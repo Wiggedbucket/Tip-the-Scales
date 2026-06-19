@@ -177,6 +177,12 @@ public class EnemyFSM : MonoBehaviour
             Points = points,
             RoomID = roomId,
         });
+        EventBus<StyleGainEvent>.Raise(new StyleGainEvent()
+        {
+            Amount = points,
+            Reason = "Enemy Dead",
+            TextColor = Color.lightYellow,
+        });
         Destroy(gameObject);
     }
 

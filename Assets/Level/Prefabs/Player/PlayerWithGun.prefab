@@ -72,7 +72,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4196563881663706791}
-  - component: {fileID: 9063732458497749173}
   - component: {fileID: 7243432027371486388}
   - component: {fileID: 656645658249047089}
   - component: {fileID: 705700531240658165}
@@ -101,31 +100,6 @@ Transform:
   - {fileID: 6827894434898789570}
   m_Father: {fileID: 2684918215128439172}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!143 &9063732458497749173
-CharacterController:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3016535209961589408}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 0
-  serializedVersion: 3
-  m_Height: 2
-  m_Radius: 0.5
-  m_SlopeLimit: 45
-  m_StepOffset: 0.3
-  m_SkinWidth: 0.08
-  m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &7243432027371486388
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -553,10 +527,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerShooting
   damage: 10
   range: 40
-  firerate: 0.2
-  maxAmmo: 22
+  firerate: 0.1
+  maxAmmo: 25
   currentAmmo: 0
   reloadTime: 0.8
+  bulletSpread: 0.05
   currentFireMode: 0
   playerCam: {fileID: 1329407062800773401}
 --- !u!1 &6708298392339631534

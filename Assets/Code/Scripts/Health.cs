@@ -24,9 +24,9 @@ public class Health : MonoBehaviour
         if (isDead) return;
         
         currentHealth -= amount;
-        
+
         //Debug.Log(gameObject.name + " took " + amount + " damage. Current health: " + currentHealth);
-        
+
         if (currentHealth <= 0)
         {
             currentHealth = 0;
@@ -39,6 +39,15 @@ public class Health : MonoBehaviour
             IsEnemy = isEnemy,
             Died = isDead,
         });
+        if (isEnemy == false)
+        {
+            EventBus<StyleGainEvent>.Raise(new StyleGainEvent()
+            {
+                Amount = -(amount/2),
+                Reason = "Got Hit",
+                TextColor = Color.red,
+            });
+        }
     }
 
     public float GetMaxHealth()

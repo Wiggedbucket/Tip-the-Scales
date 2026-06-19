@@ -60,6 +60,12 @@ public class PlayerShooting : MonoBehaviour
         {
             currentAmmo = maxAmmo;
             hasAmmo = true;
+            EventBus<StyleGainEvent>.Raise(new StyleGainEvent()
+            {
+                Amount = 1,
+                Reason = "Reloaded",
+                TextColor = Color.yellow,
+            });
         }
     }
 
@@ -118,12 +124,25 @@ public class PlayerShooting : MonoBehaviour
                 if (health != null)
                 {
                     health.TakeDamage(damage);
+
+                    EventBus<StyleGainEvent>.Raise(new StyleGainEvent()
+                    {
+                        Amount = damage / 2,
+                        Reason = "Shot Hit",
+                        TextColor = Color.yellow,
+                    });
                 }
             }
         
         else
         {
             Debug.Log("Miss");
+            EventBus<StyleGainEvent>.Raise(new StyleGainEvent()
+            {
+                Amount = -1,
+                Reason = "you shot air",
+                TextColor = Color.red,
+            });
         }
     }
 }
