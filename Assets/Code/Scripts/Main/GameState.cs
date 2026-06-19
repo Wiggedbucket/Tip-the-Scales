@@ -45,6 +45,8 @@ public class GameState : MonoBehaviour
 
     public bool InPermaDeathRange => Scale <= ScaleTreshold;
 
+    public bool PlayerIsPermaDead = false;
+
     public CombatPoints GlobalCombatPoints
     {
         get

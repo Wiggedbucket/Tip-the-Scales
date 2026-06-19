@@ -381,6 +381,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Health
   maxHealth: 100
   isEnemy: 0
+  hitSound: 
+  deathSound: 
 --- !u!114 &7383733740544774614
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -575,6 +577,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   playerCam: {fileID: 1329407062800773401}
+  gunshotSound: 
+  reloadSound: 
 --- !u!1 &6708298392339631534
 GameObject:
   m_ObjectHideFlags: 0
