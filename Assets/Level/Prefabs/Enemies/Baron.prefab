@@ -189,3 +189,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Health
   maxHealth: 50
   isEnemy: 1
+  hitSound: 
+  deathSound: EnemyDeath
