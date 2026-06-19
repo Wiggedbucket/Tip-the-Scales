@@ -119,67 +119,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1001 &13550442
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 2759150030564165673, guid: d9e520be5e197e34ab813d435cbdcbe7, type: 3}
-      propertyPath: m_Name
-      value: TempShotgun
-      objectReference: {fileID: 0}
-    - target: {fileID: 2759150030564165673, guid: d9e520be5e197e34ab813d435cbdcbe7, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3672272419057839176, guid: d9e520be5e197e34ab813d435cbdcbe7, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 18.613596
-      objectReference: {fileID: 0}
-    - target: {fileID: 3672272419057839176, guid: d9e520be5e197e34ab813d435cbdcbe7, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.941
-      objectReference: {fileID: 0}
-    - target: {fileID: 3672272419057839176, guid: d9e520be5e197e34ab813d435cbdcbe7, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 3.3311274
-      objectReference: {fileID: 0}
-    - target: {fileID: 3672272419057839176, guid: d9e520be5e197e34ab813d435cbdcbe7, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3672272419057839176, guid: d9e520be5e197e34ab813d435cbdcbe7, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3672272419057839176, guid: d9e520be5e197e34ab813d435cbdcbe7, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3672272419057839176, guid: d9e520be5e197e34ab813d435cbdcbe7, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3672272419057839176, guid: d9e520be5e197e34ab813d435cbdcbe7, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3672272419057839176, guid: d9e520be5e197e34ab813d435cbdcbe7, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3672272419057839176, guid: d9e520be5e197e34ab813d435cbdcbe7, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: d9e520be5e197e34ab813d435cbdcbe7, type: 3}
 --- !u!1 &41617381
 GameObject:
   m_ObjectHideFlags: 0
@@ -1522,17 +1461,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1539426063}
   m_CullTransparentMesh: 1
---- !u!114 &1831144771 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1201137457095070481, guid: bead593ec3e94af4eb6e7a33fa464198, type: 3}
-  m_PrefabInstance: {fileID: 5578007045065553863}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2d466c9554aea2d41902e3815cfc3668, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerShooting
 --- !u!1 &2071365665
 GameObject:
   m_ObjectHideFlags: 0
@@ -1943,26 +1871,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 925935939770963796, guid: bead593ec3e94af4eb6e7a33fa464198, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1201137457095070481, guid: bead593ec3e94af4eb6e7a33fa464198, type: 3}
-      propertyPath: firerate
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1201137457095070481, guid: bead593ec3e94af4eb6e7a33fa464198, type: 3}
-      propertyPath: rifleModel
-      value: 
-      objectReference: {fileID: 3823862572512894458, guid: 5fdc94b450bc97941a828905e3e71474, type: 3}
-    - target: {fileID: 1201137457095070481, guid: bead593ec3e94af4eb6e7a33fa464198, type: 3}
-      propertyPath: bulletSpread
-      value: 0.05
-      objectReference: {fileID: 0}
-    - target: {fileID: 1201137457095070481, guid: bead593ec3e94af4eb6e7a33fa464198, type: 3}
-      propertyPath: shotgunModel
-      value: 
-      objectReference: {fileID: 2759150030564165673, guid: d9e520be5e197e34ab813d435cbdcbe7, type: 3}
     - target: {fileID: 2684918215128439172, guid: bead593ec3e94af4eb6e7a33fa464198, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -2007,102 +1915,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 6611337521277578877, guid: bead593ec3e94af4eb6e7a33fa464198, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7243432027371486388, guid: bead593ec3e94af4eb6e7a33fa464198, type: 3}
-      propertyPath: m_ActionEvents.Array.size
-      value: 9
-      objectReference: {fileID: 0}
-    - target: {fileID: 7243432027371486388, guid: bead593ec3e94af4eb6e7a33fa464198, type: 3}
-      propertyPath: m_ActionEvents.Array.data[7].m_ActionId
-      value: b46eb8e3-a973-4dd3-814d-0127e539ddf4
-      objectReference: {fileID: 0}
-    - target: {fileID: 7243432027371486388, guid: bead593ec3e94af4eb6e7a33fa464198, type: 3}
-      propertyPath: m_ActionEvents.Array.data[8].m_ActionId
-      value: 20b7352b-9575-470e-b7d3-3fd23157a517
-      objectReference: {fileID: 0}
-    - target: {fileID: 7243432027371486388, guid: bead593ec3e94af4eb6e7a33fa464198, type: 3}
-      propertyPath: m_ActionEvents.Array.data[7].m_ActionName
-      value: 'Player/SwapWeapon1[/Keyboard/1]'
-      objectReference: {fileID: 0}
-    - target: {fileID: 7243432027371486388, guid: bead593ec3e94af4eb6e7a33fa464198, type: 3}
-      propertyPath: m_ActionEvents.Array.data[8].m_ActionName
-      value: 'Player/SwapWeapon2[/Keyboard/2]'
-      objectReference: {fileID: 0}
-    - target: {fileID: 7243432027371486388, guid: bead593ec3e94af4eb6e7a33fa464198, type: 3}
-      propertyPath: m_ActionEvents.Array.data[6].m_PersistentCalls.m_Calls.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7243432027371486388, guid: bead593ec3e94af4eb6e7a33fa464198, type: 3}
-      propertyPath: m_ActionEvents.Array.data[7].m_PersistentCalls.m_Calls.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7243432027371486388, guid: bead593ec3e94af4eb6e7a33fa464198, type: 3}
-      propertyPath: m_ActionEvents.Array.data[8].m_PersistentCalls.m_Calls.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7243432027371486388, guid: bead593ec3e94af4eb6e7a33fa464198, type: 3}
-      propertyPath: m_ActionEvents.Array.data[6].m_PersistentCalls.m_Calls.Array.data[1].m_Mode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7243432027371486388, guid: bead593ec3e94af4eb6e7a33fa464198, type: 3}
-      propertyPath: m_ActionEvents.Array.data[7].m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7243432027371486388, guid: bead593ec3e94af4eb6e7a33fa464198, type: 3}
-      propertyPath: m_ActionEvents.Array.data[8].m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7243432027371486388, guid: bead593ec3e94af4eb6e7a33fa464198, type: 3}
-      propertyPath: m_ActionEvents.Array.data[7].m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 1831144771}
-    - target: {fileID: 7243432027371486388, guid: bead593ec3e94af4eb6e7a33fa464198, type: 3}
-      propertyPath: m_ActionEvents.Array.data[8].m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 1831144771}
-    - target: {fileID: 7243432027371486388, guid: bead593ec3e94af4eb6e7a33fa464198, type: 3}
-      propertyPath: m_ActionEvents.Array.data[6].m_PersistentCalls.m_Calls.Array.data[1].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 7243432027371486388, guid: bead593ec3e94af4eb6e7a33fa464198, type: 3}
-      propertyPath: m_ActionEvents.Array.data[7].m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 7243432027371486388, guid: bead593ec3e94af4eb6e7a33fa464198, type: 3}
-      propertyPath: m_ActionEvents.Array.data[8].m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 7243432027371486388, guid: bead593ec3e94af4eb6e7a33fa464198, type: 3}
-      propertyPath: m_ActionEvents.Array.data[7].m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: onWeaponSelect1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7243432027371486388, guid: bead593ec3e94af4eb6e7a33fa464198, type: 3}
-      propertyPath: m_ActionEvents.Array.data[8].m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: onWeaponSelect2
-      objectReference: {fileID: 0}
-    - target: {fileID: 7243432027371486388, guid: bead593ec3e94af4eb6e7a33fa464198, type: 3}
-      propertyPath: m_ActionEvents.Array.data[6].m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
-      value: PlayerShooting, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 7243432027371486388, guid: bead593ec3e94af4eb6e7a33fa464198, type: 3}
-      propertyPath: m_ActionEvents.Array.data[7].m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: PlayerShooting, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 7243432027371486388, guid: bead593ec3e94af4eb6e7a33fa464198, type: 3}
-      propertyPath: m_ActionEvents.Array.data[8].m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: PlayerShooting, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 7243432027371486388, guid: bead593ec3e94af4eb6e7a33fa464198, type: 3}
-      propertyPath: m_ActionEvents.Array.data[7].m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
-    - target: {fileID: 7243432027371486388, guid: bead593ec3e94af4eb6e7a33fa464198, type: 3}
-      propertyPath: m_ActionEvents.Array.data[8].m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2125,4 +1937,3 @@ SceneRoots:
   - {fileID: 2071365666}
   - {fileID: 1230373983}
   - {fileID: 2084710930}
-  - {fileID: 13550442}

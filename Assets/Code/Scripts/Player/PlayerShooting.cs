@@ -45,6 +45,7 @@ public class PlayerShooting : MonoBehaviour
         currentAmmo = maxAmmo;
         audioSource = GetComponent<AudioSource>();
         weaponAnimator = GetComponentInChildren<Animator>();
+        EquipRifle();
     }
     void Update()
     {

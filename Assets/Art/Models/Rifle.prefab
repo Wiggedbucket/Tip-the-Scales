@@ -136,4 +136,7 @@ MonoBehaviour:
   bulletSpread: 0.05
   pelletsPerShot: 8
   currentFireMode: 0
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 0
   playerCam: {fileID: 0}
