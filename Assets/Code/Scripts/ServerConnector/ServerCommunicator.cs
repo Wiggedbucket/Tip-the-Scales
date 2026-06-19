@@ -3,30 +3,6 @@ using UnityEngine.Networking;
 using System.Collections;
 using System.Text;
 
-[System.Serializable]
-public class Objective
-{
-    public int light;
-    public int dark;
-}
-
-[System.Serializable]
-public class GameData
-{
-    public float score;
-    public int objectives;
-
-    public Objective obj1;
-    public Objective obj2;
-    public Objective obj3;
-}
-
-[System.Serializable]
-public class ResetRequest
-{
-    public int objectives;
-}
-
 public class ServerCommunicator : MonoBehaviour
 {
     private const int RequiredRooms = 3;
@@ -200,4 +176,28 @@ public class ServerCommunicator : MonoBehaviour
         CopyObjectiveToRoom(data.obj2, rooms[1]);
         CopyObjectiveToRoom(data.obj3, rooms[2]);
     }
+}
+
+[System.Serializable]
+public class Objective
+{
+    public int light;
+    public int dark;
+}
+
+[System.Serializable]
+public class GameData
+{
+    public float score;
+    public int objectives;
+
+    public Objective obj1;
+    public Objective obj2;
+    public Objective obj3;
+}
+
+[System.Serializable]
+public class ResetRequest
+{
+    public int objectives;
 }
