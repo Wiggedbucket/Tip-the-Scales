@@ -87,13 +87,16 @@ public class GameState : MonoBehaviour
     private void Update()
     {
         GameTime += Time.deltaTime;
-        CalculateScale();
+
+        if (!GameMode.IsMultiplayer)
+            CalculateScale();
+
+        // TODO: Make sure scale is gathered from the server in multiplayer
+
         TickPassiveGeneration();
 
         if (!GameMode.IsMultiplayer && Scale >= 1f)
-        {
             MatchEndMenu.Instance.OpenMenu(true);
-        }
     }
 
     private void TickPassiveGeneration()

@@ -1601,6 +1601,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9947c1e2bee5804c8f23c01ba373c58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UnityRequestFromServer
+  url: http://145.93.81.29:8080
+  clientId: unityClient1
+  heartbeatInterval: 5
 --- !u!4 &1398828944
 Transform:
   m_ObjectHideFlags: 0
@@ -2492,7 +2495,7 @@ GameObject:
   - component: {fileID: 2008298038}
   - component: {fileID: 2008298037}
   m_Layer: 0
-  m_Name: MockData
+  m_Name: SingleplayerMode
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

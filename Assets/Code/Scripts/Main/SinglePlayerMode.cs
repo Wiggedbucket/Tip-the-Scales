@@ -19,6 +19,7 @@ public class SinglePlayerMode : MonoBehaviour
             StartCoroutine(RoomSwitchTimer());
         }
     }
+
     private void PickNewRoom()
     {
         var rooms = GameState.Instance.RoomCombatPointsList;
