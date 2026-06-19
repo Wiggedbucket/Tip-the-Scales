@@ -34,6 +34,8 @@ public class RoomExitTrigger : MonoBehaviour
 
     private void TeleportPlayer(Collider player, Transform destination)
     {
+        StyleMeter.Instance.PauseDecay();
+
         Rigidbody rb = player.GetComponent<Rigidbody>();
         if (rb == null)
             rb = player.GetComponentInParent<Rigidbody>();

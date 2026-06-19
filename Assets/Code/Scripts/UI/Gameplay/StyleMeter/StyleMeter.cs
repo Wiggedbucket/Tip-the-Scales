@@ -46,6 +46,32 @@ public class StyleMeter : MonoBehaviour
     private EventBinding<StyleGainEvent> styleGainEventBinding;
     private EventBinding<WeaponFiredEvent> weaponFiredEventBinding;
 
+    #region Singleton Setup
+    public static StyleMeter Instance { get; private set; }
+    public static bool InstanceExists => Instance != null;
+
+    void Awake()
+    {
+        if (InstanceExists)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            // Registers the first valid instance before the rest of the scene startup flow.
+            Instance = this;
+        }
+    }
+
+    void OnDestroy()
+    {
+        if (Instance == this)
+        {
+            Instance = null;
+        }
+    }
+    #endregion
+
     private void OnEnable()
     {
         styleGainEventBinding = new EventBinding<StyleGainEvent>(GainStyle);

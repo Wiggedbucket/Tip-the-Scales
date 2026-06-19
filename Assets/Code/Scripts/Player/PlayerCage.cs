@@ -54,6 +54,8 @@ public class PlayerCage : MonoBehaviour
 
         player.transform.position = transform.position + playerSpawnOffset;
 
+        StyleMeter.Instance.PauseDecay();
+
         timeoutTimer.RemoveFromClassList("hidden");
 
         if (cageCoroutine != null)

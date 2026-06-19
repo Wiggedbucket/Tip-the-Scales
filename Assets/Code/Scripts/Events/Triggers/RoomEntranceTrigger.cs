@@ -33,6 +33,8 @@ public class RoomEntranceTrigger : MonoBehaviour
 
     private void TeleportPlayer (Collider player, Transform destination )
     {
+        StyleMeter.Instance.ResumeDecay();
+
         Rigidbody rb = player.GetComponent<Rigidbody>();
         if (rb == null)
             rb = player.GetComponentInParent<Rigidbody>();
