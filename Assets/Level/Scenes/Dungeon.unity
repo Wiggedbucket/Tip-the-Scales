@@ -184,6 +184,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1259198224307568674, guid: 6d1173309e84b694d9fde868996623f4, type: 3}
+      propertyPath: width
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1259198224307568674, guid: 6d1173309e84b694d9fde868996623f4, type: 3}
+      propertyPath: height
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1259198224307568674, guid: 6d1173309e84b694d9fde868996623f4, type: 3}
+      propertyPath: tileSize
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 2383335788874686253, guid: 6d1173309e84b694d9fde868996623f4, type: 3}
       propertyPath: roomId
       value: 2
@@ -191,6 +203,10 @@ PrefabInstance:
     - target: {fileID: 2393589989458302881, guid: 6d1173309e84b694d9fde868996623f4, type: 3}
       propertyPath: m_Name
       value: Room (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6189964979617635013, guid: 6d1173309e84b694d9fde868996623f4, type: 3}
+      propertyPath: roomID
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6316150130360447284, guid: 6d1173309e84b694d9fde868996623f4, type: 3}
       propertyPath: roomId
@@ -328,6 +344,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1259198224307568674, guid: 6d1173309e84b694d9fde868996623f4, type: 3}
+      propertyPath: width
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1259198224307568674, guid: 6d1173309e84b694d9fde868996623f4, type: 3}
+      propertyPath: height
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1259198224307568674, guid: 6d1173309e84b694d9fde868996623f4, type: 3}
+      propertyPath: tileSize
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 2383335788874686253, guid: 6d1173309e84b694d9fde868996623f4, type: 3}
       propertyPath: roomId
       value: 0
@@ -335,6 +363,10 @@ PrefabInstance:
     - target: {fileID: 2393589989458302881, guid: 6d1173309e84b694d9fde868996623f4, type: 3}
       propertyPath: m_Name
       value: Room
+      objectReference: {fileID: 0}
+    - target: {fileID: 6189964979617635013, guid: 6d1173309e84b694d9fde868996623f4, type: 3}
+      propertyPath: roomID
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6613925235650307213, guid: 6d1173309e84b694d9fde868996623f4, type: 3}
       propertyPath: m_LocalPosition.x
@@ -688,6 +720,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1259198224307568674, guid: 6d1173309e84b694d9fde868996623f4, type: 3}
+      propertyPath: width
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1259198224307568674, guid: 6d1173309e84b694d9fde868996623f4, type: 3}
+      propertyPath: height
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1259198224307568674, guid: 6d1173309e84b694d9fde868996623f4, type: 3}
+      propertyPath: tileSize
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 2383335788874686253, guid: 6d1173309e84b694d9fde868996623f4, type: 3}
       propertyPath: roomId
       value: 1
@@ -695,6 +739,10 @@ PrefabInstance:
     - target: {fileID: 2393589989458302881, guid: 6d1173309e84b694d9fde868996623f4, type: 3}
       propertyPath: m_Name
       value: Room (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6189964979617635013, guid: 6d1173309e84b694d9fde868996623f4, type: 3}
+      propertyPath: roomID
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6316150130360447284, guid: 6d1173309e84b694d9fde868996623f4, type: 3}
       propertyPath: roomId
