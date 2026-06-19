@@ -17,8 +17,10 @@ public class PlayerHealth : MonoBehaviour
     {
         if (GameState.Instance.InPermaDeathRange)
         {
-            // Kill player
-            // Show death screen (Show score on it)
+            MatchEndMenu.Instance.OpenMenu(false);
+
+            GameState.Instance.PlayerIsPermaDead = true;
+
             // Send death to the server (If in multiplayer)
         }
         else
