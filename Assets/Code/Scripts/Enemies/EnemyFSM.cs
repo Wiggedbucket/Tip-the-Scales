@@ -6,24 +6,31 @@ public class EnemyFSM : MonoBehaviour
 {
     public int roomId = -1;
 
-    [SerializeField] Material basecolour;
-    [SerializeField] Renderer rend;
+    [SerializeField] private Material basecolour;
+    [SerializeField] private Renderer rend;
 
-    public enum State { Idle, Recover, Chase, Attack, Kite }
+    public enum State { Idle, Recover, Chase, Attack, Kite, ReturnHome }
 
-    [SerializeField] public EnemyStats stats;
+    public EnemyStats stats;
     public Transform player;
 
     public float lastKiteEndTime;
     public State currentState = State.Idle;
 
-    NavMeshAgent agent;
+    private NavMeshAgent agent;
 
     public float lastAttackTime;
-    Health health;
-    void Start()
+    private Health health;
+    private float combatStoppingDistance;
+
+    Vector3 HomePosition;
+
+    public int points = 20;
+
+    private void Start()
     {
-        health = GetComponent<Health>();
+        HomePosition = transform.position;
+        health = GetComponentInParent<Health>();
         health.OnDeath += HandleDeath;
 
         GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
@@ -45,12 +52,17 @@ public class EnemyFSM : MonoBehaviour
             agent.stoppingDistance = stats.lungeRange * 0.8f;
         else
             agent.stoppingDistance = stats.attackRange * 0.8f;
+
+        agent.stoppingDistance = combatStoppingDistance;
     }
 
-    void Update()
+    private void Update()
     {
         switch (currentState)
         {
+            case State.ReturnHome:
+                HandleReturnHome();
+                break;
             case State.Idle:
                 HandleIdle();
                 break;
@@ -87,7 +99,20 @@ public class EnemyFSM : MonoBehaviour
                 break;
         }
     }
-    void HandleIdle()
+
+
+    private void HandleReturnHome()
+    {
+        agent.SetDestination(HomePosition);
+        float distanceToHome = Vector3.Distance(transform.position, HomePosition);
+        if (distanceToHome < 0.5f)
+        {
+            agent.SetDestination(transform.position);
+            currentState = State.Idle;
+        }
+    }
+
+    private void HandleIdle()
     {
         float distance = Vector3.Distance(transform.position, player.position);
         if (distance < 100f)
@@ -96,8 +121,11 @@ public class EnemyFSM : MonoBehaviour
         }
     }
 
-    void HandleChase()
+    private void HandleChase()
     {
+        if (player == null)
+            return;
+
         agent.SetDestination(player.position);
         float distance = Vector3.Distance(transform.position, player.position);
 
@@ -113,7 +141,7 @@ public class EnemyFSM : MonoBehaviour
         }
     }
 
-    void HandleRecover()
+    private void HandleRecover()
     {
         agent.velocity = Vector3.zero;
         if (Time.time >= lastAttackTime + stats.attackCooldown)
@@ -123,7 +151,7 @@ public class EnemyFSM : MonoBehaviour
         rend.material = basecolour;
     }
 
-    void HandleKite()
+    private void HandleKite()
     {
         agent.stoppingDistance = 0f;
         Vector3 directionAwayFromPlayer = (transform.position - player.position).normalized;
@@ -139,11 +167,30 @@ public class EnemyFSM : MonoBehaviour
         }
 
     }
-    void HandleDeath()
+
+    private void HandleDeath()
     {
+        Debug.Log($"[EnemyFSM] DIED → RoomID: {roomId}, Points: {points}");
+        EventBus<EnemyDiedEvent>.Raise(new EnemyDiedEvent()
         {
-            Debug.Log(stats.enemyName + " has died.");
-            Destroy(gameObject);
+            EnemyObject = gameObject,
+            Points = points,
+            RoomID = roomId,
+        });
+        Destroy(gameObject);
+    }
+
+    public void GoHome()
+    {
+        agent.stoppingDistance = 0f;
+        currentState = State.ReturnHome;
+    }
+    public void ResumeChase()
+    {
+        if (currentState == State.ReturnHome)
+        {
+            agent.stoppingDistance = combatStoppingDistance;
+            currentState = State.Chase;
         }
     }
 }

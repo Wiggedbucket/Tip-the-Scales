@@ -2,47 +2,63 @@ using UnityEngine;
 using System.Collections;
 
 public class FirePillar : MonoBehaviour
-
 {
-    [Header("damage")]
-    [SerializeField] float damagePerTick = 10f;
-    [SerializeField] float damageInterval = 0.5f;
+    [Header("Damage")]
+    [SerializeField] private float damagePerTick = 10f;
+    [SerializeField] private float damageInterval = 0.5f;
+
+    [Header("Particles")]
+    [SerializeField] private ParticleSystem warningParticles;
+    [SerializeField] private ParticleSystem activeParticles;
 
     [Header("Timing")]
-    [SerializeField] float warningDuration = 3f;
-    [SerializeField] float minActiveDuration = 5f;
-    [SerializeField] float maxActiveDuration = 10f;
-    [SerializeField] float minInterval = 1f;
-    [SerializeField] float maxInterval = 4f;
+    [SerializeField] private float warningDuration = 3f;
+    [SerializeField] private float minActiveDuration = 5f;
+    [SerializeField] private float maxActiveDuration = 10f;
+    [SerializeField] private float minInterval = 1f;
+    [SerializeField] private float maxInterval = 4f;
 
     [Header("Scale")]
-    float scaleMultiplier = 0f;
-    bool isActive = false;
-    float nextDamageTime;
+    private float scaleMultiplier = 0f;
+    private bool isActive = false;
+    private float nextDamageTime;
 
-    void Start()
+    private void Start()
     {
         StartCoroutine(FireCycle());
     }
 
-    IEnumerator FireCycle()
+    private IEnumerator FireCycle()
     {
+        yield return new WaitForSeconds(Random.Range(0f, maxInterval)); // Randomize initial delay to desync multiple pillars
         while (true)
         {
+            //rest phase
+            if (warningParticles != null) warningParticles.Stop();
+            if (activeParticles != null) activeParticles.Stop();
             float currentInterval = Mathf.Lerp(maxInterval, minInterval, scaleMultiplier);
             yield return new WaitForSeconds(currentInterval);
-            Debug.Log(gameObject.name + " warning!");
+
+            //warning phase
+            if (warningParticles != null) warningParticles.Play();
+            //Debug.Log(gameObject.name + " warning!");
             yield return new WaitForSeconds(warningDuration);
+
+            //active phase
+            if (warningParticles != null) warningParticles.Stop();
+            if (activeParticles != null) activeParticles.Play();
             isActive = true;
             float currentActiveDuration = Mathf.Lerp(minActiveDuration, maxActiveDuration, scaleMultiplier);
-            Debug.Log(gameObject.name + " ACTIVE!");
+            //Debug.Log(gameObject.name + " ACTIVE!");
             yield return new WaitForSeconds(currentActiveDuration);
             isActive = false;
-            Debug.Log(gameObject.name + " off.");
+            if (activeParticles != null) activeParticles.Stop();
+            //Debug.Log(gameObject.name + " off.");
 
         }
     }
-    void OnTriggerStay(Collider other)
+
+    private void OnTriggerStay(Collider other)
     {
         if(!isActive) return;
         if(!other.CompareTag("Player")) return;
@@ -55,6 +71,7 @@ public class FirePillar : MonoBehaviour
             nextDamageTime = Time.time + damageInterval;
         }
     }
+
     public void SetScaleMultiplier(float normalizedscale)
     {
         scaleMultiplier = Mathf.Clamp01(normalizedscale);

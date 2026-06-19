@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5458638983422408896}
   - component: {fileID: 839493403846800751}
   - component: {fileID: 4883976249852593605}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LavaZone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -139,7 +139,7 @@ GameObject:
   - component: {fileID: 5655954937523409051}
   - component: {fileID: 8576331088896238099}
   - component: {fileID: 4393465100372230647}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LavaParticles
   m_TagString: Untagged
   m_Icon: {fileID: 0}

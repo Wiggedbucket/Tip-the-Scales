@@ -11,12 +11,12 @@ public class ViscountAttack : MonoBehaviour
     [SerializeField] GameObject projectilePrefab;
     [SerializeField] Transform firePoint;
 
-    void Start()
+    private void Start()
     {
         fsm = GetComponent<EnemyFSM>();
         stats = fsm.stats;
     }
-    void Update()
+    private void Update()
     {
         if (fsm.currentState != EnemyFSM.State.Attack) return;
         if (Time.time < fsm.lastKiteEndTime + 0.3f) return;
@@ -26,7 +26,7 @@ public class ViscountAttack : MonoBehaviour
     
     }
 
-    void Fire()
+    private void Fire()
     {
         GameObject projectileObj = Instantiate(projectilePrefab, firePoint.position, firePoint.rotation);
         Projectile projectile = projectileObj.GetComponent<Projectile>();

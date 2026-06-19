@@ -28,17 +28,19 @@ public class ResetRequest
 
 public class UnityRequestFromServer : MonoBehaviour
 {
-    private string url = "http://localhost:8080";
+    private string url = "http://145.93.81.29:8080";
     private string clientId = "unityClient1";
     private float heartbeatInterval = 5f;
-    private bool serverConnected = false;
-
-    public GameObject Room1;
-    public GameObject Room2;
-    public GameObject Room3;
-
+    private bool IsMultiplayer = GameMode.IsMultiplayer;
     private IEnumerator Start()
     {
+        if(!IsMultiplayer)
+        {
+            Debug.Log("Server off, Singleplayer On");
+            //if Multiplayer's off, it won't start.
+            yield break;
+        }
+        Debug.Log("Server on, Singleplayer Off");
         yield return StartCoroutine(ResetGame());
 
         StartCoroutine(HeartbeatLoop());
@@ -70,6 +72,7 @@ public class UnityRequestFromServer : MonoBehaviour
 
     private IEnumerator HeartbeatLoop()
     {
+
         while (true)
         {
             yield return StartCoroutine(SendCurrentGameData());
@@ -79,6 +82,12 @@ public class UnityRequestFromServer : MonoBehaviour
 
     private IEnumerator SendCurrentGameData()
     {
+        var rooms = GameState.Instance.RoomCombatPointsList;
+        if(rooms.Count < 3)
+        {
+            Debug.LogError("Not enough rooms, need to be 3");
+            yield break;
+        }
         GameData currentData = new()
         {
             objectives = 3,
@@ -87,18 +96,14 @@ public class UnityRequestFromServer : MonoBehaviour
             obj3 = new Objective(),
         };
 
-        RoomData room1 = Room1.GetComponent<RoomData>();
-        RoomData room2 = Room2.GetComponent<RoomData>();
-        RoomData room3 = Room3.GetComponent<RoomData>();
+        currentData.obj1.light = rooms[0].angelPoints;
+        currentData.obj1.dark = rooms[0].demonPoints;
 
-        currentData.obj1.light = room1.angelPoints;
-        currentData.obj1.dark = room1.demonPoints;
+        currentData.obj2.light = rooms[1].angelPoints;
+        currentData.obj2.dark = rooms[1].demonPoints;
 
-        currentData.obj2.light = room2.angelPoints;
-        currentData.obj2.dark = room2.demonPoints;
-
-        currentData.obj3.light = room3.angelPoints;
-        currentData.obj3.dark = room3.demonPoints;
+        currentData.obj3.light = rooms[2].angelPoints;
+        currentData.obj3.dark = rooms[2].demonPoints;
 
         yield return StartCoroutine(SendGameData(currentData));
     }
@@ -131,26 +136,6 @@ public class UnityRequestFromServer : MonoBehaviour
         else
         {
             Debug.Log("Reset Response: " + request.downloadHandler.text);
-        }
-    }
-
-    private IEnumerator MockScoreDarkIncrease()
-    {
-        while (!serverConnected)
-        {
-            RoomData[] rooms =
-            {
-                Room1.GetComponent<RoomData>(),
-                Room2.GetComponent<RoomData>(),
-                Room3.GetComponent<RoomData>(),
-            };
-
-            foreach (RoomData room in rooms)
-            {
-                room.demonPoints += Random.Range(1, 6);
-            }
-
-            yield return new WaitForSeconds(3f);
         }
     }
 
@@ -189,17 +174,32 @@ public class UnityRequestFromServer : MonoBehaviour
     }
     private void ApplyToGameStateData(GameData data)
     {
-        RoomData room1 = Room1.GetComponent<RoomData>();
-        RoomData room2 = Room2.GetComponent<RoomData>();
-        RoomData room3 = Room3.GetComponent<RoomData>();
+        var rooms = GameState.Instance.RoomCombatPointsList;
+        if (GameState.Instance == null)
+        {
+            Debug.LogError("GameState.Instance is NULL");
+            return;
+        }
+    Debug.Log("RoomCombatPointsList Count = " + rooms.Count);
+    
 
-        room1.angelPoints = data.obj1.light;
-        room1.demonPoints = data.obj1.dark;
+    while (rooms.Count < 3)
+    {
+        rooms.Add(new CombatPoints());
+    }
+        CombatPoints room0 = rooms[0];
+        room0.angelPoints = data.obj1.light;
+        room0.demonPoints = data.obj1.dark;
+        rooms[0] = room0;
 
-        room2.angelPoints = data.obj2.light;
-        room2.demonPoints = data.obj2.dark;
-
-        room3.angelPoints = data.obj3.light;
-        room3.demonPoints = data.obj3.dark;
+        CombatPoints room1 = rooms[1];
+        room1.angelPoints = data.obj2.light;
+        room1.demonPoints = data.obj2.dark;
+        rooms[1] = room1;
+        
+        CombatPoints room2 = rooms[2];
+        room2.angelPoints = data.obj3.light;
+        room2.demonPoints = data.obj3.dark;
+        rooms[2] = room2;
     }
 }

@@ -1,5 +1,8 @@
+using System;
 using UnityEngine;
+
 [CreateAssetMenu(fileName = "EnemyStats", menuName = "Tip the Scales/Enemy Stats")]
+[Serializable]
 public class EnemyStats : ScriptableObject
 {
     [SerializeField] public string enemyName = "Knight";
