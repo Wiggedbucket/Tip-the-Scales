@@ -41,6 +41,12 @@ public class Health : MonoBehaviour
         });
     }
 
+    public void Revive()
+    {
+        isDead = false;
+        currentHealth = maxHealth;
+    }
+
     public float GetMaxHealth()
     {
         return maxHealth;
