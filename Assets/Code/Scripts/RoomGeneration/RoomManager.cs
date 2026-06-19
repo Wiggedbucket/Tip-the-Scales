@@ -1,5 +1,10 @@
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using UnityEngine;
+
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 public class RoomGenerator : MonoBehaviour
 {
@@ -14,6 +19,9 @@ public class RoomGenerator : MonoBehaviour
     public void Initialize(int id)
     {
         roomID = id;
+        #if UNITY_EDITOR
+        LoadRoomPrefabs();
+        #endif
     }
 
     void Start()
@@ -71,4 +79,32 @@ public class RoomGenerator : MonoBehaviour
             }
         }
     }
+
+    // automatic adding room prefabs to the array cuz im lazy.
+    #if UNITY_EDITOR
+    private void LoadRoomPrefabs()
+    {
+        string[] guids = AssetDatabase.FindAssets("t:GameObject", new string[] { "Assets/Level/Prefabs/Room" });
+        
+        List<GameObject> filteredPrefabs = new();
+        Regex roomPattern = new Regex(@"^Room\d+$");
+        
+        foreach (string guid in guids)
+        {
+            string path = AssetDatabase.GUIDToAssetPath(guid);
+            string fileName = System.IO.Path.GetFileNameWithoutExtension(path);
+            
+            if (roomPattern.IsMatch(fileName))
+            {
+                GameObject prefab = AssetDatabase.LoadAssetAtPath<GameObject>(path);
+                if (prefab != null)
+                {
+                    filteredPrefabs.Add(prefab);
+                }
+            }
+        }
+        
+        roomPrefabs = filteredPrefabs.ToArray();
+    }
+    #endif
 }
