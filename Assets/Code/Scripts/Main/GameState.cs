@@ -19,7 +19,7 @@ public class GameState : MonoBehaviour
     [Header("Perma Death")]
     public bool InPermaDeathRange => Scale <= ScaleTreshold;
 
-    public bool PlayerIsPermaDead = false;
+    public bool MatchEnded = false;
 
     [Header("Combat Points")]
     public CombatPoints GlobalCombatPoints
@@ -95,7 +95,10 @@ public class GameState : MonoBehaviour
         TickPassiveGeneration();
 
         if (!GameMode.IsMultiplayer && Scale >= 1f)
+        {
             MatchEndMenu.Instance.OpenMenu(true);
+            MatchEnded = true;
+        }
     }
 
     private void TickPassiveGeneration()
@@ -157,6 +160,22 @@ public class GameState : MonoBehaviour
 
         if (!GameMode.IsMultiplayer)
             Time.timeScale = IsPaused ? 0f : 1f;
+    }
+
+    public float GetHazardIntensity(int roomIndex)
+    {
+        if (roomIndex < 0 || roomIndex >= RoomCombatPointsList.Count)
+            return 0f;
+
+        CombatPoints room = RoomCombatPointsList[roomIndex];
+
+        float total = room.angelPoints + room.demonPoints;
+        if (total <= 0f)
+            return 0f;
+
+        float ratio = (float)(room.demonPoints - room.angelPoints) / total;
+
+        return Mathf.Clamp(ratio * 0.5f + 0.5f, 0f, 1f);
     }
 }
 

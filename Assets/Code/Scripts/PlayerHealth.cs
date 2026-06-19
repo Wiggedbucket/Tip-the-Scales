@@ -23,7 +23,7 @@ public class PlayerHealth : MonoBehaviour
         {
             MatchEndMenu.Instance.OpenMenu(false);
 
-            GameState.Instance.PlayerIsPermaDead = true;
+            GameState.Instance.MatchEnded = true;
 
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;

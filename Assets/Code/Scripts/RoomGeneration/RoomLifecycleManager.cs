@@ -23,11 +23,14 @@ public class RoomLifecycleManager : MonoBehaviour
     {
         if (evt.RoomId != roomID)
             return;
-        if (evt.IsPlayerInRoom) {
+
+        if (evt.IsPlayerInRoom)
+        {
             Debug.Log($"Creating room {evt.RoomId}!");
             CreateRoom(evt.RoomId);
         }
-        else {
+        else
+        {
             Debug.Log($"Removing room {evt.RoomId}!");
             RemoveRoom();
         }
@@ -40,7 +43,7 @@ public class RoomLifecycleManager : MonoBehaviour
         var localRg = GetComponentInChildren<RoomManager>(true);
         if (localRg != null)
         {
-            localRg.setID(id);
+            localRg.SetID(id);
             localRg.Create(pos);
         }
     }

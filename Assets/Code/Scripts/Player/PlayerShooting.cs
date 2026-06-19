@@ -131,7 +131,7 @@ public class PlayerShooting : MonoBehaviour
 
     private void ShootCheck()
     {
-        if (GameState.Instance.IsPaused || GameState.Instance.PlayerIsPermaDead)
+        if (GameState.Instance.IsPaused || GameState.Instance.MatchEnded)
             return;
 
         if (!isShooting)

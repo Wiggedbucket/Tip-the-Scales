@@ -27,7 +27,7 @@ public class PauseInputHandler : MonoBehaviour
 
     private void OnMenuPerformed(InputAction.CallbackContext context)
     {
-        if (GameState.Instance.PlayerIsPermaDead)
+        if (GameState.Instance.MatchEnded)
             return;
 
         GameState.Instance.TogglePauseGame();

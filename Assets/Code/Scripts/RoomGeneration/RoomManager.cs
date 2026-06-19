@@ -11,8 +11,7 @@ public class RoomManager : MonoBehaviour
     private List<Transform> hazardSpawnPoints = new();
     private int roomID;
 
-
-    public void setID(int id)
+    public void SetID(int id)
     {
         roomID = id;
     }
@@ -24,7 +23,8 @@ public class RoomManager : MonoBehaviour
         ClearTiles();
 
         bool hasValidPrefab = roomPrefabs != null && roomPrefabs.Length > 0 && roomPrefabs[0] != null;
-        if (!hasValidPrefab) { return; }
+        if (!hasValidPrefab)
+            return;
 
         for (int y = 0; y < height; y++)
         {
