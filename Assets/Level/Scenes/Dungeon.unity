@@ -1166,6 +1166,10 @@ PrefabInstance:
       value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 5514952863428335759, guid: 54311cca4eb382a4fbb3d4762d1deac4, type: 3}
+      propertyPath: passivePointsPerInterval
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5514952863428335759, guid: 54311cca4eb382a4fbb3d4762d1deac4, type: 3}
       propertyPath: RoomCombatPointsList.Array.size
       value: 3
       objectReference: {fileID: 0}
@@ -2332,9 +2336,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12b47a9259b86014f9fd34e0d98e24a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SinglePlayerMode
-  demonModifier: 6
-  demonPointInterval: 5
-  roomSwitchInterval: 20
+  demonModifier: 4
+  demonPointInterval: 6
+  roomSwitchInterval: 10
 --- !u!4 &2008298038
 Transform:
   m_ObjectHideFlags: 0

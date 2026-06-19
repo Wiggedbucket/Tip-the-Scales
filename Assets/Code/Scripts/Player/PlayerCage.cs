@@ -50,9 +50,9 @@ public class PlayerCage : MonoBehaviour
 
     public void SendPlayerToJail(GameObject player)
     {
-        player.transform.position = transform.position + playerSpawnOffset;
-
         jailFloor.SetActive(true);
+
+        player.transform.position = transform.position + playerSpawnOffset;
 
         timeoutTimer.RemoveFromClassList("hidden");
 
