@@ -50,11 +50,22 @@ namespace AudioSystem
 			audioSource.outputAudioMixerGroup = data.mixerGroup;
 			audioSource.loop = data.loop;
 			audioSource.playOnAwake = data.playOnAwake;
+			audioSource.spatialBlend = data.spatialBlend;
+			audioSource.dopplerLevel = data.dopplerLevel;
+			audioSource.spread = data.spread;
+			audioSource.rolloffMode = data.rolloffMode;
+			audioSource.minDistance = data.minDistance;
+			audioSource.maxDistance = data.maxDistance;
 		}
 
 		public void WithRandomPitch(float min = -.05f, float max = .05f)
 		{
 			audioSource.pitch += UnityEngine.Random.Range(min, max);
+		}
+
+		private void OnDrawGizmos()
+		{
+			Data.DrawGizmos(transform.position);
 		}
 	}
 }

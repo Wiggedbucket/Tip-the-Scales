@@ -18,7 +18,7 @@ public class MusicManager : MonoBehaviour
 
 	public void PlayTrack(string trackName, float fadeInDuration = 0f)
 	{
-		AudioClip clip = library.GetClipFromName(trackName);
+		AudioClip clip = library.GetTrackFromName(trackName);
 		if (clip == null)
 			return;
 
@@ -33,7 +33,7 @@ public class MusicManager : MonoBehaviour
 	}
 	public void PlayMusicCrossfade(string trackName, float fadeDuration = .5f)
 	{
-		StartCoroutine(AnimateMusicCrossfade(library.GetClipFromName(trackName), fadeDuration));
+		StartCoroutine(AnimateMusicCrossfade(library.GetTrackFromName(trackName), fadeDuration));
 	}
 
 	private IEnumerator AnimateTrackFadeIn(AudioClip track, float fadeDuration)

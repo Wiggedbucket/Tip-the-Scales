@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace AudioSystem
@@ -17,6 +18,15 @@ namespace AudioSystem
 		public SoundBuilder WithSoundData(SoundData soundData)
 		{
 			this.soundData = soundData;
+			return this;
+		}
+
+		public SoundBuilder WithSoundData(string soundName)
+		{
+			this.soundData = SoundManager.instance.soundLibrary.GetDataFromName(soundName);
+			if (soundData == null)
+				throw new NullReferenceException("No sound with name: " +  soundName);
+
 			return this;
 		}
 

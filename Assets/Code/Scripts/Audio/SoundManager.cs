@@ -9,9 +9,11 @@ namespace AudioSystem
 		public static SoundManager instance;
 
 		//[SerializeField] private AudioSource soundFXObject;
-		IObjectPool<SoundEmitter> soundEmitterPool;
+		private IObjectPool<SoundEmitter> soundEmitterPool;
 		private readonly List<SoundEmitter> activeSoundEmitters = new();
 		public readonly Queue<SoundEmitter> FrequentSoundEmitters = new();
+
+		public SoundLibrary soundLibrary;
 
 		[SerializeField] private SoundEmitter soundEmitterPrefab;
 		[SerializeField] private bool collectionCheck = true;

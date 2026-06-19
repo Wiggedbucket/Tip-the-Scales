@@ -140,7 +140,6 @@ GameObject:
   - component: {fileID: 7889963004582963926}
   - component: {fileID: 4490201924429457912}
   - component: {fileID: 3267025060373525224}
-  - component: {fileID: 122259794460936011}
   m_Layer: 0
   m_Name: AudioManager
   m_TagString: Untagged
@@ -176,6 +175,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ceb98983af554a544897b7ca9ee4c83f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SoundFXManager
+  soundLibrary: {fileID: 11400000, guid: 5448e9b7770bd2549a302439b835490a, type: 2}
   soundEmitterPrefab: {fileID: 8150803524195033817, guid: a30be6ec331fe354a943f6d3baaf8e31, type: 3}
   collectionCheck: 1
   defaultCapacity: 10
@@ -194,19 +194,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MusicManager
   musicSource: {fileID: 6244702126881590645}
-  library: {fileID: 122259794460936011}
---- !u!114 &122259794460936011
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7667338324743346676}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 23127271053f6e342afa37de7f6f0354, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MusicLibrary
-  tracks:
-  - name: Room Music 1
-    clip: {fileID: 8300000, guid: 307f49d77f9fcf24f81f9dbd23f0e6e0, type: 3}
+  library: {fileID: 11400000, guid: 3aabd1f6a64d6914398c2b538aee6222, type: 2}

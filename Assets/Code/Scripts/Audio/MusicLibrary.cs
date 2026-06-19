@@ -1,23 +1,20 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class MusicTrack
+public class TrackEntry
 {
     public string name;
     public AudioClip clip;
 }
 
-public class MusicLibrary : MonoBehaviour
+[CreateAssetMenu(fileName = "MusicLibrary", menuName = "Sound/MusicLibrary")]
+public class MusicLibrary : ScriptableObject
 {
-    public MusicTrack[] tracks;
+    public List<TrackEntry> entries;
 
-    public AudioClip GetClipFromName(string name)
+    public AudioClip GetTrackFromName(string name)
     {
-        foreach (MusicTrack track in tracks)
-        {
-            if (track.name == name)
-                return track.clip;
-        }
-        return null;
+        return entries.Find(x => x.name == name).clip;
     }
 }
