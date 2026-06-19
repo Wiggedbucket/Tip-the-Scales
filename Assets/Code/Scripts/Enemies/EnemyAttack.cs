@@ -1,3 +1,4 @@
+using AudioSystem;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
@@ -10,6 +11,7 @@ public class EnemyAttack : MonoBehaviour
     EnemyStats stats;
     NavMeshAgent agent;
     private bool isAttacking = false;
+    public string attackSound = "";
     private void Start()
     {
         fsm = GetComponent<EnemyFSM>();
@@ -30,6 +32,9 @@ public class EnemyAttack : MonoBehaviour
         rend.material = attackIndicator;
         Vector3 directionToPLayer = (fsm.player.position - transform.position).normalized;
         yield return new WaitForSeconds(stats.anticipationTime);
+
+        if(attackSound != "")
+            SoundManager.instance.CreateSound().WithSoundData(attackSound).WithPosition(transform.position).WithrandomPitch().Play();
 
         if (stats.useLunge)
         {

@@ -13,9 +13,8 @@ MonoBehaviour:
   m_Name: Baron
   m_EditorClassIdentifier: Assembly-CSharp::EnemyStats
   enemyName: Baron
-  maxHealth: 80
   moveSpeed: 3
-  attackDamage: 20
+  attackDamage: 15
   attackRange: 2.25
   attackCooldown: 2.5
   anticipationTime: 0.6

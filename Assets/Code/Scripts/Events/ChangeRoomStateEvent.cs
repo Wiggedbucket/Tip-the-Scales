@@ -1,4 +1,4 @@
-public class ChangeRoomStateEvent : IEvent
+public struct ChangeRoomStateEvent : IEvent
 {
     public int RoomId;
 

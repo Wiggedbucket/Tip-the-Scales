@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using AudioSystem;
 
 public class FirePillar : MonoBehaviour
 {
@@ -49,6 +50,7 @@ public class FirePillar : MonoBehaviour
             if (activeParticles != null) activeParticles.Play();
             isActive = true;
             float currentActiveDuration = Mathf.Lerp(minActiveDuration, maxActiveDuration, scaleMultiplier);
+            SoundManager.instance.CreateSound().WithSoundData("LavaPillar").WithPosition(transform.position).WithrandomPitch().Play();
             //Debug.Log(gameObject.name + " ACTIVE!");
             yield return new WaitForSeconds(currentActiveDuration);
             isActive = false;

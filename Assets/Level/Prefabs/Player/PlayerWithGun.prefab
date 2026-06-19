@@ -75,7 +75,7 @@ GameObject:
   - component: {fileID: 7243432027371486388}
   - component: {fileID: 656645658249047089}
   - component: {fileID: 705700531240658165}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: PlayerObject
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -381,6 +381,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Health
   maxHealth: 100
   isEnemy: 0
+  hitSound: 
+  deathSound: 
 --- !u!114 &7383733740544774614
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -393,6 +395,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4037c60b08d80344c8b7ae8d2f2b2572, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerHealth
+  player: {fileID: 3016535209961589408}
 --- !u!114 &271586012094846685
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -574,6 +577,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   playerCam: {fileID: 1329407062800773401}
+  gunshotSound: 
+  reloadSound: 
 --- !u!1 &6708298392339631534
 GameObject:
   m_ObjectHideFlags: 0
@@ -586,7 +591,7 @@ GameObject:
   - component: {fileID: 3666420083231965548}
   - component: {fileID: 875263533420819559}
   - component: {fileID: 7337777961256896218}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: PlayerBody
   m_TagString: Player
   m_Icon: {fileID: 0}

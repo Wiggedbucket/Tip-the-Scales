@@ -1,3 +1,4 @@
+using AudioSystem;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -18,17 +19,28 @@ public class EnemySpawner : MonoBehaviour
 
     private readonly HashSet<GameObject> aliveEnemies = new();
 
+    private EventBinding<RoomCreatedEvent> roomCreatedBinding;
+
     private EventBinding<EnemyDiedEvent> enemyDiedEventBinding;
 
     private void OnEnable()
     {
+        roomCreatedBinding = new EventBinding<RoomCreatedEvent>(RoomCreated);
+        EventBus<RoomCreatedEvent>.Register(roomCreatedBinding);
+
         enemyDiedEventBinding = new EventBinding<EnemyDiedEvent>(EnemyDied);
         EventBus<EnemyDiedEvent>.Register(enemyDiedEventBinding);
     }
 
     private void OnDisable()
     {
+        EventBus<RoomCreatedEvent>.Deregister(roomCreatedBinding);
         EventBus<EnemyDiedEvent>.Deregister(enemyDiedEventBinding);
+    }
+
+    private void RoomCreated(RoomCreatedEvent e)
+    {
+        spawnPoints = e.EnemySpawnPoints;
     }
 
     public bool IsWaveOver() => allEnemiesSpawned && aliveEnemies.Count == 0;
@@ -145,6 +157,7 @@ public class EnemySpawner : MonoBehaviour
         }
 
         aliveEnemies.Add(enemy);
+        SoundManager.instance.CreateSound().WithSoundData("EnemySpawn").WithPosition(spawnPoint.position).Play();
     }
 
     private void EnemyDied(EnemyDiedEvent enemyDiedEvent)

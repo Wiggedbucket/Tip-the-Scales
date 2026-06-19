@@ -2,7 +2,10 @@ using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour
 {
-    Health health;
+    private Health health;
+
+    [SerializeField]
+    private GameObject player;
 
     private void Start()
     {
@@ -12,6 +15,18 @@ public class PlayerHealth : MonoBehaviour
 
     private void HandleDeath()
     {
-        //Destroy(gameObject);
+        if (GameState.Instance.InPermaDeathRange)
+        {
+            MatchEndMenu.Instance.OpenMenu(false);
+
+            GameState.Instance.PlayerIsPermaDead = true;
+
+            // Send death to the server (If in multiplayer)
+        }
+        else
+        {
+            PlayerCage.Instance.SendPlayerToJail(player);
+            health.Revive();
+        }
     }
 }

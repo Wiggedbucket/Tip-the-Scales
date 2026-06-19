@@ -29,7 +29,7 @@ public class Projectile : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            Health health = other.GetComponent<Health>();
+            Health health = other.GetComponentInParent<Health>();
             if (health != null)
             {
                 health.TakeDamage(damage);

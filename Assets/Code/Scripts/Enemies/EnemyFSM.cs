@@ -25,7 +25,7 @@ public class EnemyFSM : MonoBehaviour
 
     Vector3 HomePosition;
 
-    public int points = 20;
+    public int points;
 
     private void Start()
     {

@@ -1,3 +1,4 @@
+using AudioSystem;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -38,7 +39,13 @@ public class PlayerShooting : MonoBehaviour
     public Camera playerCam;
     private bool isShooting = false;
     private bool hasAmmo = true;
-    //private bool isReloading = false; //still need to use so can't shoot while reloading & add reloading time.
+
+	//private bool isReloading = false; //still need to use so can't shoot while reloading & add reloading time.
+
+	[Header("Audio")]
+    public string gunshotSound = "";
+    public string reloadSound = "";
+    
 
     private void Awake()
     {
@@ -115,6 +122,8 @@ public class PlayerShooting : MonoBehaviour
 
         if (context.performed && currentAmmo < maxAmmo)
         {
+            if(reloadSound != "")
+                SoundManager.instance.CreateSound().WithSoundData(reloadSound).WithrandomPitch().Play();
             currentAmmo = maxAmmo;
             hasAmmo = true;
             EventBus<StyleGainEvent>.Raise(new StyleGainEvent()
@@ -185,6 +194,9 @@ public class PlayerShooting : MonoBehaviour
         if (GameState.Instance.IsPaused)
             return;
 
+        if(gunshotSound != "")
+            SoundManager.instance.CreateSound().WithSoundData(gunshotSound).WithrandomPitch().Play();
+        
         nextTimeToFire = Time.time + firerate;
 
         int bulletsPerShot = (currentFireMode == FireMode.Shotgun) ? pelletsPerShot : 1;
