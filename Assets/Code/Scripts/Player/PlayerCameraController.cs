@@ -24,6 +24,8 @@ public class PlayerCameraController : MonoBehaviour
 
     private EventBinding<TookDamageEvent> tookDamageBinding;
 
+    private EventBinding<PlayerWonEvent> playerWonBinding;
+
     private void OnEnable()
     {
         pauseGameStateChangedBinding = new EventBinding<PauseGameStateChangedEvent>(OnPauseGameStateChanged);
@@ -32,6 +34,9 @@ public class PlayerCameraController : MonoBehaviour
         tookDamageBinding = new EventBinding<TookDamageEvent>(OnTookDamage);
         EventBus<TookDamageEvent>.Register(tookDamageBinding);
 
+        playerWonBinding = new EventBinding<PlayerWonEvent>(OnPlayerWon);
+        EventBus<PlayerWonEvent>.Register(playerWonBinding);
+
         Look.Enable();
     }
 
@@ -39,6 +44,7 @@ public class PlayerCameraController : MonoBehaviour
     {
         EventBus<PauseGameStateChangedEvent>.Deregister(pauseGameStateChangedBinding);
         EventBus<TookDamageEvent>.Deregister(tookDamageBinding);
+        EventBus<PlayerWonEvent>.Deregister(playerWonBinding);
 
         Look.Disable();
     }
@@ -52,6 +58,11 @@ public class PlayerCameraController : MonoBehaviour
     {
         if (!e.IsEnemy && e.Died && GameState.Instance.InPermaDeathRange)
             ToggleLookControl(false);
+    }
+
+    private void OnPlayerWon(PlayerWonEvent e)
+    {
+        ToggleLookControl(false);
     }
 
     private void ToggleLookControl(bool enable)

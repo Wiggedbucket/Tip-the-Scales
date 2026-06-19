@@ -98,6 +98,7 @@ public class GameState : MonoBehaviour
         {
             MatchEndMenu.Instance.OpenMenu(true);
             MatchEnded = true;
+            EventBus<PlayerWonEvent>.Raise(new PlayerWonEvent());
         }
     }
 
