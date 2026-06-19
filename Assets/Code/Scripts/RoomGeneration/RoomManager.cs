@@ -1,36 +1,28 @@
 using System.Collections.Generic;
-using System.Text.RegularExpressions;
 using UnityEngine;
 
-#if UNITY_EDITOR
-using UnityEditor;
-#endif
-
-public class RoomGenerator : MonoBehaviour
+public class RoomManager : MonoBehaviour
 {
     public GameObject[] roomPrefabs;
     public int width = 5;
     public int height = 5;
-    public float tileSize = 5f;
+    public float tileSize = 6f;
     private List<Transform> enemySpawnPoints = new();
     private List<Transform> hazardSpawnPoints = new();
     private int roomID;
 
-    public void Initialize(int id)
+
+    public void setID(int id)
     {
         roomID = id;
-        #if UNITY_EDITOR
-        LoadRoomPrefabs();
-        #endif
-    }
-
-    void Start()
-    {
-        Create(transform.position);
     }
 
     public void Create(Vector3 position)
     {
+        // remove any existing tiles before creating new ones
+        Debug.Log($"Creating room {roomID} at position {position}!");
+        ClearTiles();
+
         bool hasValidPrefab = roomPrefabs != null && roomPrefabs.Length > 0 && roomPrefabs[0] != null;
         if (!hasValidPrefab) { return; }
 
@@ -38,7 +30,7 @@ public class RoomGenerator : MonoBehaviour
         {
             for (int x = 0; x < width; x++)
             {
-                SpawnRoom(x-2.5f, y-2.5f, position);
+                SpawnRoom(x - 2f, y - 2f, position);
             }
         }
 
@@ -48,6 +40,26 @@ public class RoomGenerator : MonoBehaviour
             EnemySpawnPoints = enemySpawnPoints,
             HazardSpawnPoints = hazardSpawnPoints,
         });
+    }
+
+    public void ClearTiles()
+    {
+        // clear spawn lists
+        enemySpawnPoints.Clear();
+        hazardSpawnPoints.Clear();
+
+        // destroy child tile instances
+        for (int i = transform.childCount - 1; i >= 0; i--)
+        {
+            var child = transform.GetChild(i).gameObject;
+            if (child != null)
+            {
+                if (Application.isPlaying)
+                    Destroy(child);
+                else
+                    DestroyImmediate(child);
+            }
+        }
     }
 
 
@@ -79,32 +91,4 @@ public class RoomGenerator : MonoBehaviour
             }
         }
     }
-
-    // automatic adding room prefabs to the array cuz im lazy.
-    #if UNITY_EDITOR
-    private void LoadRoomPrefabs()
-    {
-        string[] guids = AssetDatabase.FindAssets("t:GameObject", new string[] { "Assets/Level/Prefabs/Room" });
-        
-        List<GameObject> filteredPrefabs = new();
-        Regex roomPattern = new Regex(@"^Room\d+$");
-        
-        foreach (string guid in guids)
-        {
-            string path = AssetDatabase.GUIDToAssetPath(guid);
-            string fileName = System.IO.Path.GetFileNameWithoutExtension(path);
-            
-            if (roomPattern.IsMatch(fileName))
-            {
-                GameObject prefab = AssetDatabase.LoadAssetAtPath<GameObject>(path);
-                if (prefab != null)
-                {
-                    filteredPrefabs.Add(prefab);
-                }
-            }
-        }
-        
-        roomPrefabs = filteredPrefabs.ToArray();
-    }
-    #endif
 }
