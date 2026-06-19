@@ -573,21 +573,33 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerShooting
   rifleModel: {fileID: 4066805361609911121}
   shotgunModel: {fileID: 3305896485335328695}
-  damage: 10
-  range: 40
-  firerate: 0.1
-  maxAmmo: 25
-  currentAmmo: 0
-  reloadTime: 0.8
-  bulletSpread: 0.05
-  pelletsPerShot: 2
-  currentFireMode: 0
+  rifleStats:
+    WeaponName: Rifle
+    FireMode: 0
+    Damage: 10
+    Range: 50
+    FireRate: 0.1
+    BulletSpread: 0.05
+    MaxAmmo: 25
+    PelletsPerShot: 1
+  shotgunStats:
+    WeaponName: Shotgun
+    FireMode: 2
+    Damage: 80
+    Range: 30
+    FireRate: 0.2
+    BulletSpread: 0.1
+    MaxAmmo: 2
+    PelletsPerShot: 5
+  playerCam: {fileID: 1329407062800773401}
   enemyLayer:
     serializedVersion: 2
     m_Bits: 128
-  playerCam: {fileID: 1329407062800773401}
-  gunshotSound: 
-  reloadSound: 
+  gunshotSound: ShotgunShoot
+  reloadSound: AKReload
+  reloadAction: {fileID: 5201899917287827667, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  weapon1Action: {fileID: 401328854548433511, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  weapon2Action: {fileID: 7201945487257040534, guid: 052faaac586de48259a63d0c4782560b, type: 3}
 --- !u!1 &6708298392339631534
 GameObject:
   m_ObjectHideFlags: 0

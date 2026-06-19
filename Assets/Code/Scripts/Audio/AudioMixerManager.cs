@@ -10,11 +10,11 @@ public class AudioMixerManager : MonoBehaviour
 
 	private void Start()
 	{
-		soundFXSlider = UI.rootVisualElement.Q<Slider>("soundFXSlider");
-		soundFXSlider.RegisterValueChangedCallback(evt =>
-		{
-			SetSoundFXVolume(evt.newValue);
-		});
+		//soundFXSlider = UI.rootVisualElement.Q<Slider>("soundFXSlider");
+		//soundFXSlider.RegisterValueChangedCallback(evt =>
+		//{
+		//	SetSoundFXVolume(evt.newValue);
+		//});
 	}
 
 	public void SetMasterVolume(float volume)

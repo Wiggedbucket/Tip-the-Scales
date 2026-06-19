@@ -47,7 +47,7 @@ public class PlayerStatsUI : MonoBehaviour
     private void Update()
     {
         if (shooting != null)
-            ammoLabel.text = $"Ammo: {shooting.currentAmmo}/{shooting.maxAmmo}";
+            ammoLabel.text = $"Ammo: {shooting.CurrentAmmo}/{shooting.CurrentWeapon.MaxAmmo}";
 
         if (health != null)
             healthLabel.text = $"Health: {health.GetHealth()}/{health.GetMaxHealth()}";
