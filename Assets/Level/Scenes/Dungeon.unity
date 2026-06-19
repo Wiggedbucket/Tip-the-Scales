@@ -2498,7 +2498,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12b47a9259b86014f9fd34e0d98e24a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SinglePlayerMode
-  demonModifier: 6
+  demonModifier: 8
   demonPointInterval: 4
   roomSwitchInterval: 10
 --- !u!4 &2008298038
