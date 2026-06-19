@@ -27,7 +27,7 @@ public class PlayerShooting : MonoBehaviour
     public int currentAmmo;
     public float reloadTime = 0.8f;
     public float bulletSpread = 0.1f;
-    public int pelletsPerShot = 8;
+    public int pelletsPerShot = 2;
 
     [Header("Firing Mode Settings")]
     public FireMode currentFireMode = FireMode.Automatic;
@@ -150,6 +150,10 @@ public class PlayerShooting : MonoBehaviour
             {
                 ExecuteShot();
                 currentAmmo -= 1;
+                EventBus<WeaponFiredEvent>.Raise(new WeaponFiredEvent()
+                {
+                    Weapon = "Shotgun",
+                });
             }
             else if (currentFireMode == FireMode.SingleShot)
             {
@@ -158,6 +162,10 @@ public class PlayerShooting : MonoBehaviour
                     ExecuteShot();
                     currentAmmo -= 1;
                     hasFiredSingle =true;
+                    EventBus<WeaponFiredEvent>.Raise(new WeaponFiredEvent()
+                    {
+                        Weapon = "Shotgun",
+                    });
                 }
             }
             else if (currentFireMode == FireMode.Shotgun)
@@ -173,7 +181,10 @@ public class PlayerShooting : MonoBehaviour
     }
 
     public void ExecuteShot()
-    {   
+    {
+        if (GameState.Instance.IsPaused)
+            return;
+
         nextTimeToFire = Time.time + firerate;
 
         int bulletsPerShot = (currentFireMode == FireMode.Shotgun) ? pelletsPerShot : 1;
@@ -183,27 +194,25 @@ public class PlayerShooting : MonoBehaviour
         
 
         RaycastHit hit;
+        if (Physics.Raycast(playerCam.transform.position, direction, out hit, range, enemyLayer))
+        {
+            Debug.Log(hit.transform.name);
 
-            if (Physics.Raycast(playerCam.transform.position, direction, out hit, range, enemyLayer))
+            Health health = hit.transform.GetComponentInParent<Health>();
+            if (health != null)
             {
-                Debug.Log(hit.transform.name);
+            float calculatedDamage = (currentFireMode == FireMode.Shotgun) ? (damage / pelletsPerShot) : damage;
 
-                Health health = hit.transform.GetComponentInParent<Health>();
-                if (health != null)
+                health.TakeDamage(calculatedDamage);
+
+                EventBus<StyleGainEvent>.Raise(new StyleGainEvent()
                 {
-                float calculatedDamage = (currentFireMode == FireMode.Shotgun) ? (damage / pelletsPerShot) : damage;
-
-                    health.TakeDamage(calculatedDamage);
-
-                    EventBus<StyleGainEvent>.Raise(new StyleGainEvent()
-                    {
-                        Amount = damage * 0.5f,
-                        Reason = "Shot Hit",
-                        TextColor = Color.yellow,
-                    });
-                }
+                    Amount = damage * 0.5f,
+                    Reason = "Shot Hit",
+                    TextColor = Color.yellow,
+                });
             }
-        
+        }
         else
         {
             Debug.Log("Miss");
