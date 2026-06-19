@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerHealth : MonoBehaviour
 {
@@ -6,6 +7,9 @@ public class PlayerHealth : MonoBehaviour
 
     [SerializeField]
     private GameObject player;
+
+    [Header("Input binding")]
+    [SerializeField] private InputAction look;
 
     private void Start()
     {
@@ -20,6 +24,11 @@ public class PlayerHealth : MonoBehaviour
             MatchEndMenu.Instance.OpenMenu(false);
 
             GameState.Instance.PlayerIsPermaDead = true;
+
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+
+            look.Disable();
 
             // Send death to the server (If in multiplayer)
         }

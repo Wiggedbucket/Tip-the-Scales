@@ -396,6 +396,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerHealth
   player: {fileID: 3016535209961589408}
+  look:
+    m_Name: Look
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 582b754c-672e-47ba-8777-81fd73ce8c64
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
 --- !u!114 &271586012094846685
 MonoBehaviour:
   m_ObjectHideFlags: 0
