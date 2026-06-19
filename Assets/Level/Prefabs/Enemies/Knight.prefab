@@ -175,7 +175,7 @@ MonoBehaviour:
   lastKiteEndTime: 0
   currentState: 0
   lastAttackTime: 0
-  points: 20
+  points: 2
 --- !u!114 &4497885199475217975
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -188,7 +188,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e1ca5ca67a68394db06e3193cbfd030, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Health
-  maxHealth: 50
+  maxHealth: 40
   isEnemy: 1
   hitSound: 
   deathSound: EnemyDeath

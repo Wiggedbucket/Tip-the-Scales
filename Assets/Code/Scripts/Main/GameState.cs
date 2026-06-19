@@ -30,10 +30,13 @@ public class GameState : MonoBehaviour
     }
     #endregion
 
-    public bool isServerConnected = false;
-
     [Range(-1f, 1f)]
     public float Scale = 0f;
+
+    [Range(-1f, 1f)]
+    public float ScaleTreshold = -0.8f;
+
+    public bool InPermaDeathRange => Scale <= ScaleTreshold;
 
     public CombatPoints GlobalCombatPoints
     {

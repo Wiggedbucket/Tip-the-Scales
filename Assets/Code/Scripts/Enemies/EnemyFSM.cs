@@ -25,7 +25,7 @@ public class EnemyFSM : MonoBehaviour
 
     Vector3 HomePosition;
 
-    public int points = 20;
+    public int points;
 
     private void Start()
     {
@@ -176,6 +176,12 @@ public class EnemyFSM : MonoBehaviour
             EnemyObject = gameObject,
             Points = points,
             RoomID = roomId,
+        });
+        EventBus<StyleGainEvent>.Raise(new StyleGainEvent()
+        {
+            Amount = points,
+            Reason = "Enemy Dead",
+            TextColor = Color.lightYellow,
         });
         Destroy(gameObject);
     }

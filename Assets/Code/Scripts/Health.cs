@@ -30,24 +30,39 @@ public class Health : MonoBehaviour
         currentHealth -= amount;
 
         if(hitSound != "")
-			SoundManager.instance.CreateSound().WithSoundData(hitSound).WithPosition(transform.position).WithrandomPitch().Play();
+			      SoundManager.instance.CreateSound().WithSoundData(hitSound).WithPosition(transform.position).WithrandomPitch().Play();
 
-		//Debug.Log(gameObject.name + " took " + amount + " damage. Current health: " + currentHealth);
+		    //Debug.Log(gameObject.name + " took " + amount + " damage. Current health: " + currentHealth);
 
-		if (currentHealth <= 0)
+        if (currentHealth <= 0)
         {
             currentHealth = 0;
             isDead = true;
             OnDeath?.Invoke();
             if(deathSound != "")
-				SoundManager.instance.CreateSound().WithSoundData(deathSound).WithPosition(transform.position).WithrandomPitch().Play();
-		}
+				        SoundManager.instance.CreateSound().WithSoundData(deathSound).WithPosition(transform.position).WithrandomPitch().Play();
+		    }
 
         EventBus<TookDamageEvent>.Raise(new TookDamageEvent()
         {
             IsEnemy = isEnemy,
             Died = isDead,
         });
+        if (isEnemy == false)
+        {
+            EventBus<StyleGainEvent>.Raise(new StyleGainEvent()
+            {
+                Amount = -(amount/2),
+                Reason = "Got Hit",
+                TextColor = Color.red,
+            });
+        }
+    }
+
+    public void Revive()
+    {
+        isDead = false;
+        currentHealth = maxHealth;
     }
 
     public float GetMaxHealth()

@@ -71,7 +71,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: ecb4ab4f03005434981150ccc95d45d6, type: 2}
+  - {fileID: 2100000, guid: 465acdff91b0796418656a08aa21e909, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -187,7 +187,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e1ca5ca67a68394db06e3193cbfd030, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Health
-  maxHealth: 80
+  maxHealth: 50
   isEnemy: 1
   hitSound: 
   deathSound: EnemyDeath
