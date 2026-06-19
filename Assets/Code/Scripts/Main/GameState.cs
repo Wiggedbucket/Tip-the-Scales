@@ -35,6 +35,11 @@ public class GameState : MonoBehaviour
     [Range(-1f, 1f)]
     public float Scale = 0f;
 
+    [Range(-1f, 1f)]
+    public float ScaleTreshold = -0.8f;
+
+    public bool InPermaDeathRange => Scale <= ScaleTreshold;
+
     public CombatPoints GlobalCombatPoints
     {
         get
@@ -112,7 +117,8 @@ public class GameState : MonoBehaviour
             IsPaused = IsPaused,
         });
 
-        Time.timeScale = IsPaused ? 0f : 1f;
+        if (!GameMode.IsMultiplayer)
+            Time.timeScale = IsPaused ? 0f : 1f;
     }
 }
 
