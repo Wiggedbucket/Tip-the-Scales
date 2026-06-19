@@ -20,6 +20,7 @@ public class PlayerShooting : MonoBehaviour
     public int maxAmmo = 24;
     public int currentAmmo;
     public float reloadTime = 0.8f;
+    public float bulletSpread = 0.1f;
 
     [Header("Firing Mode Settings")]
     public FireMode currentFireMode = FireMode.Automatic;
@@ -60,6 +61,12 @@ public class PlayerShooting : MonoBehaviour
         {
             currentAmmo = maxAmmo;
             hasAmmo = true;
+            EventBus<StyleGainEvent>.Raise(new StyleGainEvent()
+            {
+                Amount = 1,
+                Reason = "Reloaded",
+                TextColor = Color.yellow,
+            });
         }
     }
 
@@ -104,9 +111,13 @@ public class PlayerShooting : MonoBehaviour
     {   
             nextTimeToFire = Time.time + firerate;
 
+        Vector2 shotSpread = Random.insideUnitCircle * bulletSpread;
+        Vector3 direction = playerCam.transform.forward + (playerCam.transform.right * shotSpread.x) + (playerCam.transform.up * shotSpread.y);
+        
+
             RaycastHit hit;
 
-            if (Physics.Raycast(playerCam.transform.position, playerCam.transform.forward, out hit, range, enemyLayer))
+            if (Physics.Raycast(playerCam.transform.position, direction, out hit, range, enemyLayer))
             {
                 Debug.Log(hit.transform.name);
 
@@ -114,12 +125,25 @@ public class PlayerShooting : MonoBehaviour
                 if (health != null)
                 {
                     health.TakeDamage(damage);
+
+                    EventBus<StyleGainEvent>.Raise(new StyleGainEvent()
+                    {
+                        Amount = damage / 2,
+                        Reason = "Shot Hit",
+                        TextColor = Color.yellow,
+                    });
                 }
             }
         
         else
         {
-            Debug.Log("No ammo");
+            Debug.Log("Miss");
+            EventBus<StyleGainEvent>.Raise(new StyleGainEvent()
+            {
+                Amount = -1,
+                Reason = "you shot air",
+                TextColor = Color.red,
+            });
         }
     }
 }

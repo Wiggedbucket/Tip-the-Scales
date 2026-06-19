@@ -37,8 +37,6 @@ public class GameState : MonoBehaviour
     }
     #endregion
 
-    public bool isServerConnected = false;
-
     [Range(-1f, 1f)]
     public float Scale = 0f;
 
