@@ -580,7 +580,7 @@ MonoBehaviour:
   currentAmmo: 0
   reloadTime: 0.8
   bulletSpread: 0.05
-  pelletsPerShot: 8
+  pelletsPerShot: 2
   currentFireMode: 0
   enemyLayer:
     serializedVersion: 2
