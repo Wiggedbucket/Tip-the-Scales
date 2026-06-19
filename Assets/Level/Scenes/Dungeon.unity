@@ -630,6 +630,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerWithGun
       objectReference: {fileID: 0}
+    - target: {fileID: 7383733740544774614, guid: bead593ec3e94af4eb6e7a33fa464198, type: 3}
+      propertyPath: look.m_SingletonActionBindings.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7383733740544774614, guid: bead593ec3e94af4eb6e7a33fa464198, type: 3}
+      propertyPath: look.m_SingletonActionBindings.Array.data[0].m_Id
+      value: 76654967-27d6-45ea-89c6-b67a52d6dcc4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7383733740544774614, guid: bead593ec3e94af4eb6e7a33fa464198, type: 3}
+      propertyPath: look.m_SingletonActionBindings.Array.data[0].m_Action
+      value: Look
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2498,7 +2510,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12b47a9259b86014f9fd34e0d98e24a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SinglePlayerMode
-  demonModifier: 8
+  demonModifier: 6
   demonPointInterval: 4
   roomSwitchInterval: 10
 --- !u!4 &2008298038
