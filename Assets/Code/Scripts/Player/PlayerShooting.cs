@@ -1,16 +1,22 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public enum FireMode
 {
     Automatic,
-    SingleShot
+    SingleShot,
+    Shotgun
 }
 
 public class PlayerShooting : MonoBehaviour
 {
     AudioSource audioSource;
     Animator weaponAnimator;
+
+    [Header("WeaponModels")]
+    public GameObject rifleModel;
+    public GameObject shotgunModel;
 
     [Header("WeaponStats")]
     public float damage = 25f;
@@ -21,6 +27,7 @@ public class PlayerShooting : MonoBehaviour
     public int currentAmmo;
     public float reloadTime = 0.8f;
     public float bulletSpread = 0.1f;
+    public int pelletsPerShot = 8;
 
     [Header("Firing Mode Settings")]
     public FireMode currentFireMode = FireMode.Automatic;
@@ -42,6 +49,54 @@ public class PlayerShooting : MonoBehaviour
     {
         AmmoCheck();
         ShootCheck();
+    }
+
+    public void onWeaponSelect1 (InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            EquipRifle();
+        }
+    }
+
+    public void onWeaponSelect2(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            EquipShotgun();
+        }
+    }
+
+    private void EquipRifle()
+    {
+        rifleModel.SetActive(true);
+        shotgunModel.SetActive(false);
+
+        currentFireMode = FireMode.Automatic;
+        damage = 10f;
+        firerate = 0.1f;
+        bulletSpread = 0.05f;
+        maxAmmo = 25;
+        range = 50f;
+
+        currentAmmo = maxAmmo;
+        hasAmmo = true;
+    }
+
+    private void EquipShotgun()
+    {
+        rifleModel.SetActive (false);
+        shotgunModel.SetActive(true);
+
+        currentFireMode = FireMode.Shotgun;
+        damage = 80f;
+        firerate = 0.2f;
+        bulletSpread = 0.1f;
+        maxAmmo = 2;
+        range = 30f;
+
+        currentAmmo = maxAmmo;
+        hasAmmo = true;
     }
 
     public void AmmoCheck()
@@ -103,18 +158,29 @@ public class PlayerShooting : MonoBehaviour
                     hasFiredSingle =true;
                 }
             }
+            else if (currentFireMode == FireMode.Shotgun)
+            {
+                if (!hasFiredSingle)
+                {
+                    ExecuteShot();
+                    currentAmmo -= 1;
+                    hasFiredSingle =true;
+                }
+            }
         }
     }
 
     public void ExecuteShot()
     {   
-            nextTimeToFire = Time.time + firerate;
+        nextTimeToFire = Time.time + firerate;
+
+        int bulletsPerShot = (currentFireMode == FireMode.Shotgun) ? pelletsPerShot : 1;
 
         Vector2 shotSpread = Random.insideUnitCircle * bulletSpread;
         Vector3 direction = playerCam.transform.forward + (playerCam.transform.right * shotSpread.x) + (playerCam.transform.up * shotSpread.y);
         
 
-            RaycastHit hit;
+        RaycastHit hit;
 
             if (Physics.Raycast(playerCam.transform.position, direction, out hit, range))
             {
@@ -123,11 +189,13 @@ public class PlayerShooting : MonoBehaviour
                 Health health = hit.transform.GetComponentInParent<Health>();
                 if (health != null)
                 {
-                    health.TakeDamage(damage);
+                float calculatedDamage = (currentFireMode == FireMode.Shotgun) ? (damage / pelletsPerShot) : damage;
+
+                    health.TakeDamage(calculatedDamage);
 
                     EventBus<StyleGainEvent>.Raise(new StyleGainEvent()
                     {
-                        Amount = damage / 2,
+                        Amount = damage * 0.5f,
                         Reason = "Shot Hit",
                         TextColor = Color.yellow,
                     });

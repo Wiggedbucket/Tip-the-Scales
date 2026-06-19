@@ -43,7 +43,7 @@ public class Health : MonoBehaviour
         {
             EventBus<StyleGainEvent>.Raise(new StyleGainEvent()
             {
-                Amount = -(amount/2),
+                Amount = -(amount * 0.5f),
                 Reason = "Got Hit",
                 TextColor = Color.red,
             });

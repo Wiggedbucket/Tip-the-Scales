@@ -525,6 +525,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d466c9554aea2d41902e3815cfc3668, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerShooting
+  rifleModel: {fileID: 6611337521277578877}
+  shotgunModel: {fileID: 0}
   damage: 10
   range: 40
   firerate: 0.1
@@ -532,6 +534,7 @@ MonoBehaviour:
   currentAmmo: 0
   reloadTime: 0.8
   bulletSpread: 0.05
+  pelletsPerShot: 8
   currentFireMode: 0
   playerCam: {fileID: 1329407062800773401}
 --- !u!1 &6708298392339631534
