@@ -10,7 +10,9 @@ public class PlayerCameraController : MonoBehaviour
     public Transform Orientation;
 
     [Header("Input binding")]
-    [SerializeField] private InputAction look;
+    [SerializeField] private InputActionReference lookActionReference;
+
+    private InputAction Look => lookActionReference.action;
 
     [Header("Camera Mover")]
     public Transform cameraPosition;
@@ -20,36 +22,53 @@ public class PlayerCameraController : MonoBehaviour
 
     private EventBinding<PauseGameStateChangedEvent> pauseGameStateChangedBinding;
 
+    private EventBinding<TookDamageEvent> tookDamageBinding;
+
     private void OnEnable()
     {
         pauseGameStateChangedBinding = new EventBinding<PauseGameStateChangedEvent>(OnPauseGameStateChanged);
         EventBus<PauseGameStateChangedEvent>.Register(pauseGameStateChangedBinding);
 
-        look.Enable();
+        tookDamageBinding = new EventBinding<TookDamageEvent>(OnTookDamage);
+        EventBus<TookDamageEvent>.Register(tookDamageBinding);
+
+        Look.Enable();
     }
 
     private void OnDisable()
     {
         EventBus<PauseGameStateChangedEvent>.Deregister(pauseGameStateChangedBinding);
+        EventBus<TookDamageEvent>.Deregister(tookDamageBinding);
 
-        look.Disable();
+        Look.Disable();
     }
 
     private void OnPauseGameStateChanged(PauseGameStateChangedEvent e)
     {
-        if (e.IsPaused)
-        {
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
+        ToggleLookControl(!e.IsPaused);
+    }
 
-            look.Disable();
-        }
-        else
+    private void OnTookDamage(TookDamageEvent e)
+    {
+        if (!e.IsEnemy && e.Died && GameState.Instance.InPermaDeathRange)
+            ToggleLookControl(false);
+    }
+
+    private void ToggleLookControl(bool enable)
+    {
+        if (enable)
         {
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
 
-            look.Enable();
+            Look.Enable();
+        }
+        else
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+
+            Look.Disable();
         }
     }
 
@@ -61,7 +80,7 @@ public class PlayerCameraController : MonoBehaviour
 
     private void Update()
     {
-        Vector2 lookInput = look.ReadValue<Vector2>();
+        Vector2 lookInput = Look.ReadValue<Vector2>();
 
         float mouseX = lookInput.x * sensX;
         float mouseY = lookInput.y * sensY;

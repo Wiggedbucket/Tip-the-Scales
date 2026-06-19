@@ -855,23 +855,7 @@ MonoBehaviour:
   sensX: 0.1
   sensY: 0.075
   Orientation: {fileID: 4004263459997601496}
-  look:
-    m_Name: Look
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: 92029007-8240-41d1-b155-ac791d931f4d
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings:
-    - m_Name: 
-      m_Id: e344c0b1-79e6-4691-ae47-e03cf4302bdc
-      m_Path: <Mouse>/delta
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Look
-      m_Flags: 0
-    m_Flags: 0
+  lookActionReference: {fileID: -5630151704836100654, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   cameraPosition: {fileID: 6827894434898789570}
 --- !u!1001 &840659115781320606
 PrefabInstance:

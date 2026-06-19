@@ -10,6 +10,42 @@ public class GameState : MonoBehaviour
     public int passivePointsPerInterval = 2;
     private float passiveTimer = 0f;
 
+    [Header("Scale Values")]
+    [Range(-1f, 1f)]
+    public float Scale = 0f;
+
+    [Range(-1f, 1f)]
+    public float ScaleTreshold = -0.8f;
+
+    [Header("Perma Death")]
+    public bool InPermaDeathRange => Scale <= ScaleTreshold;
+
+    public bool PlayerIsPermaDead = false;
+
+    [Header("Combat Points")]
+    public CombatPoints GlobalCombatPoints
+    {
+        get
+        {
+            CombatPoints total = new();
+
+            foreach (CombatPoints room in RoomCombatPointsList)
+            {
+                total.angelPoints += room.angelPoints;
+                total.demonPoints += room.demonPoints;
+            }
+
+            return total;
+        }
+    }
+    public List<CombatPoints> RoomCombatPointsList;
+
+    [Header("Variables")]
+    public float GameTime = 0f;
+
+    public bool IsPaused = false;
+
+    public EventBinding<EnemyDiedEvent> enemyDiedBinding;
 
     #region Singleton Setup
     public static GameState Instance { get; private set; }
@@ -36,39 +72,6 @@ public class GameState : MonoBehaviour
         }
     }
     #endregion
-
-    [Range(-1f, 1f)]
-    public float Scale = 0f;
-
-    [Range(-1f, 1f)]
-    public float ScaleTreshold = -0.8f;
-
-    public bool InPermaDeathRange => Scale <= ScaleTreshold;
-
-    public bool PlayerIsPermaDead = false;
-
-    public CombatPoints GlobalCombatPoints
-    {
-        get
-        {
-            CombatPoints total = new();
-
-            foreach (CombatPoints room in RoomCombatPointsList)
-            {
-                total.angelPoints += room.angelPoints;
-                total.demonPoints += room.demonPoints;
-            }
-
-            return total;
-        }
-    }
-    public List<CombatPoints> RoomCombatPointsList;
-
-    public float GameTime = 0f;
-
-    public bool IsPaused = false;
-
-    public EventBinding<EnemyDiedEvent> enemyDiedBinding;
 
     private void OnEnable()
     {

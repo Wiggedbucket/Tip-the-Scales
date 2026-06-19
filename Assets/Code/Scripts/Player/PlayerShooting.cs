@@ -46,7 +46,6 @@ public class PlayerShooting : MonoBehaviour
     public string gunshotSound = "";
     public string reloadSound = "";
     
-
     private void Awake()
     {
         currentAmmo = maxAmmo;
@@ -137,22 +136,22 @@ public class PlayerShooting : MonoBehaviour
 
     public void OnShoot(InputAction.CallbackContext context)
     {
-
-        { 
-            if (context.started)
-            {
-                isShooting = true;
-            }
-            else if (context.canceled)
-            {
-                isShooting = false;
-                hasFiredSingle = false;
-            }
+        if (context.started)
+        {
+            isShooting = true;
+        }
+        else if (context.canceled)
+        {
+            isShooting = false;
+            hasFiredSingle = false;
         }
     }
 
     public void ShootCheck()
     {
+        if (GameState.Instance.IsPaused || GameState.Instance.PlayerIsPermaDead)
+            return;
+
         if (!isShooting || Time.time < nextTimeToFire || !hasAmmo) return;
         {
             if (currentFireMode == FireMode.Automatic )
@@ -191,9 +190,6 @@ public class PlayerShooting : MonoBehaviour
 
     public void ExecuteShot()
     {
-        if (GameState.Instance.IsPaused)
-            return;
-
         if(gunshotSound != "")
             SoundManager.instance.CreateSound().WithSoundData(gunshotSound).WithrandomPitch().Play();
         
