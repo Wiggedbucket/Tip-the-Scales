@@ -10,7 +10,7 @@ public class EnemySpawner : MonoBehaviour
 
     [SerializeField] private List<Transform> spawnPoints;
 
-    [SerializeField] private bool allEnemiesSpawned = false;
+    [SerializeField] private bool allEnemiesSpawned = true;
 
     [SerializeField] private float spawnDelay = 0.2f;
 
@@ -30,6 +30,8 @@ public class EnemySpawner : MonoBehaviour
     {
         EventBus<EnemyDiedEvent>.Deregister(enemyDiedEventBinding);
     }
+
+    public bool IsWaveOver() => allEnemiesSpawned && aliveEnemies.Count == 0;
 
     public IEnumerator SpawnWave(int budget, int wave)
     {
@@ -69,6 +71,7 @@ public class EnemySpawner : MonoBehaviour
 
         float totalWeight = 0f;
 
+        // Find out which enemies are valid to spawn and calculate the total weight for the weighted random selection
         foreach (EnemyData enemy in Registry.enemies)
         {
             if (enemy.enemy == null)
@@ -102,6 +105,7 @@ public class EnemySpawner : MonoBehaviour
 
         float current = 0f;
 
+        // Select an enemy based on the weighted random value
         foreach (EnemyData enemy in validEnemies)
         {
             float curveValue = EvaluateAppearanceChance(enemy, wave);
@@ -135,21 +139,31 @@ public class EnemySpawner : MonoBehaviour
     private void SpawnEnemy(EnemyData enemyData, Transform spawnPoint)
     {
         GameObject enemy = Instantiate(enemyData.enemy, spawnPoint.position, spawnPoint.rotation, transform);
+        if (enemy.TryGetComponent<EnemyFSM>(out var enemyFSM))
+        {
+            enemyFSM.roomId = hordeDirector.id;
+        }
 
         aliveEnemies.Add(enemy);
     }
 
     private void EnemyDied(EnemyDiedEvent enemyDiedEvent)
     {
-        aliveEnemies.Remove(enemyDiedEvent.enemyObject);
+        aliveEnemies.Remove(enemyDiedEvent.EnemyObject);
         if (aliveEnemies.Count == 0 && allEnemiesSpawned)
-            hordeDirector.TryStartWave();
+            EventBus<AllEnemiesDeadEvent>.Raise(new AllEnemiesDeadEvent()
+            {
+                IsFinalWave = false
+            });
     }
 
     [ContextMenu("Kill All Enemies")]
     private void KillAllEnemies()
     {
-        EventBus<KillAllEnemiesEvent>.Raise(new KillAllEnemiesEvent());
+        EventBus<KillAllEnemiesEvent>.Raise(new KillAllEnemiesEvent()
+        {
+            RoomId = hordeDirector.id
+        });
     }
 
     private void CleanUpEnemyHashSet()

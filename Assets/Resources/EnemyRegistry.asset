@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: EnemyRegistry
   m_EditorClassIdentifier: Assembly-CSharp::EnemyRegistry
   enemies:
-  - enemy: {fileID: 4470074452919762278, guid: 725fff3d8cee997439b96f9a2b001c68, type: 3}
+  - enemy: {fileID: 1523946893141706178, guid: 22ac01472013d814b848508ca5ddef5c, type: 3}
     tier: 0
     cost: 2
     weight: 2
@@ -44,8 +44,8 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-  - enemy: {fileID: 4470074452919762278, guid: 87d300bfdff3bfa40abc351560a3feb0, type: 3}
-    tier: 0
+  - enemy: {fileID: 8276154443068584962, guid: ed23e2a6e42cd1a459cd2ffc62fc9b87, type: 3}
+    tier: 1
     cost: 4
     weight: 1
     startWave: 5
@@ -56,19 +56,50 @@ MonoBehaviour:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.1
+        value: 1
         inSlope: 0
         outSlope: 0
-        tangentMode: 0
+        tangentMode: 34
         weightedMode: 0
         inWeight: 0
         outWeight: 0
       - serializedVersion: 3
         time: 1
         value: 1
-        inSlope: 2
-        outSlope: 2
-        tangentMode: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+  - enemy: {fileID: 8070420967922871306, guid: 026d0434f7d478442a7240d59b9812df, type: 3}
+    tier: 2
+    cost: 8
+    weight: 1
+    startWave: 5
+    curveEndWave: 15
+    stopSpawningWave: 0
+    appearanceChance:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 34
         weightedMode: 0
         inWeight: 0
         outWeight: 0

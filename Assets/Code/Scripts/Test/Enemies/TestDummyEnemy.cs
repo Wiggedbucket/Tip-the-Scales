@@ -7,6 +7,8 @@ public class TestDummyEnemy : MonoBehaviour
 
     private EventBinding<KillAllEnemiesEvent> killAllEnemiesEventBinding;
 
+    public int roomId;
+
     private void OnEnable()
     {
         killAllEnemiesEventBinding = new EventBinding<KillAllEnemiesEvent>(Die);
@@ -26,9 +28,12 @@ public class TestDummyEnemy : MonoBehaviour
 
     private void Die(KillAllEnemiesEvent killAllEnemiesEvent)
     {
+        if (killAllEnemiesEvent.RoomId != roomId)
+            return;
+
         EventBus<EnemyDiedEvent>.Raise(new EnemyDiedEvent()
         {
-            enemyObject = gameObject
+            EnemyObject = gameObject
         });
         Destroy(gameObject);
     }
