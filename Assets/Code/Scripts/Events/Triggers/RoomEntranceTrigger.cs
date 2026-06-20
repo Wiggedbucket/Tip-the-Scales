@@ -5,6 +5,7 @@ public class RoomEntranceTrigger : MonoBehaviour
 {
     [SerializeField] private int roomId = -1;
     [SerializeField] private Transform enterDestination;
+
     private void OnTriggerEnter(Collider other)
     {
         if (!other.CompareTag("Player"))
@@ -28,15 +29,16 @@ public class RoomEntranceTrigger : MonoBehaviour
             IsPlayerInRoom = true,
         });
 
-        Debug.Log($"Player has entered room {roomId}!");
+        GameState.Instance.CurrentRoomId = roomId;
+
+        //Debug.Log($"Player has entered room {roomId}!");
     }
 
     private void TeleportPlayer (Collider player, Transform destination )
     {
         StyleMeter.Instance.ResumeDecay();
 
-        Rigidbody rb = player.GetComponent<Rigidbody>();
-        if (rb == null)
+        if (!player.TryGetComponent<Rigidbody>(out var rb))
             rb = player.GetComponentInParent<Rigidbody>();
 
         if (rb != null)

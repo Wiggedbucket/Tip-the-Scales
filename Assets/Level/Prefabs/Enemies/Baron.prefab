@@ -32,7 +32,7 @@ Transform:
   m_GameObject: {fileID: 8276154443068584962}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.46, y: 0.99999994, z: 4.11}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -154,6 +154,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyAttack
   attackIndicator: {fileID: 2100000, guid: c3f28fc08d1664b48b4107170256dbf9, type: 2}
   rend: {fileID: 7031152097463236565}
+  attackSound: 
 --- !u!114 &3839556008265635549
 MonoBehaviour:
   m_ObjectHideFlags: 0

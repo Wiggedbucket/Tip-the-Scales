@@ -170,7 +170,7 @@ public class EnemyFSM : MonoBehaviour
 
     private void HandleDeath()
     {
-        Debug.Log($"[EnemyFSM] DIED → RoomID: {roomId}, Points: {points}");
+        //Debug.Log($"[EnemyFSM] DIED → RoomID: {roomId}, Points: {points}");
         EventBus<EnemyDiedEvent>.Raise(new EnemyDiedEvent()
         {
             EnemyObject = gameObject,

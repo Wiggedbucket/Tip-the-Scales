@@ -44,6 +44,8 @@ public class GameState : MonoBehaviour
 
     public bool IsPaused = false;
 
+    public int CurrentRoomId = -1;
+
     public EventBinding<EnemyDiedEvent> enemyDiedBinding;
 
     #region Singleton Setup

@@ -56,6 +56,12 @@ public class PlayerCage : MonoBehaviour
 
         StyleMeter.Instance.PauseDecay();
 
+        EventBus<ChangeRoomStateEvent>.Raise(new ChangeRoomStateEvent
+        {
+            RoomId = GameState.Instance.CurrentRoomId,
+            IsPlayerInRoom = false,
+        });
+
         timeoutTimer.RemoveFromClassList("hidden");
 
         if (cageCoroutine != null)

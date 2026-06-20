@@ -9,8 +9,6 @@ public class HordeDirector : MonoBehaviour
 
     public bool isPlayerInRoom = false;
 
-    private EventBinding<RoomCreatedEvent> roomCreatedBinding;
-
     private EventBinding<ChangeRoomStateEvent> changeRoomStateEventBinding;
 
     private EventBinding<AllEnemiesDeadEvent> allEnemiesDeadEventBinding;
@@ -44,9 +42,6 @@ public class HordeDirector : MonoBehaviour
 
     private void OnEnable()
     {
-        roomCreatedBinding = new EventBinding<RoomCreatedEvent>(RoomCreated);
-        EventBus<RoomCreatedEvent>.Register(roomCreatedBinding);
-
         changeRoomStateEventBinding = new EventBinding<ChangeRoomStateEvent>(ChangeRoomState);
         EventBus<ChangeRoomStateEvent>.Register(changeRoomStateEventBinding);
 
@@ -56,14 +51,8 @@ public class HordeDirector : MonoBehaviour
 
     private void OnDisable()
     {
-        EventBus<RoomCreatedEvent>.Deregister(roomCreatedBinding);
         EventBus<ChangeRoomStateEvent>.Deregister(changeRoomStateEventBinding);
         EventBus<AllEnemiesDeadEvent>.Deregister(allEnemiesDeadEventBinding);
-    }
-
-    private void RoomCreated(RoomCreatedEvent e)
-    {
-        StartWave();
     }
 
     private void ChangeRoomState(ChangeRoomStateEvent e)

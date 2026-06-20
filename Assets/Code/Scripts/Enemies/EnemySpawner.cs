@@ -17,6 +17,8 @@ public class EnemySpawner : MonoBehaviour
 
     [SerializeField] private int maxEnemiesAlive = 500;
 
+    public bool PlayerInRoom => hordeDirector.isPlayerInRoom;
+
     private readonly HashSet<GameObject> aliveEnemies = new();
 
     private EventBinding<RoomCreatedEvent> roomCreatedBinding;
@@ -41,6 +43,8 @@ public class EnemySpawner : MonoBehaviour
     private void RoomCreated(RoomCreatedEvent e)
     {
         spawnPoints = e.EnemySpawnPoints;
+
+        hordeDirector.TryStartWave(new AllEnemiesDeadEvent());
     }
 
     public bool IsWaveOver() => allEnemiesSpawned && aliveEnemies.Count == 0;
@@ -56,6 +60,12 @@ public class EnemySpawner : MonoBehaviour
         Debug.Log($"Starting wave {wave} with a budget of {budget}");
         while (budget > 0 && safety-- > 0)
         {
+            if (!PlayerInRoom)
+            {
+                yield return null;
+                continue;
+            }
+
             if (aliveEnemies.Count >= maxEnemiesAlive)
                 break;
 

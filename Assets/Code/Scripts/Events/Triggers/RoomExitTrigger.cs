@@ -29,15 +29,16 @@ public class RoomExitTrigger : MonoBehaviour
             IsPlayerInRoom = false,
         });
 
-        Debug.Log($"Player has exited room {roomId}!");
+        GameState.Instance.CurrentRoomId = -1;
+
+        //Debug.Log($"Player has exited room {roomId}!");
     }
 
     private void TeleportPlayer(Collider player, Transform destination)
     {
         StyleMeter.Instance.PauseDecay();
 
-        Rigidbody rb = player.GetComponent<Rigidbody>();
-        if (rb == null)
+        if (!player.TryGetComponent<Rigidbody>(out var rb))
             rb = player.GetComponentInParent<Rigidbody>();
 
         if (rb != null)
