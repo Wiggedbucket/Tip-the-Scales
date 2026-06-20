@@ -2,12 +2,16 @@ using System;
 
 internal interface IEventBinding<T>
 {
+    int Priority { get; }
+
     public Action<T> OnEvent { get; set; }
     public Action OnEventNoArgs { get; set; }
 }
 
 public class EventBinding<T> : IEventBinding<T> where T : IEvent
 {
+    public int Priority { get; }
+
     Action<T> OnEvent = _ => { };
     Action OnEventNoArgs = () => { };
 
@@ -23,8 +27,17 @@ public class EventBinding<T> : IEventBinding<T> where T : IEvent
         set => OnEventNoArgs = value;
     }
 
-    public EventBinding(Action<T> onEvent) => this.OnEvent = onEvent;
-    public EventBinding(Action onEventNoArgs) => this.OnEventNoArgs = onEventNoArgs;
+    public EventBinding(Action<T> onEvent, int priority = 0)
+    {
+        this.OnEvent = onEvent;
+        this.Priority = priority;
+    }
+
+    public EventBinding(Action onEventNoArgs, int priority = 0)
+    {
+        this.OnEventNoArgs = onEventNoArgs;
+        this.Priority = priority;
+    }
 
     public void Add(Action onEvent) => OnEventNoArgs += onEvent;
     public void Remove(Action onEvent) => OnEventNoArgs -= onEvent;

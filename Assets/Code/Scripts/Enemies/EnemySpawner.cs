@@ -42,6 +42,11 @@ public class EnemySpawner : MonoBehaviour
 
     private void RoomCreated(RoomCreatedEvent e)
     {
+        if (e.ID != hordeDirector.id)
+            return;
+
+        Debug.Log($"Room {e.ID} created with {e.EnemySpawnPoints.Count} enemy spawn points.");
+
         spawnPoints = e.EnemySpawnPoints;
 
         hordeDirector.TryStartWave(new AllEnemiesDeadEvent());
@@ -75,6 +80,8 @@ public class EnemySpawner : MonoBehaviour
                 break;
 
             Transform spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Count)];
+
+            Debug.Log($"Spawning enemy {enemy.enemy.name} at {spawnPoint.position} with cost {enemy.cost}. Remaining budget: {budget - enemy.cost}");
 
             SpawnEnemy(enemy, spawnPoint);
 

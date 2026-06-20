@@ -8,7 +8,7 @@ public class RoomLifecycleManager : MonoBehaviour
 
     private void OnEnable()
     {
-        changeBinding = new EventBinding<ChangeRoomStateEvent>(OnChangeRoomState);
+        changeBinding = new EventBinding<ChangeRoomStateEvent>(OnChangeRoomState, EventPriorities.Normal);
         EventBus<ChangeRoomStateEvent>.Register(changeBinding);
     }
 

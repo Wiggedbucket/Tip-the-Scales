@@ -16,6 +16,8 @@ public static class EventBus<T> where T : IEvent
 
         bindingSnapshot.AddRange(bindings);
 
+        bindingSnapshot.Sort((a, b) => b.Priority.CompareTo(a.Priority));
+
         foreach (var binding in bindingSnapshot)
         {
             binding.OnEvent?.Invoke(@event);

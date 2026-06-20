@@ -42,7 +42,7 @@ public class HordeDirector : MonoBehaviour
 
     private void OnEnable()
     {
-        changeRoomStateEventBinding = new EventBinding<ChangeRoomStateEvent>(ChangeRoomState);
+        changeRoomStateEventBinding = new EventBinding<ChangeRoomStateEvent>(ChangeRoomState, EventPriorities.High);
         EventBus<ChangeRoomStateEvent>.Register(changeRoomStateEventBinding);
 
         allEnemiesDeadEventBinding = new EventBinding<AllEnemiesDeadEvent>(TryStartWave);
@@ -61,6 +61,8 @@ public class HordeDirector : MonoBehaviour
             return;
 
         isPlayerInRoom = e.IsPlayerInRoom;
+
+        Debug.Log($"Room {id} state changed: isPlayerInRoom={isPlayerInRoom}");
 
         if (isPlayerInRoom)
         {
@@ -87,8 +89,12 @@ public class HordeDirector : MonoBehaviour
     [ContextMenu("Start Wave")]
     private void StartWave()
     {
+        Debug.Log($"Attempting to start wave in room {id} = playerInRoom={isPlayerInRoom} and waveOver={enemySpawner.IsWaveOver()}");
+
         if (!isPlayerInRoom || !enemySpawner.IsWaveOver())
             return;
+
+        Debug.Log($"Starting wave in room {id}");
 
         currentWave++;
         TotalCurrentWave++;

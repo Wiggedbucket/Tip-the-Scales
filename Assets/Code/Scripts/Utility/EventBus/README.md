@@ -16,6 +16,8 @@ This EventBus system contains several C# classes residing in the Scripts\EventBu
 
 5. `EventBusUtil.cs` - Static initialization methods and additional utilities used for EventBus.
 
+6. `EventPriorities.cs` - Static class with preset priority values, can be used to set the priority of an event in a script.
+
 
 ## Example Usage
 
@@ -30,7 +32,7 @@ public struct PlayerEvent : IEvent {
 EventBinding<PlayerEvent> playerEventBinding;
 
 void OnEnable() {    
-    playerEventBinding = new EventBinding<PlayerEvent>(HandlePlayerEvent);
+    playerEventBinding = new EventBinding<PlayerEvent>(HandlePlayerEvent, EventPriorities.Normal);
     EventBus<PlayerEvent>.Register(playerEventBinding);
 
     // Can Add or Remove Actions to/from the EventBinding
