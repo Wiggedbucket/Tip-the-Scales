@@ -22,6 +22,8 @@ public class EnemyFSM : MonoBehaviour
     public float lastAttackTime;
     private Health health;
     private float combatStoppingDistance;
+    private BillboardSprite _billboard;
+
 
     Vector3 HomePosition;
 
@@ -44,6 +46,7 @@ public class EnemyFSM : MonoBehaviour
         }
 
         agent = GetComponent<NavMeshAgent>();
+        _billboard = GetComponentInChildren<BillboardSprite>();
         agent.speed = stats.moveSpeed;
 
         if (stats.canKite)
@@ -58,6 +61,9 @@ public class EnemyFSM : MonoBehaviour
 
     private void Update()
     {
+        if (_billboard != null)
+            _billboard.isMoving = currentState == State.Chase;
+        Debug.Log($"State: {currentState}, isMoving: {_billboard?.isMoving}");
         switch (currentState)
         {
             case State.ReturnHome:
