@@ -31,6 +31,8 @@ public class RoomEntranceTrigger : MonoBehaviour
 
         GameState.Instance.CurrentRoomId = roomId;
 
+        MusicHandler.instance.PlayOST();
+
         //Debug.Log($"Player has entered room {roomId}!");
     }
 
