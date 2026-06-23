@@ -141,7 +141,7 @@ public class PlayerCharacterController : MonoBehaviour
         readyToDash = false;
         isDashing = true;
 
-        lockedDashDirection = new Vector3(orientation.forward.x, 0f, orientation.forward.z).normalized;
+        lockedDashDirection = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z).normalized;
 
         rb.useGravity = false;
 
