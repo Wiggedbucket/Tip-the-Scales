@@ -73,6 +73,11 @@ public class RoomManager : MonoBehaviour
         instance.name = "Tile_" + coord_x + "_" + coord_y;
         instance.transform.localScale = new Vector3(tileSize, 0.1f, tileSize);
 
+        if (coord_x == 0 && coord_y == -2)
+        {
+            return;
+        }
+
         Transform enemyRoot = instance.transform.Find("EnemySpawnPoints");
         if (enemyRoot != null)
         {
