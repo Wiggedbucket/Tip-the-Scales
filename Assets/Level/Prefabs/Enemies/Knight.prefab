@@ -127,7 +127,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BillboardSprite
   wobbleAmount: 8
-  wobbleSpeed: 6
+  wobbleSpeed: 12
   isMoving: 0
 --- !u!1 &1523946893141706178
 GameObject:
