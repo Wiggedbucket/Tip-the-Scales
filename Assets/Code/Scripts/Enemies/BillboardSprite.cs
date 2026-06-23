@@ -9,6 +9,9 @@ public class BillboardSprite : MonoBehaviour
     public bool isMoving = false;
 
     private Transform _player;
+    [SerializeField] private Material BaseSprite;
+    [SerializeField] private Material AttackSprite;
+    [SerializeField] private Renderer rend;
 
     void Start()
     {
@@ -26,10 +29,12 @@ public class BillboardSprite : MonoBehaviour
             float tilt = Mathf.Sin(Time.time * wobbleSpeed) * wobbleAmount;
             Quaternion wobble = Quaternion.Euler(0f, 0f, tilt);
             transform.rotation = billboardRot * wobble;
+            rend.material = BaseSprite;
         }
         else
         {
             transform.rotation = billboardRot;
+            rend.material= AttackSprite;
         }
     }
 }

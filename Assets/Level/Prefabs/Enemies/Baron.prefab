@@ -29,8 +29,8 @@ Transform:
   m_GameObject: {fileID: 6120572658709652834}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0.0677, y: 0.2007, z: 0}
+  m_LocalScale: {x: 1.3, y: 1.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1232031338656290867}
@@ -129,6 +129,9 @@ MonoBehaviour:
   wobbleAmount: 8
   wobbleSpeed: 12
   isMoving: 0
+  BaseSprite: {fileID: 2100000, guid: 0c429b9a9f7861148bba59a7c7773b89, type: 2}
+  AttackSprite: {fileID: 2100000, guid: d56ef89c37280cf44811d9ca7b7d6845, type: 2}
+  rend: {fileID: 7342929294341869937}
 --- !u!1 &8276154443068584962
 GameObject:
   m_ObjectHideFlags: 0
