@@ -1,0 +1,19 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/Level/UI/StyleSheets/PauseMenu.uss?fileID=7433441132597879392&amp;guid=d7e2921839b8686449cec1d5726022ef&amp;type=3#PauseMenu"/>
+    <ui:VisualElement name="Container" class="hidden" style="flex-grow: 1; position: absolute; width: 100%; height: 100%;">
+        <ui:VisualElement name="BackgroundPanel" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0.86); width: 957px; position: relative; align-self: center; margin-top: 64px; margin-bottom: 64px; display: flex; justify-content: center; flex-direction: column;">
+            <ui:Label text="Audio" name="Title" style="-unity-text-align: upper-center; color: rgb(255, 255, 255); font-size: 75px; -unity-font-style: bold;"/>
+            <ui:VisualElement name="SettingsContainer" style="flex-direction: column; justify-content: center; align-items: center; align-content: auto; align-self: center; width: 80%; flex-grow: 1;">
+                <ui:VisualElement name="SliderContainer" style="margin-left: 25px; margin-right: 25px; flex-grow: 0; align-self: center; position: relative; width: 100%;">
+                    <ui:Label text="Master" name="SFXLabel" style="color: rgb(42, 196, 255); font-size: 31px; -unity-text-align: middle-center; margin-top: 25px;"/>
+                    <ui:Slider label="" value="42" high-value="1" direction="Horizontal" name="MasterSlider" low-value="1E-05" style="flex-direction: column; align-items: stretch; justify-content: space-evenly; align-self: auto; flex-grow: 1;"/>
+                    <ui:Label text="SFX" name="SFXLabel" style="color: rgb(79, 255, 131); font-size: 31px; -unity-text-align: middle-center; margin-top: 25px;"/>
+                    <ui:Slider label="" value="1" high-value="1" direction="Horizontal" name="SFXSlider" low-value="1E-05" style="flex-direction: column; align-items: stretch; justify-content: space-evenly; align-self: auto; flex-grow: 1;"/>
+                    <ui:Label text="Music" name="MusicLabel" style="color: rgb(255, 0, 80); font-size: 31px; -unity-text-align: middle-center; margin-top: 25px;"/>
+                    <ui:Slider label="" value="1" high-value="1" direction="Horizontal" name="MusicSlider" low-value="1E-05" style="flex-direction: column; align-items: stretch; justify-content: center; align-self: auto; flex-grow: 1;"/>
+                </ui:VisualElement>
+                <ui:Button text="Back" name="BackButton" class="button"/>
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
