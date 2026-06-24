@@ -1,3 +1,4 @@
+using System.Net.Security;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -29,7 +30,6 @@ public class PlayerHealth : MonoBehaviour
             Cursor.visible = true;
 
             look.Disable();
-
             // Send death to the server (If in multiplayer)
         }
         else
