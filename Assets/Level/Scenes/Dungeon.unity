@@ -495,6 +495,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 157008374599431746, guid: 2cfe0b151d2c887439c66798c001a0dd, type: 3}
+      propertyPath: m_Volume
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3583796121698317400, guid: 2cfe0b151d2c887439c66798c001a0dd, type: 3}
+      propertyPath: m_Pitch
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7667338324743346676, guid: 2cfe0b151d2c887439c66798c001a0dd, type: 3}
       propertyPath: m_Name
       value: AudioManager
@@ -625,6 +633,10 @@ PrefabInstance:
     - target: {fileID: 2684918215128439172, guid: bead593ec3e94af4eb6e7a33fa464198, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3585482613974724569, guid: bead593ec3e94af4eb6e7a33fa464198, type: 3}
+      propertyPath: hitSound
+      value: PlayerHit
       objectReference: {fileID: 0}
     - target: {fileID: 5686094593700950779, guid: bead593ec3e94af4eb6e7a33fa464198, type: 3}
       propertyPath: m_Name

@@ -17,6 +17,10 @@ public class PauseMenu : MonoBehaviour
     private Button changeBindingsButton;
     private Button mainMenuButton;
 
+	private Slider masterSlider;
+	private Slider SFXSlider;
+    private Slider musicSlider;
+
     private EventBinding<PauseGameStateChangedEvent> pauseGameStateChangedBinding;
 
     private void OnEnable()
@@ -39,25 +43,42 @@ public class PauseMenu : MonoBehaviour
         changeBindingsButton = pauseContainer.Q<Button>("ChangeBindingsButton");
         mainMenuButton = pauseContainer.Q<Button>("MainMenuButton");
 
+		masterSlider = pauseContainer.Q<Slider>("MasterSlider");
+		SFXSlider = pauseContainer.Q<Slider>("SFXSlider");
+        musicSlider = pauseContainer.Q<Slider>("MusicSlider");
+
         resumeButton.clicked += Resume;
         changeBindingsButton.clicked += ChangeBindings;
         mainMenuButton.clicked += MainMenu;
 
-        pauseContainer.AddToClassList("hidden");
+        masterSlider.RegisterValueChangedCallback(evt =>
+        {
+            AudioMixerManager.instance.SetMasterVolume(evt.newValue);
+        });
+		SFXSlider.RegisterValueChangedCallback(evt =>
+		{
+			AudioMixerManager.instance.SetSoundFXVolume(evt.newValue);
+		});
+		musicSlider.RegisterValueChangedCallback(evt =>
+		{
+			AudioMixerManager.instance.SetMusicVolume(evt.newValue);
+		});
+
+		pauseContainer.AddToClassList("hidden");
     }
 
     private void OnPauseGameStateChanged(PauseGameStateChangedEvent e)
     {
         if (e.IsPaused)
-            pauseContainer.RemoveFromClassList("hidden");
+			pauseContainer.RemoveFromClassList("hidden");
         else
-            pauseContainer.AddToClassList("hidden");
-    }
+			pauseContainer.AddToClassList("hidden");
+	}
 
-    private void Resume()
+	private void Resume()
     {
-        GameState.Instance.TogglePauseGame();
-    }
+        GameState.Instance.TogglePauseGame();  
+	}
 
     private void ChangeBindings()
     {

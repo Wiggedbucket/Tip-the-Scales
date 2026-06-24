@@ -1,3 +1,4 @@
+using AudioSystem;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -55,6 +56,7 @@ public class PlayerCage : MonoBehaviour
         player.transform.position = transform.position + playerSpawnOffset;
 
         StyleMeter.Instance.PauseDecay();
+        MusicHandler.instance.DampenOST();
 
         EventBus<ChangeRoomStateEvent>.Raise(new ChangeRoomStateEvent
         {
@@ -73,6 +75,7 @@ public class PlayerCage : MonoBehaviour
     private IEnumerator CageCountdown()
     {
         float remainingTime = jailTime;
+        int lastSecond = Mathf.CeilToInt(remainingTime);
 
         while (remainingTime > 0)
         {
@@ -80,12 +83,21 @@ public class PlayerCage : MonoBehaviour
 
             remainingTime -= Time.deltaTime;
 
+            int currentSecond = Mathf.CeilToInt(remainingTime);
+
+            if(currentSecond <= 3 && currentSecond != lastSecond)
+            {
+                lastSecond = currentSecond;
+                SoundManager.instance.CreateSound().WithSoundData("TimerBeep").Play();
+            }
+
             yield return null;
         }
 
         timeoutTimer.text = "Time: 0";
 
         jailFloor.SetActive(false);
+        SoundManager.instance.CreateSound().WithSoundData("CageDoor").WithPosition(transform.position).Play();
 
         timeoutTimer.AddToClassList("hidden");
     }
