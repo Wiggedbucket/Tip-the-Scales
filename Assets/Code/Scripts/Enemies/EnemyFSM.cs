@@ -62,7 +62,7 @@ public class EnemyFSM : MonoBehaviour
     private void Update()
     {
         if (_billboard != null)
-            _billboard.isMoving = currentState == State.Chase;
+            _billboard.isMoving = currentState == State.Chase || currentState == State.Kite;
         Debug.Log($"State: {currentState}, isMoving: {_billboard?.isMoving}");
         switch (currentState)
         {
