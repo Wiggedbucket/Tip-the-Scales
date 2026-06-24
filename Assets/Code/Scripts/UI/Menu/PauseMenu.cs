@@ -52,7 +52,9 @@ public class PauseMenu : MonoBehaviour
 			pauseContainer.RemoveFromClassList("hidden");
         else
 			pauseContainer.AddToClassList("hidden");
-	}
+
+        FindFirstObjectByType<SettingsMenu>().CloseSettings();
+    }
 
 	private void Resume()
     {

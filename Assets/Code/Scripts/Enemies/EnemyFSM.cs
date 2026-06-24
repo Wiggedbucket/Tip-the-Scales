@@ -63,7 +63,9 @@ public class EnemyFSM : MonoBehaviour
     {
         if (_billboard != null)
             _billboard.isMoving = currentState == State.Chase || currentState == State.Kite;
-        Debug.Log($"State: {currentState}, isMoving: {_billboard?.isMoving}");
+
+        //Debug.Log($"State: {currentState}, isMoving: {_billboard?.isMoving}");
+
         switch (currentState)
         {
             case State.ReturnHome:
