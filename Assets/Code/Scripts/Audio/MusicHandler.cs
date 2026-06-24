@@ -17,10 +17,15 @@ public class MusicHandler : MonoBehaviour
 	[Range(-1f, 0f)]
 	public float demonWinningTreshhold = -.2f;
 
+	[Header("Damping Values")]
+	public float dampCutoff = 1000f;
+	public float dampFadeDuration = 2f;
+
 	//HELPERS
 	public bool IsOSTPlaying { get; set; } = false;
 	private bool isWaiting = false;
 	private int winningSide = 0;
+	private bool isDamped = false;
 
 	private void Awake()
 	{
@@ -53,6 +58,53 @@ public class MusicHandler : MonoBehaviour
 			isWaiting = true;
 			StartCoroutine(WaitingNeutralRoutine());
 		}
+	}
+
+	public void SetOSTVolume(float volume)
+	{
+		volume = Mathf.Clamp01(volume);
+
+		MusicManager.instance.SetVolume(volume);
+		angelicChoir.volume = volume;
+		demonicChoir.volume = volume;
+	}
+
+	public void MultiplyOSTVolumeBy(float multiplier)
+	{
+		multiplier = Mathf.Clamp01(multiplier);
+
+		MusicManager.instance.MultiplyVolumeBy(multiplier);
+		angelicChoir.volume *= multiplier;
+		demonicChoir.volume *= multiplier;
+	}
+
+	public void DampenOST()
+	{
+		if (!IsOSTPlaying)
+			return;
+
+		if (isDamped)
+			return;
+
+		isDamped = true;
+
+		MusicManager.instance.DampenTrack(dampCutoff, dampFadeDuration);
+		MusicManager.instance.DampenTrackOf(angelicChoir, dampCutoff, dampFadeDuration);
+		MusicManager.instance.DampenTrackOf(demonicChoir, dampCutoff, dampFadeDuration);
+	}
+
+	public void UnDampenOST()
+	{
+		if (!IsOSTPlaying)
+			return;
+
+		if (!isDamped)
+			return;
+
+		isDamped = false;
+		MusicManager.instance.UnDampedTrack(dampFadeDuration);
+		MusicManager.instance.UnDampenTrackOf(angelicChoir, dampFadeDuration);
+		MusicManager.instance.UnDampenTrackOf(demonicChoir, dampFadeDuration);
 	}
 
 	public void PlayOST()

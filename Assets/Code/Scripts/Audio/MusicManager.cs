@@ -18,6 +18,66 @@ public class MusicManager : MonoBehaviour
 			Destroy(gameObject);
 	}
 
+	public void SetVolume(float volume)
+	{
+		volume = Mathf.Clamp01(volume);
+		musicSource.volume = volume;
+	}
+
+	public void MultiplyVolumeBy(float multiplier)
+	{
+		multiplier = Mathf.Clamp01(multiplier);
+		musicSource.volume *= multiplier;
+	}
+
+
+	public void DampenTrack(float cutoff, float fadeDuration)
+	{
+		StartCoroutine(AnimateDampenTrack(musicSource, cutoff, fadeDuration));
+	}
+
+	public void UnDampedTrack(float fadeDuration)
+	{
+		StartCoroutine(AnimateUnDampenTrack(musicSource, fadeDuration));
+	}
+
+	public void DampenTrackOf(AudioSource source, float cutoff, float fadeDuration)
+	{
+		StartCoroutine(AnimateDampenTrack(source, cutoff, fadeDuration));
+	}
+
+	public void UnDampenTrackOf(AudioSource source, float fadeDuration)
+	{
+		StartCoroutine(AnimateUnDampenTrack(source, fadeDuration));
+	}
+
+	private IEnumerator AnimateDampenTrack(AudioSource source, float cutoff, float fadeDuration)
+	{
+		AudioLowPassFilter filter = source.GetComponent<AudioLowPassFilter>();
+		float statedCutoff = filter.cutoffFrequency;
+		float percent = 0;
+
+		while(percent < 1)
+		{
+			percent += Time.deltaTime * 1 / fadeDuration;
+			filter.cutoffFrequency = Mathf.Lerp(statedCutoff, cutoff, percent);
+			yield return null;
+		}
+	}
+	private IEnumerator AnimateUnDampenTrack(AudioSource source, float fadeDuration)
+	{
+		AudioLowPassFilter filter = source.GetComponent<AudioLowPassFilter>();
+		float statedCutoff = filter.cutoffFrequency;
+		float percent = 0;
+
+		while (percent < 1)
+		{
+			percent += Time.deltaTime * 1 / fadeDuration;
+			filter.cutoffFrequency = Mathf.Lerp(statedCutoff, 22000, percent);
+			yield return null;
+		}
+	}
+
 	public void PlayTrack(string trackName, double startTime = 0, float fadeInDuration = 0f)
 	{
 		AudioClip clip = library.GetTrackFromName(trackName);

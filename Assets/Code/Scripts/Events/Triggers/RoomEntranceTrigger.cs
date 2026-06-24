@@ -1,3 +1,4 @@
+using AudioSystem;
 using UnityEngine;
 
 [RequireComponent(typeof(Collider))]
@@ -31,7 +32,10 @@ public class RoomEntranceTrigger : MonoBehaviour
 
         GameState.Instance.CurrentRoomId = roomId;
 
+        SoundManager.instance.CreateSound().WithSoundData("DungeonDoor").Play();
+
         MusicHandler.instance.PlayOST();
+        MusicHandler.instance.UnDampenOST();
 
         //Debug.Log($"Player has entered room {roomId}!");
     }

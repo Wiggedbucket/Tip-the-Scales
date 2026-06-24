@@ -16,10 +16,11 @@ MonoBehaviour:
   - name: ShotgunShoot
     data:
       clip: {fileID: 8300000, guid: 9f63fa5f193db0943aa8131a3df5d0e9, type: 3}
-      mixerGroup: {fileID: -5796144478588062741, guid: db81423d922aafc4ba892f1b9c1defa0, type: 2}
+      mixerGroup: {fileID: -5399465720356035431, guid: db81423d922aafc4ba892f1b9c1defa0, type: 2}
       loop: 0
       playOnAwake: 0
       frequentSound: 0
+      pitch: 1
       spatialBlend: 0
       dopplerLevel: 0
       spread: 0
@@ -33,6 +34,7 @@ MonoBehaviour:
       loop: 0
       playOnAwake: 0
       frequentSound: 0
+      pitch: 1
       spatialBlend: 1
       dopplerLevel: 0
       spread: 0
@@ -46,6 +48,7 @@ MonoBehaviour:
       loop: 0
       playOnAwake: 0
       frequentSound: 0
+      pitch: 1
       spatialBlend: 1
       dopplerLevel: 0
       spread: 0
@@ -59,6 +62,7 @@ MonoBehaviour:
       loop: 0
       playOnAwake: 0
       frequentSound: 0
+      pitch: 1
       spatialBlend: 1
       dopplerLevel: 0
       spread: 0
@@ -72,6 +76,7 @@ MonoBehaviour:
       loop: 0
       playOnAwake: 0
       frequentSound: 0
+      pitch: 1
       spatialBlend: 1
       dopplerLevel: 0
       spread: 0
@@ -84,7 +89,8 @@ MonoBehaviour:
       mixerGroup: {fileID: -5796144478588062741, guid: db81423d922aafc4ba892f1b9c1defa0, type: 2}
       loop: 0
       playOnAwake: 0
-      frequentSound: 0
+      frequentSound: 1
+      pitch: 1
       spatialBlend: 1
       dopplerLevel: 0
       spread: 0
@@ -97,7 +103,8 @@ MonoBehaviour:
       mixerGroup: {fileID: -5796144478588062741, guid: db81423d922aafc4ba892f1b9c1defa0, type: 2}
       loop: 1
       playOnAwake: 0
-      frequentSound: 0
+      frequentSound: 1
+      pitch: 1
       spatialBlend: 1
       dopplerLevel: 0
       spread: 0
@@ -110,7 +117,8 @@ MonoBehaviour:
       mixerGroup: {fileID: -5796144478588062741, guid: db81423d922aafc4ba892f1b9c1defa0, type: 2}
       loop: 0
       playOnAwake: 0
-      frequentSound: 1
+      frequentSound: 0
+      pitch: 1
       spatialBlend: 0
       dopplerLevel: 0
       spread: 0
@@ -124,6 +132,7 @@ MonoBehaviour:
       loop: 0
       playOnAwake: 0
       frequentSound: 1
+      pitch: 1
       spatialBlend: 1
       dopplerLevel: 0
       spread: 0
@@ -137,6 +146,7 @@ MonoBehaviour:
       loop: 0
       playOnAwake: 0
       frequentSound: 1
+      pitch: 1
       spatialBlend: 1
       dopplerLevel: 0
       spread: 0
@@ -146,10 +156,11 @@ MonoBehaviour:
   - name: LavaPillar
     data:
       clip: {fileID: 8300000, guid: c2446f1fa8947f44c9761064a66d1a40, type: 3}
-      mixerGroup: {fileID: -5796144478588062741, guid: db81423d922aafc4ba892f1b9c1defa0, type: 2}
+      mixerGroup: {fileID: -5139301398370764254, guid: db81423d922aafc4ba892f1b9c1defa0, type: 2}
       loop: 0
       playOnAwake: 0
-      frequentSound: 0
+      frequentSound: 1
+      pitch: 1
       spatialBlend: 1
       dopplerLevel: 0
       spread: 0
@@ -158,11 +169,12 @@ MonoBehaviour:
       maxDistance: 31
   - name: Dash
     data:
-      clip: {fileID: 8300000, guid: d8a80efd06091844ea75951136954120, type: 3}
-      mixerGroup: {fileID: -5796144478588062741, guid: db81423d922aafc4ba892f1b9c1defa0, type: 2}
+      clip: {fileID: 8300000, guid: 06b82918d89b6444a861e51f5c50f5af, type: 3}
+      mixerGroup: {fileID: -7411059157087454273, guid: db81423d922aafc4ba892f1b9c1defa0, type: 2}
       loop: 0
       playOnAwake: 0
       frequentSound: 0
+      pitch: 1
       spatialBlend: 0
       dopplerLevel: 0
       spread: 0
@@ -172,10 +184,11 @@ MonoBehaviour:
   - name: AKGunshot
     data:
       clip: {fileID: 8300000, guid: dd16084cacf70bf4f8c88b9373b1e29d, type: 3}
-      mixerGroup: {fileID: -5796144478588062741, guid: db81423d922aafc4ba892f1b9c1defa0, type: 2}
+      mixerGroup: {fileID: -5399465720356035431, guid: db81423d922aafc4ba892f1b9c1defa0, type: 2}
       loop: 0
       playOnAwake: 0
       frequentSound: 0
+      pitch: 1
       spatialBlend: 0
       dopplerLevel: 0
       spread: 0
@@ -189,9 +202,80 @@ MonoBehaviour:
       loop: 0
       playOnAwake: 0
       frequentSound: 0
+      pitch: 1
       spatialBlend: 0
       dopplerLevel: 0
       spread: 0
       rolloffMode: 1
       minDistance: 3.13
+      maxDistance: 31
+  - name: TimerBeep
+    data:
+      clip: {fileID: 8300000, guid: 334fca15cee99e048b9a5f1fea12b1de, type: 3}
+      mixerGroup: {fileID: -5796144478588062741, guid: db81423d922aafc4ba892f1b9c1defa0, type: 2}
+      loop: 0
+      playOnAwake: 0
+      frequentSound: 0
+      pitch: 1
+      spatialBlend: 0
+      dopplerLevel: 0
+      spread: 0
+      rolloffMode: 1
+      minDistance: 3.13
+      maxDistance: 31
+  - name: CageDoor
+    data:
+      clip: {fileID: 8300000, guid: 66657bbbd16da994cab3d00b7d66232e, type: 3}
+      mixerGroup: {fileID: -1229184115378218836, guid: db81423d922aafc4ba892f1b9c1defa0, type: 2}
+      loop: 0
+      playOnAwake: 0
+      frequentSound: 0
+      pitch: 1
+      spatialBlend: 1
+      dopplerLevel: 0
+      spread: 0
+      rolloffMode: 0
+      minDistance: 41.6
+      maxDistance: 86.5
+  - name: ReturnByDeath
+    data:
+      clip: {fileID: 8300000, guid: c59b83ca6b19dca489cbf5c90c224a30, type: 3}
+      mixerGroup: {fileID: 6866879783269105582, guid: db81423d922aafc4ba892f1b9c1defa0, type: 2}
+      loop: 0
+      playOnAwake: 0
+      frequentSound: 0
+      pitch: 1
+      spatialBlend: 0
+      dopplerLevel: 0
+      spread: 0
+      rolloffMode: 1
+      minDistance: 11.95
+      maxDistance: 31
+  - name: Swoosh
+    data:
+      clip: {fileID: 8300000, guid: 06b82918d89b6444a861e51f5c50f5af, type: 3}
+      mixerGroup: {fileID: -5796144478588062741, guid: db81423d922aafc4ba892f1b9c1defa0, type: 2}
+      loop: 0
+      playOnAwake: 0
+      frequentSound: 0
+      pitch: 1
+      spatialBlend: 0
+      dopplerLevel: 0
+      spread: 0
+      rolloffMode: 1
+      minDistance: 11.95
+      maxDistance: 31
+  - name: DungeonDoor
+    data:
+      clip: {fileID: 8300000, guid: b98cb9ca01c276945ab16e8fc0a1a438, type: 3}
+      mixerGroup: {fileID: 7084669409981965648, guid: db81423d922aafc4ba892f1b9c1defa0, type: 2}
+      loop: 0
+      playOnAwake: 0
+      frequentSound: 0
+      pitch: 0.75
+      spatialBlend: 0
+      dopplerLevel: 0
+      spread: 0
+      rolloffMode: 1
+      minDistance: 11.95
       maxDistance: 31

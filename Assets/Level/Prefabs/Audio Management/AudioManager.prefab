@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2417291135027520431}
   - component: {fileID: 3583796121698317400}
+  - component: {fileID: 2339082889084813319}
   m_Layer: 0
   m_Name: DemonicChoir
   m_TagString: Untagged
@@ -41,7 +42,7 @@ AudioSource:
   m_GameObject: {fileID: 6392556372494924059}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 6762950874312791640, guid: db81423d922aafc4ba892f1b9c1defa0, type: 2}
+  OutputAudioMixerGroup: {fileID: 5200294981058990840, guid: db81423d922aafc4ba892f1b9c1defa0, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: 3cb981e0e8a8abd429b44c0aab04736a, type: 3}
   m_PlayOnAwake: 0
@@ -51,7 +52,7 @@ AudioSource:
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 128
+  Priority: 0
   DopplerLevel: 1
   MinDistance: 1
   MaxDistance: 500
@@ -129,6 +130,31 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!169 &2339082889084813319
+AudioLowPassFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6392556372494924059}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_LowpassResonanceQ: 1
+  lowpassLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &6393219034186968992
 GameObject:
   m_ObjectHideFlags: 0
@@ -139,6 +165,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5552913316200883582}
   - component: {fileID: 157008374599431746}
+  - component: {fileID: 7765562710187696487}
   m_Layer: 0
   m_Name: AngelicChoir
   m_TagString: Untagged
@@ -170,7 +197,7 @@ AudioSource:
   m_GameObject: {fileID: 6393219034186968992}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 6762950874312791640, guid: db81423d922aafc4ba892f1b9c1defa0, type: 2}
+  OutputAudioMixerGroup: {fileID: 3520039318821593835, guid: db81423d922aafc4ba892f1b9c1defa0, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: 7e8a7606d62b78c4aad74fbf19f6cf2f, type: 3}
   m_PlayOnAwake: 0
@@ -180,7 +207,7 @@ AudioSource:
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 128
+  Priority: 0
   DopplerLevel: 1
   MinDistance: 1
   MaxDistance: 500
@@ -258,6 +285,31 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!169 &7765562710187696487
+AudioLowPassFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6393219034186968992}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_LowpassResonanceQ: 1
+  lowpassLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &6617867066545837928
 GameObject:
   m_ObjectHideFlags: 0
@@ -268,6 +320,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5667440528833115603}
   - component: {fileID: 6244702126881590645}
+  - component: {fileID: 3455748422554938826}
   m_Layer: 0
   m_Name: MusicSource
   m_TagString: Untagged
@@ -309,7 +362,7 @@ AudioSource:
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 128
+  Priority: 0
   DopplerLevel: 1
   MinDistance: 1
   MaxDistance: 500
@@ -373,6 +426,31 @@ AudioSource:
     m_PostInfinity: 2
     m_RotationOrder: 4
   reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!169 &3455748422554938826
+AudioLowPassFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6617867066545837928}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_LowpassResonanceQ: 1
+  lowpassLevelCustomCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
@@ -440,8 +518,8 @@ MonoBehaviour:
   soundEmitterPrefab: {fileID: 8150803524195033817, guid: a30be6ec331fe354a943f6d3baaf8e31, type: 3}
   collectionCheck: 1
   defaultCapacity: 10
-  maxPoolSize: 100
-  maxSoundInstances: 30
+  maxPoolSize: 128
+  maxSoundInstances: 50
 --- !u!114 &3267025060373525224
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -470,7 +548,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MusicHandler
   angelicChoir: {fileID: 157008374599431746}
   demonicChoir: {fileID: 3583796121698317400}
-  waitTime: 5
-  fadeTime: 5
+  waitTime: 2
+  fadeTime: 4
   angelWinningTreshhold: 0.2
   demonWinningTreshhold: -0.2
+  dampCutoff: 5000
+  dampFadeDuration: 0.5

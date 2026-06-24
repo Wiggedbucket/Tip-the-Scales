@@ -1,3 +1,4 @@
+using AudioSystem;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -36,6 +37,7 @@ public class PlayerHealth : MonoBehaviour
         {
             PlayerCage.Instance.SendPlayerToJail(player);
             health.Revive();
+            SoundManager.instance.CreateSound().WithSoundData("ReturnByDeath").Play();
         }
     }
 }

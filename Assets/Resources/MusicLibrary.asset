@@ -21,3 +21,5 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 7e8a7606d62b78c4aad74fbf19f6cf2f, type: 3}
   - name: DemonicChoir
     clip: {fileID: 8300000, guid: 3cb981e0e8a8abd429b44c0aab04736a, type: 3}
+  - name: Ambience
+    clip: {fileID: 8300000, guid: 387a0fbfc4788db4caa373feb7fdf26b, type: 3}

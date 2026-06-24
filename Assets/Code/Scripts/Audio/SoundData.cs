@@ -14,6 +14,9 @@ namespace AudioSystem
 		public bool playOnAwake;
 		public bool frequentSound;
 
+		[Range(-3f, 3f)]
+		public float pitch = 1;
+
 		[Range(0f, 1f)]
 		public float spatialBlend = 0;
 
