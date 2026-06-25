@@ -4,6 +4,8 @@ public class RoomLifecycleManager : MonoBehaviour
 {
     public int roomID;
     public GameObject roomGeneratorPrefab;
+    public Transform playerSpawnPoint;
+
     private EventBinding<ChangeRoomStateEvent> changeBinding;
 
     private void OnEnable()
@@ -43,6 +45,10 @@ public class RoomLifecycleManager : MonoBehaviour
         var localRg = GetComponentInChildren<RoomManager>(true);
         if (localRg != null)
         {
+            if (localRg.playerSpawnPoint == null)
+            {
+                localRg.playerSpawnPoint = playerSpawnPoint;
+            }
             localRg.SetID(id);
             localRg.Create(pos);
         }
