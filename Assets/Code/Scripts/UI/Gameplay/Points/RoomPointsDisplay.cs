@@ -9,6 +9,9 @@ public class RoomPointsDisplay : MonoBehaviour
     [SerializeField]
     private UIDocument document;
 
+    private VisualElement balanceDemonicBarFill;
+    private VisualElement balanceAngelicBarFill;
+
     private Label angelCombatPointsLabel;
     private Label seperatorLabel;
     private Label demonCombatPointsLabel;
@@ -22,6 +25,9 @@ public class RoomPointsDisplay : MonoBehaviour
     {
         var root = document.rootVisualElement;
 
+        balanceDemonicBarFill = root.Q<VisualElement>("BalanceDemonicBarFill");
+        balanceAngelicBarFill = root.Q<VisualElement>("BalanceAngelicBarFill");
+
         angelCombatPointsLabel = root.Q<Label>("AngelCombatPointsLabel");
         seperatorLabel = root.Q<Label>("SeperatorLabel");
         demonCombatPointsLabel = root.Q<Label>("DemonCombatPointsLabel");
@@ -29,11 +35,24 @@ public class RoomPointsDisplay : MonoBehaviour
 
     private void Update()
     {
-        if (GameState.Instance == null)
-        {
-            return;
-        }
+        UpdateProgressBar();
+        UpdateLabels();
+    }
 
+    private void UpdateProgressBar()
+    {
+        CombatPoints combatPoints = GameState.Instance.RoomCombatPointsList[roomId];
+        float scale = Mathf.Clamp(GameState.Instance.CalculateScale(combatPoints.angelPoints, combatPoints.demonPoints), -1f, 1f);
+
+        float angelPercent = (scale + 1f) * 0.5f;
+        float demonPercent = 1f - angelPercent;
+
+        balanceAngelicBarFill.style.width = Length.Percent(angelPercent * 100f);
+        balanceDemonicBarFill.style.width = Length.Percent(demonPercent * 100f);
+    }
+
+    private void UpdateLabels()
+    {
         if (roomId < 0)
         {
             angelCombatPointsLabel.text = "";

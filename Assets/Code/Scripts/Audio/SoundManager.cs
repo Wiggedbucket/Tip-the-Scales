@@ -41,7 +41,7 @@ namespace AudioSystem
 		{
 			if (!data.frequentSound) return true;
 
-			if(FrequentSoundEmitters.Count >= maxSoundInstances && FrequentSoundEmitters.TryDequeue(out var soundEmitter))
+			if (FrequentSoundEmitters.Count >= maxSoundInstances && FrequentSoundEmitters.TryDequeue(out var soundEmitter))
 			{
 				try
 				{
@@ -50,7 +50,7 @@ namespace AudioSystem
 				}
 				catch
 				{
-					Debug.Log("Sound Emitter is alreadyt released");
+					Debug.Log("Sound Emitter is already released");
 				}
 				return false;
 			}

@@ -68,6 +68,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b143058136e6604bb1b6c3129efc2ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RoomEntranceTrigger
+  interactionDistance: 5
+  interactionText: Enter Room
   roomId: -1
   enterDestination: {fileID: 0}
 --- !u!23 &3228880078372712148
