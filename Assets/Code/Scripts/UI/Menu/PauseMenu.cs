@@ -8,18 +8,14 @@ public class PauseMenu : MonoBehaviour
     private UIDocument pauseDocument;
 
     [SerializeField]
-    private UIDocument inputSettingsDocument;
+    private UIDocument settingsDocument;
 
     private VisualElement pauseContainer;
-    private VisualElement inputSettingsContainer;
+    private VisualElement settingsContainer;
 
     private Button resumeButton;
-    private Button changeBindingsButton;
+    private Button settingsButton;
     private Button mainMenuButton;
-
-	private Slider masterSlider;
-	private Slider SFXSlider;
-    private Slider musicSlider;
 
     private EventBinding<PauseGameStateChangedEvent> pauseGameStateChangedBinding;
 
@@ -37,32 +33,15 @@ public class PauseMenu : MonoBehaviour
     private void Awake()
     {
         pauseContainer = pauseDocument.rootVisualElement.Q<VisualElement>("Container");
-        inputSettingsContainer = inputSettingsDocument.rootVisualElement.Q<VisualElement>("PanelBackground");
+        settingsContainer = settingsDocument.rootVisualElement.Q<VisualElement>("Container");
 
         resumeButton = pauseContainer.Q<Button>("ResumeButton");
-        changeBindingsButton = pauseContainer.Q<Button>("ChangeBindingsButton");
+        settingsButton = pauseContainer.Q<Button>("SettingsButton");
         mainMenuButton = pauseContainer.Q<Button>("MainMenuButton");
 
-		masterSlider = pauseContainer.Q<Slider>("MasterSlider");
-		SFXSlider = pauseContainer.Q<Slider>("SFXSlider");
-        musicSlider = pauseContainer.Q<Slider>("MusicSlider");
-
         resumeButton.clicked += Resume;
-        changeBindingsButton.clicked += ChangeBindings;
+        settingsButton.clicked += OpenSettings;
         mainMenuButton.clicked += MainMenu;
-
-        masterSlider.RegisterValueChangedCallback(evt =>
-        {
-            AudioMixerManager.instance.SetMasterVolume(evt.newValue);
-        });
-		SFXSlider.RegisterValueChangedCallback(evt =>
-		{
-			AudioMixerManager.instance.SetSoundFXVolume(evt.newValue);
-		});
-		musicSlider.RegisterValueChangedCallback(evt =>
-		{
-			AudioMixerManager.instance.SetMusicVolume(evt.newValue);
-		});
 
 		pauseContainer.AddToClassList("hidden");
     }
@@ -80,9 +59,9 @@ public class PauseMenu : MonoBehaviour
         GameState.Instance.TogglePauseGame();  
 	}
 
-    private void ChangeBindings()
+    private void OpenSettings()
     {
-        inputSettingsContainer.RemoveFromClassList("hidden");
+        settingsContainer.RemoveFromClassList("hidden");
     }
 
     private void MainMenu()
