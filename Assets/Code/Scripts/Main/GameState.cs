@@ -90,7 +90,7 @@ public class GameState : MonoBehaviour
         GameTime += Time.deltaTime;
 
         if (!GameMode.IsMultiplayer)
-            CalculateScale();
+            Scale = CalculateScale(GlobalCombatPoints.angelPoints, GlobalCombatPoints.demonPoints);
 
         // TODO: Make sure scale is gathered from the server in multiplayer
 
@@ -125,17 +125,14 @@ public class GameState : MonoBehaviour
         }
     }
 
-    private void CalculateScale()
+    public float CalculateScale(float pointsLight, float pointsDark)
     {
-        float pointsLight = GlobalCombatPoints.angelPoints;
-        float pointsDark = GlobalCombatPoints.demonPoints;
-
         float rawScore = (pointsLight - pointsDark) / 100f;
 
         float clamped = Mathf.Clamp(rawScore, -1f, 1f);
         float newScore = (float)System.Math.Round(clamped, 2);
 
-        Scale = newScore;
+        return newScore;
     }
 
     private void EnemyDeath(EnemyDiedEvent e)
