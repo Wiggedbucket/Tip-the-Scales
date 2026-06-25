@@ -3,233 +3,6 @@ using UnityEngine.Networking;
 using System.Collections;
 using System.Text;
 
-public class ServerCommunicator : MonoBehaviour
-{
-    private const int RequiredRooms = 3;
-
-    [Header("Server Settings")]
-    [SerializeField] private string url = "http://145.93.81.29:8080";
-    [SerializeField] private string clientId = "unityClient1";
-    [SerializeField] private float heartbeatInterval = 5f;
-
-    private bool IsMultiplayer => GameMode.IsMultiplayer;
-
-    /// <summary>
-    /// Creates an empty GameData object with 3 initialized objectives.
-    /// This is used as the base object before filling it with room data.
-    /// </summary>
-    private static GameData CreateEmptyGameData()
-    {
-        return new GameData
-        {
-            score = 0,
-            objectives = RequiredRooms,
-            obj1 = new Objective(),
-            obj2 = new Objective(),
-            obj3 = new Objective(),
-        };
-    }
-
-    /// <summary>
-    /// Copies combat points from a room into an objective that can be sent to the server.
-    /// </summary>
-    private static void CopyRoomToObjective(CombatPoints room, Objective objective)
-    {
-        objective.light = room.angelPoints;
-        objective.dark = room.demonPoints;
-    }
-
-    /// <summary>
-    /// Copies objective data received from the server back into a room.
-    /// </summary>
-    private static void CopyObjectiveToRoom(Objective objective, CombatPoints room)
-    {
-        room.angelPoints = objective.light;
-        room.demonPoints = objective.dark;
-    }
-
-    /// <summary>
-    /// Initializes the server connection when the game starts.
-    /// Resets the server state, starts the heartbeat loop,
-    /// and sends an initial empty game state.
-    /// </summary>
-    private IEnumerator Start()
-    {
-        if (!IsMultiplayer)
-        {
-            Debug.Log("Server off, Singleplayer On");
-            yield break;
-        }
-
-        Debug.Log("Server on, Singleplayer Off");
-
-        // Reset the server before starting synchronization.
-        yield return SendResetRequest();
-
-        // Begin periodically sending updates.
-        StartCoroutine(HeartbeatLoop());
-
-        // Small delay to ensure everything has initialized.
-        yield return new WaitForSeconds(1f);
-
-        // Send a fresh empty game state.
-        yield return SendGameData(CreateEmptyGameData());
-    }
-
-    /// <summary>
-    /// Periodically sends the current game state to the server.
-    /// </summary>
-    private IEnumerator HeartbeatLoop()
-    {
-        while (true)
-        {
-            yield return SendCurrentGameData();
-            yield return new WaitForSeconds(heartbeatInterval);
-        }
-    }
-
-    /// <summary>
-    /// Builds a GameData object from the current room combat points
-    /// and sends it to the server.
-    /// </summary>
-    private IEnumerator SendCurrentGameData()
-    {
-        var rooms = GameState.Instance.RoomCombatPointsList;
-
-        if (rooms == null || rooms.Count < RequiredRooms)
-        {
-            Debug.LogError("Not enough rooms for sync");
-            yield break;
-        }
-
-        GameData data = CreateEmptyGameData();
-
-        // Copy all room data into the server data structure.
-        for (int i = 0; i < RequiredRooms; i++)
-        {
-            CopyRoomToObjective(rooms[i], GetObjective(data, i));
-        }
-
-        yield return SendGameData(data);
-    }
-
-    /// <summary>
-    /// Returns one of the objectives based on an index.
-    /// Used to avoid repetitive code when looping through rooms.
-    /// </summary>
-    private Objective GetObjective(GameData data, int index)
-    {
-        return index switch
-        {
-            0 => data.obj1,
-            1 => data.obj2,
-            2 => data.obj3,
-            _ => null,
-        };
-    }
-
-    /// <summary>
-    /// Sends a reset request to the server so it clears its current state.
-    /// </summary>
-    private IEnumerator SendResetRequest()
-    {
-        ResetRequest reset = new()
-        {
-            objectives = RequiredRooms
-        };
-
-        yield return SendRequest(
-            $"{url}/reset/{clientId}",
-            JsonUtility.ToJson(reset),
-            response => Debug.Log("Reset Response: " + response)
-        );
-    }
-
-    /// <summary>
-    /// Sends game data to the server and applies the returned data
-    /// back into the local GameState.
-    /// </summary>
-    private IEnumerator SendGameData(GameData gameData)
-    {
-        string json = JsonUtility.ToJson(gameData);
-
-        yield return SendRequest(
-            $"{url}/{clientId}",
-            json,
-            response =>
-            {
-                Debug.Log("Server Response: " + response);
-
-                // Deserialize the server response.
-                GameData updated = JsonUtility.FromJson<GameData>(response);
-
-                if (updated != null)
-                {
-                    Debug.Log("New Score: " + updated.score);
-
-                    // Update local room values with the server's response.
-                    ApplyToGameStateData(updated);
-                }
-            }
-        );
-    }
-
-    /// <summary>
-    /// Generic helper used for all POST requests.
-    /// Handles serialization, sending, error checking,
-    /// and invoking a success callback.
-    /// </summary>
-    private IEnumerator SendRequest(string endpoint, string json, System.Action<string> onSuccess)
-    {
-        byte[] body = Encoding.UTF8.GetBytes(json);
-
-        using UnityWebRequest request = new(endpoint, "POST")
-        {
-            uploadHandler = new UploadHandlerRaw(body),
-            downloadHandler = new DownloadHandlerBuffer()
-        };
-
-        request.SetRequestHeader("Content-Type", "application/json");
-
-        yield return request.SendWebRequest();
-
-        if (request.result != UnityWebRequest.Result.Success)
-        {
-            Debug.LogError("Request Failed: " + request.error);
-            yield break;
-        }
-
-        onSuccess?.Invoke(request.downloadHandler.text);
-    }
-
-    /// <summary>
-    /// Updates the local GameState with data received from the server.
-    /// </summary>
-    private void ApplyToGameStateData(GameData data)
-    {
-        var state = GameState.Instance;
-
-        if (state == null)
-        {
-            Debug.LogError("GameState is null");
-            return;
-        }
-
-        var rooms = state.RoomCombatPointsList;
-
-        // Ensure the list contains enough rooms.
-        while (rooms.Count < RequiredRooms)
-        {
-            rooms.Add(new CombatPoints());
-        }
-
-        // Copy each objective into its corresponding room.
-        CopyObjectiveToRoom(data.obj1, rooms[0]);
-        CopyObjectiveToRoom(data.obj2, rooms[1]);
-        CopyObjectiveToRoom(data.obj3, rooms[2]);
-    }
-}
-
 [System.Serializable]
 public class Objective
 {
@@ -246,10 +19,189 @@ public class GameData
     public Objective obj1;
     public Objective obj2;
     public Objective obj3;
+    public bool playerAlive;
 }
-
 [System.Serializable]
 public class ResetRequest
 {
     public int objectives;
+}
+
+public class ServerCommunicator : MonoBehaviour
+{
+    private string url = "http://145.93.81.29:8080";
+    private string clientId = "unityClient1";
+    private float heartbeatInterval = 0.5f;
+    private bool IsMultiplayer = GameMode.IsMultiplayer;
+    private IEnumerator Start()
+    {
+        if(!IsMultiplayer)
+        {
+            Debug.Log("Server off, Singleplayer On");
+            //if Multiplayer's off, it won't start.
+            yield break;
+        }
+        Debug.Log("Server on, Singleplayer Off");
+        yield return StartCoroutine(ResetGame());
+
+        StartCoroutine(HeartbeatLoop());
+
+        yield return new WaitForSeconds(1);
+
+        GameData gameData = new()
+        {
+            score = 0,
+            objectives = 3,
+
+            obj1 = new Objective(),
+            obj2 = new Objective(),
+            obj3 = new Objective()
+        };
+
+        gameData.obj1.light = 0;
+        gameData.obj1.dark = 0;
+
+        gameData.obj2.light = 0;
+        gameData.obj2.dark = 0;
+
+        gameData.obj3.light = 0;
+        gameData.obj3.dark = 0;
+        yield return StartCoroutine(SendGameData(gameData));
+        //Debug.Log("Reached after reset");
+    }
+
+    private IEnumerator HeartbeatLoop()
+    {
+
+        while (true)
+        {
+            yield return StartCoroutine(SendCurrentGameData());
+            yield return new WaitForSeconds(heartbeatInterval);
+        }
+    }
+
+    private IEnumerator SendCurrentGameData()
+    {
+        var rooms = GameState.Instance.RoomCombatPointsList;
+        if(rooms.Count < 3)
+        {
+            Debug.LogError("Not enough rooms, need to be 3");
+            yield break;
+        }
+        GameData currentData = new()
+        {
+            objectives = 3,
+            obj1 = new Objective(),
+            obj2 = new Objective(),
+            obj3 = new Objective(),
+            playerAlive = true
+        };
+
+        currentData.obj1.light = rooms[0].angelPoints;
+        currentData.obj1.dark = rooms[0].demonPoints;
+
+        currentData.obj2.light = rooms[1].angelPoints;
+        currentData.obj2.dark = rooms[1].demonPoints;
+
+        currentData.obj3.light = rooms[2].angelPoints;
+        currentData.obj3.dark = rooms[2].demonPoints;
+        
+        currentData.playerAlive = !GameState.Instance.MatchEnded;
+        yield return StartCoroutine(SendGameData(currentData));
+    }
+
+    IEnumerator ResetGame()
+    {
+        ResetRequest resetData = new()
+        {
+            objectives = 3
+        };
+
+        string json = JsonUtility.ToJson(resetData);
+
+        byte[] bodyRaw = Encoding.UTF8.GetBytes(json);
+
+        UnityWebRequest request = new(url + "/reset/" + clientId, "POST")
+        {
+            uploadHandler = new UploadHandlerRaw(bodyRaw),
+            downloadHandler = new DownloadHandlerBuffer()
+        };
+
+        request.SetRequestHeader("Content-Type", "application/json");
+
+        yield return request.SendWebRequest();
+
+        if (request.result != UnityWebRequest.Result.Success)
+        {
+            Debug.LogError("Reset Failed: " + request.error);
+        }
+        else
+        {
+            Debug.Log("Reset Response: " + request.downloadHandler.text);
+        }
+    }
+
+    private IEnumerator SendGameData(GameData gameData)
+    {
+        string json = JsonUtility.ToJson(gameData);
+
+        Debug.Log("Sending: " + json);
+
+        byte[] bodyRaw = Encoding.UTF8.GetBytes(json);
+
+        UnityWebRequest request = new(url + "/" + clientId, "POST")
+        {
+            uploadHandler = new UploadHandlerRaw(bodyRaw),
+
+            downloadHandler = new DownloadHandlerBuffer()
+        };
+
+        request.SetRequestHeader("Content-Type", "application/json");
+
+        yield return request.SendWebRequest();
+
+        if (request.result != UnityWebRequest.Result.Success)
+        {
+            Debug.LogError("POST Failed: " + request.error);
+        }
+        else
+        {
+            Debug.Log("Server Response: " + request.downloadHandler.text);
+
+            GameData updatedData = JsonUtility.FromJson<GameData>(request.downloadHandler.text);
+
+            Debug.Log("New Score: " + updatedData.score);
+            ApplyToGameStateData(updatedData);
+        }
+    }
+    private void ApplyToGameStateData(GameData data)
+    {
+        var rooms = GameState.Instance.RoomCombatPointsList;
+        if (GameState.Instance == null)
+        {
+            Debug.LogError("GameState.Instance is NULL");
+            return;
+        }
+    Debug.Log("RoomCombatPointsList Count = " + rooms.Count);
+    
+
+    while (rooms.Count < 3)
+    {
+        rooms.Add(new CombatPoints());
+    }
+        CombatPoints room0 = rooms[0];
+        room0.angelPoints = data.obj1.light;
+        room0.demonPoints = data.obj1.dark;
+        rooms[0] = room0;
+
+        CombatPoints room1 = rooms[1];
+        room1.angelPoints = data.obj2.light;
+        room1.demonPoints = data.obj2.dark;
+        rooms[1] = room1;
+        
+        CombatPoints room2 = rooms[2];
+        room2.angelPoints = data.obj3.light;
+        room2.demonPoints = data.obj3.dark;
+        rooms[2] = room2;
+    }
 }

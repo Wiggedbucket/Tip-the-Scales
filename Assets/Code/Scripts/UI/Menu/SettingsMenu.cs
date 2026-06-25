@@ -56,5 +56,7 @@ public class SettingsMenu : MonoBehaviour
     public void CloseSettings()
     {
         settingsContainer.AddToClassList("hidden");
+        audioContainer.AddToClassList("hidden");
+        bindingsContainer.AddToClassList("hidden");
     }
 }

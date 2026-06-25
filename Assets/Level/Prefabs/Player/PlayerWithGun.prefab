@@ -269,6 +269,10 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 20b7352b-9575-470e-b7d3-3fd23157a517
     m_ActionName: 'Player/SwapWeapon2[/Keyboard/2]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 135cc455-ccc4-4533-869f-e504dbc32693
+    m_ActionName: 'Player/Interact[/Keyboard/e]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -727,6 +731,7 @@ GameObject:
   - component: {fileID: 3302178776694649781}
   - component: {fileID: 237552087966693204}
   - component: {fileID: 4186948462841393628}
+  - component: {fileID: 2921644058149812615}
   m_Layer: 0
   m_Name: Player Camera
   m_TagString: Untagged
@@ -864,11 +869,38 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21a1d613eac21de4e906e73714b1f0cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerCameraController
+  playerCamera: {fileID: 1329407062800773401}
+  playerObject: {fileID: 3016535209961589408}
   sensX: 0.1
   sensY: 0.075
   Orientation: {fileID: 4004263459997601496}
   lookActionReference: {fileID: -5630151704836100654, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  interactActionReference: {fileID: -216243147340856013, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  document: {fileID: 2921644058149812615}
   cameraPosition: {fileID: 6827894434898789570}
+--- !u!114 &2921644058149812615
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7614312992196215829}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 19102, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.dll::UnityEngine.UIElements.UIDocument
+  m_PanelSettings: {fileID: 11400000, guid: 002d30c96125cf049a3a2f26ff6ed897, type: 2}
+  m_ParentUI: {fileID: 271586012094846685}
+  sourceAsset: {fileID: 9197481963319205126, guid: c458bda2844a0c543826803386df515b, type: 3}
+  m_SortingOrder: 0
+  m_Position: 0
+  m_WorldSpaceSizeMode: 1
+  m_WorldSpaceWidth: 1920
+  m_WorldSpaceHeight: 1080
+  m_PivotReferenceSize: 0
+  m_Pivot: 0
+  m_WorldSpaceCollider: {fileID: 0}
 --- !u!1001 &840659115781320606
 PrefabInstance:
   m_ObjectHideFlags: 0

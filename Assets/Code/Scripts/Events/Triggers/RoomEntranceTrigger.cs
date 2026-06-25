@@ -2,21 +2,32 @@ using AudioSystem;
 using UnityEngine;
 
 [RequireComponent(typeof(Collider))]
-public class RoomEntranceTrigger : MonoBehaviour
+public class RoomEntranceTrigger : Interactable
 {
     [SerializeField] private int roomId = -1;
     [SerializeField] private Transform enterDestination;
 
-    private void OnTriggerEnter(Collider other)
+    public override void Interact(GameObject interactor)
     {
-        if (!other.CompareTag("Player"))
+        if (!interactor.CompareTag("Player"))
             return;
 
         if (enterDestination != null)
-            TeleportPlayer(other, enterDestination);
+            TeleportPlayer(interactor.transform, enterDestination);
 
         Execute();
     }
+
+    //private void OnTriggerEnter(Collider other)
+    //{
+    //    if (!other.CompareTag("Player"))
+    //        return;
+
+    //    if (enterDestination != null)
+    //        TeleportPlayer(other.transform, enterDestination);
+
+    //    Execute();
+    //}
 
     [ContextMenu("Execute Trigger")]
     private void Execute()
@@ -40,7 +51,7 @@ public class RoomEntranceTrigger : MonoBehaviour
         //Debug.Log($"Player has entered room {roomId}!");
     }
 
-    private void TeleportPlayer (Collider player, Transform destination )
+    private void TeleportPlayer(Transform player, Transform destination )
     {
         StyleMeter.Instance.ResumeDecay();
 
