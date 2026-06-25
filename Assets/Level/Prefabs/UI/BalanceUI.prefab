@@ -69,3 +69,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BalanceBar
   document: {fileID: 794160106776742256}
+  pulseSpeed: 4
+  pulseMinOpacity: 0
+  pulseMaxOpacity: 1

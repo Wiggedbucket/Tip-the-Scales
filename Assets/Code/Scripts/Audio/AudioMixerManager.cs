@@ -4,17 +4,16 @@ using UnityEngine.UIElements;
 
 public class AudioMixerManager : MonoBehaviour
 {
-    [SerializeField] private AudioMixer mixer;
-    [SerializeField] private UIDocument UI;
-	private Slider soundFXSlider;
+	public static AudioMixerManager instance;
 
-	private void Start()
+    [SerializeField] private AudioMixer mixer;
+
+	private void Awake()
 	{
-		//soundFXSlider = UI.rootVisualElement.Q<Slider>("soundFXSlider");
-		//soundFXSlider.RegisterValueChangedCallback(evt =>
-		//{
-		//	SetSoundFXVolume(evt.newValue);
-		//});
+		if (instance == null)
+			instance = this;
+		else
+			Destroy(gameObject);
 	}
 
 	public void SetMasterVolume(float volume)

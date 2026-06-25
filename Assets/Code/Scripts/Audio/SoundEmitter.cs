@@ -50,6 +50,7 @@ namespace AudioSystem
 			audioSource.outputAudioMixerGroup = data.mixerGroup;
 			audioSource.loop = data.loop;
 			audioSource.playOnAwake = data.playOnAwake;
+			audioSource.pitch = data.pitch;
 			audioSource.spatialBlend = data.spatialBlend;
 			audioSource.dopplerLevel = data.dopplerLevel;
 			audioSource.spread = data.spread;

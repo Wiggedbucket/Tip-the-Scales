@@ -1,3 +1,4 @@
+using AudioSystem;
 using UnityEngine;
 
 [RequireComponent(typeof(Collider))]
@@ -30,6 +31,10 @@ public class RoomExitTrigger : MonoBehaviour
         });
 
         GameState.Instance.CurrentRoomId = -1;
+
+		SoundManager.instance.CreateSound().WithSoundData("DungeonDoor").Play();
+
+		MusicHandler.instance.DampenOST();
 
         //Debug.Log($"Player has exited room {roomId}!");
     }
