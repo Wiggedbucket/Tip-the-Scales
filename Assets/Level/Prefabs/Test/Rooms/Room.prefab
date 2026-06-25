@@ -80,6 +80,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::RoomLifecycleManager
   roomID: 0
   roomGeneratorPrefab: {fileID: 3912804777185682932, guid: 94591f72bdee7e84e8785d43a8a8dd77, type: 3}
+  playerSpawnPoint: {fileID: 2888159211589903566}
 --- !u!1 &1559148397906563617
 GameObject:
   m_ObjectHideFlags: 0
@@ -1238,7 +1239,7 @@ Transform:
   m_GameObject: {fileID: 7638163368843337888}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.16, z: -10.79}
+  m_LocalPosition: {x: 0, y: 0.16, z: -12.02}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

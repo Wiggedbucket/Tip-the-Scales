@@ -7,6 +7,8 @@ public class RoomManager : MonoBehaviour
     public int width = 5;
     public int height = 5;
     public float tileSize = 6f;
+    public Transform playerSpawnPoint = null;
+
     private List<Transform> enemySpawnPoints = new();
     private List<Transform> hazardSpawnPoints = new();
     private int roomID;
@@ -68,13 +70,17 @@ public class RoomManager : MonoBehaviour
         int prefabIndex = Random.Range(0, roomPrefabs.Length);
         GameObject prefab = roomPrefabs[prefabIndex];
 
+        Quaternion rotation = Quaternion.Euler(0f, Random.Range(0, 4) * 90f, 0f);
         Vector3 spawnLocation = room_position + new Vector3(coord_x * tileSize, 0f, coord_y * tileSize);
-        GameObject instance = Instantiate(prefab, spawnLocation, Quaternion.identity, transform);
+
+        GameObject instance = Instantiate(prefab, spawnLocation, rotation, transform);
+        
         instance.name = "Tile_" + coord_x + "_" + coord_y;
         instance.transform.localScale = new Vector3(tileSize, 0.1f, tileSize);
 
-        if (coord_x == 0 && coord_y == -2)
+        if (IsTileBelowPlayerSpawn(coord_x, coord_y, room_position))
         {
+            print($"removed hazards from tile {coord_x}, {coord_y} because it is below the player spawn point");
             return;
         }
 
@@ -95,5 +101,17 @@ public class RoomManager : MonoBehaviour
                 hazardSpawnPoints.Add(spawnPoint);
             }
         }
+    }
+
+    private bool IsTileBelowPlayerSpawn(float coord_x, float coord_y, Vector3 room_position)
+    {
+        if (playerSpawnPoint == null)
+            return coord_x == 0 && coord_y == -2;
+
+        Vector3 localSpawn = playerSpawnPoint.position - room_position;
+        int spawnTileX = Mathf.RoundToInt(localSpawn.x / tileSize);
+        int spawnTileY = Mathf.RoundToInt(localSpawn.z / tileSize);
+
+        return coord_x == spawnTileX && coord_y == spawnTileY;
     }
 }
