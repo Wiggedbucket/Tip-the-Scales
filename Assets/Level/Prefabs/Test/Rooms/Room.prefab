@@ -1069,7 +1069,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8468201115449934106}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_StaticShadowCaster: 0
@@ -1139,6 +1139,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6020655442762603197}
     m_Modifications:
+    - target: {fileID: 3228880078372712148, guid: 39595712b5411ec4e8127aea805583e6, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 7e798049da2c9244bad9a56495f70e2e, type: 2}
     - target: {fileID: 3430270501163021285, guid: 39595712b5411ec4e8127aea805583e6, type: 3}
       propertyPath: m_Name
       value: RoomEntranceTrigger
@@ -1404,6 +1408,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4149949477454856652, guid: 3e367e27a44523b44a38956f9b5454d3, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 7e798049da2c9244bad9a56495f70e2e, type: 2}
     - target: {fileID: 5079006451780201381, guid: 3e367e27a44523b44a38956f9b5454d3, type: 3}
       propertyPath: m_Name
       value: RoomExitTrigger

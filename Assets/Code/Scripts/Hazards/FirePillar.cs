@@ -19,52 +19,73 @@ public class FirePillar : MonoBehaviour
     [SerializeField] private float minInterval = 1f;
     [SerializeField] private float maxInterval = 4f;
 
-    [Header("Scale")]
+    [Header("Light")]
+    [SerializeField] private Light hazardLight;
+    [SerializeField] private float lightBaseIntensity = 3f;
+    [SerializeField] private float lightFlickerStrength = 0.8f;
+    [SerializeField] private float lightFlickerSpeed = 8f;
+
     private float scaleMultiplier = 0f;
     private bool isActive = false;
     private float nextDamageTime;
 
     private void Start()
     {
+        if (hazardLight != null) hazardLight.enabled = false;
         StartCoroutine(FireCycle());
+    }
+
+    private void Update()
+    {
+        if (GameState.InstanceExists)
+        {
+            float normalized = Mathf.Clamp01((-GameState.Instance.Scale + 1f) / 2f);
+            SetScaleMultiplier(normalized);
+        }
+
+        // Flicker while active
+        if (isActive && hazardLight != null)
+        {
+            float flicker = Mathf.Sin(Time.time * lightFlickerSpeed) * lightFlickerStrength;
+            hazardLight.intensity = lightBaseIntensity + flicker;
+        }
     }
 
     private IEnumerator FireCycle()
     {
-        yield return new WaitForSeconds(Random.Range(0f, maxInterval)); // Randomize initial delay to desync multiple pillars
+        yield return new WaitForSeconds(Random.Range(0f, maxInterval));
         while (true)
         {
-            //rest phase
+            // Rest phase
             if (warningParticles != null) warningParticles.Stop();
             if (activeParticles != null) activeParticles.Stop();
+            if (hazardLight != null) hazardLight.enabled = false;
             float currentInterval = Mathf.Lerp(maxInterval, minInterval, scaleMultiplier);
             yield return new WaitForSeconds(currentInterval);
 
-            //warning phase
+            // Warning phase
             if (warningParticles != null) warningParticles.Play();
-            //Debug.Log(gameObject.name + " warning!");
             yield return new WaitForSeconds(warningDuration);
 
-            //active phase
+            // Active phase
             if (warningParticles != null) warningParticles.Stop();
             if (activeParticles != null) activeParticles.Play();
+            if (hazardLight != null) hazardLight.enabled = true;
             isActive = true;
             float currentActiveDuration = Mathf.Lerp(minActiveDuration, maxActiveDuration, scaleMultiplier);
             SoundManager.instance.CreateSound().WithSoundData("LavaPillar").WithPosition(transform.position).WithrandomPitch().Play();
-            //Debug.Log(gameObject.name + " ACTIVE!");
             yield return new WaitForSeconds(currentActiveDuration);
             isActive = false;
+            if (hazardLight != null) hazardLight.enabled = false;
             if (activeParticles != null) activeParticles.Stop();
-            //Debug.Log(gameObject.name + " off.");
-
         }
     }
 
     private void OnTriggerStay(Collider other)
     {
-        if(!isActive) return;
-        if(!other.CompareTag("Player")) return;
-        if(Time.time < nextDamageTime) return;
+        if (!isActive) return;
+        if (!other.CompareTag("Player")) return;
+        if (Time.time < nextDamageTime) return;
 
         Health health = other.GetComponentInParent<Health>();
         if (health != null)
@@ -74,8 +95,8 @@ public class FirePillar : MonoBehaviour
         }
     }
 
-    public void SetScaleMultiplier(float normalizedscale)
+    public void SetScaleMultiplier(float normalizedScale)
     {
-        scaleMultiplier = Mathf.Clamp01(normalizedscale);
+        scaleMultiplier = Mathf.Clamp01(normalizedScale);
     }
 }
