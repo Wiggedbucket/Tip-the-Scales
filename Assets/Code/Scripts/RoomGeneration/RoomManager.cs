@@ -68,8 +68,11 @@ public class RoomManager : MonoBehaviour
         int prefabIndex = Random.Range(0, roomPrefabs.Length);
         GameObject prefab = roomPrefabs[prefabIndex];
 
+        Quaternion rotation = Quaternion.Euler(0f, Random.Range(0, 4) * 90f, 0f);
         Vector3 spawnLocation = room_position + new Vector3(coord_x * tileSize, 0f, coord_y * tileSize);
-        GameObject instance = Instantiate(prefab, spawnLocation, Quaternion.identity, transform);
+
+        GameObject instance = Instantiate(prefab, spawnLocation, rotation, transform);
+        
         instance.name = "Tile_" + coord_x + "_" + coord_y;
         instance.transform.localScale = new Vector3(tileSize, 0.1f, tileSize);
 
