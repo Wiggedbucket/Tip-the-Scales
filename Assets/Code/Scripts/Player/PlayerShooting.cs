@@ -16,6 +16,12 @@ public class PlayerShooting : MonoBehaviour
     [SerializeField] private Camera playerCam;
     [SerializeField] private LayerMask enemyLayer;
 
+    [Header("Melee Stats")]
+    [SerializeField] private InputActionReference meleeAction;
+    [SerializeField] private float meleeDamage;
+    [SerializeField] private float meleeRange;
+    [SerializeField] private float meleeCooldown;
+
     [Header("Audio")]
     [SerializeField] private string gunshotSound = "";
     [SerializeField] private string reloadSound = "";
@@ -32,6 +38,7 @@ public class PlayerShooting : MonoBehaviour
     public int CurrentAmmo => currentAmmo;
 
     private float nextTimeToFire;
+    private float nextTimeToMelee;
 
     private bool isShooting;
     private bool hasFiredSingle;
@@ -47,6 +54,7 @@ public class PlayerShooting : MonoBehaviour
         reloadAction.action.performed += OnReloadPerformed;
         weapon1Action.action.performed += OnWeapon1Performed;
         weapon2Action.action.performed += OnWeapon2Performed;
+        meleeAction.action.performed += OnMeleePerformed;
     }
 
     private void OnDisable()
@@ -54,6 +62,7 @@ public class PlayerShooting : MonoBehaviour
         reloadAction.action.performed -= OnReloadPerformed;
         weapon1Action.action.performed -= OnWeapon1Performed;
         weapon2Action.action.performed -= OnWeapon2Performed;
+        meleeAction.action.performed -= OnMeleePerformed;
     }
 
     void Update()
@@ -69,6 +78,36 @@ public class PlayerShooting : MonoBehaviour
     private void OnWeapon2Performed(InputAction.CallbackContext context)
     {
         EquipShotgun();
+    }
+
+    private void OnMeleePerformed(InputAction.CallbackContext context)
+    {
+        PerformMeleeAttack();
+    }
+
+    private void PerformMeleeAttack()
+    {
+        if (Time.time < nextTimeToMelee)
+            return;
+
+        nextTimeToMelee = Time.time + meleeCooldown;
+
+        if (Physics.Raycast(playerCam.transform.position, playerCam.transform.forward, out RaycastHit hit, meleeRange, enemyLayer))
+        {
+            Health health = hit.transform.GetComponentInParent<Health>();
+
+            if (health != null)
+            {
+                health.TakeDamage(meleeDamage);
+
+                EventBus<StyleGainEvent>.Raise(new StyleGainEvent
+                {
+                    Amount = meleeDamage * 0.5f,
+                    Reason = "Melee Hit",
+                    TextColor = Color.yellow,
+                });
+            }
+        }
     }
 
     public void OnShoot(InputAction.CallbackContext context)
