@@ -23,7 +23,19 @@ public class PlayerCharacterController : MonoBehaviour
     public bool readyToDash = true;
     private bool isDashing;
     private Vector3 lockedDashDirection;
-    private float dashCooldownTimer;
+
+    private float dashReadyTime;
+
+    public float DashCooldownProgress
+    {
+        get
+        {
+            if (readyToDash)
+                return 1f;
+
+            return Mathf.Clamp01(1f - ((dashReadyTime - Time.time) / dashCooldown));
+        }
+    }
 
     [Header("Ground Check")]
     public float playerHeight = 2f;
@@ -145,7 +157,7 @@ public class PlayerCharacterController : MonoBehaviour
 
         rb.useGravity = false;
 
-        dashCooldownTimer = Time.time + dashCooldown;
+        dashReadyTime = Time.time + dashCooldown;
 
         SoundManager.instance.CreateSound().WithSoundData("Dash").WithrandomPitch().Play();
 
@@ -166,7 +178,7 @@ public class PlayerCharacterController : MonoBehaviour
 
     private void DashCooldownCheck()
     {
-        if (!readyToDash && Time.time >= dashCooldownTimer && grounded)
+        if (!readyToDash && Time.time >= dashReadyTime)
         { 
             readyToDash = true;
         }

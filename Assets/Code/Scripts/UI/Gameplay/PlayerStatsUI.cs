@@ -11,6 +11,12 @@ public class PlayerStatsUI : MonoBehaviour
 
     private VisualElement crosshair;
 
+    private VisualElement dashBarFill;
+    private VisualElement healthBarFill;
+
+    [SerializeField]
+    private PlayerCharacterController playerController;
+
     [SerializeField]
     private PlayerShooting shooting;
 
@@ -42,6 +48,9 @@ public class PlayerStatsUI : MonoBehaviour
         ammoLabel = root.Q<Label>("AmmoLabel");
         healthLabel = root.Q<Label>("HealthLabel");
         crosshair = root.Q<VisualElement>("HitIndicator");
+
+        dashBarFill = root.Q<VisualElement>("DashBarFill");
+        healthBarFill = root.Q<VisualElement>("HealthBarFill");
     }
 
     private void Update()
@@ -49,13 +58,38 @@ public class PlayerStatsUI : MonoBehaviour
         if (shooting != null)
             ammoLabel.text = $"Ammo: {shooting.CurrentAmmo}/{shooting.CurrentWeapon.MaxAmmo}";
 
-        if (health != null)
-            healthLabel.text = $"Health: {health.GetHealth()}/{health.GetMaxHealth()}";
-
         if (crosshairTimer < crosshairAppearTime)
             crosshairTimer += Time.deltaTime;
         else
             crosshair.AddToClassList("hidden");
+
+        UpdateDashBar();
+
+        UpdateHealthBar();
+    }
+
+    private void UpdateDashBar()
+    {
+        float dashPercent = playerController.DashCooldownProgress;
+
+        dashBarFill.style.width = Length.Percent(dashPercent * 100f);
+
+        if (dashPercent >= 1f)
+            dashBarFill.AddToClassList("dash-filled");
+        else
+            dashBarFill.RemoveFromClassList("dash-filled");
+    }
+
+    private void UpdateHealthBar()
+    {
+        if (health == null)
+            return;
+
+        healthLabel.text = $"Health: {health.GetHealth()}/{health.GetMaxHealth()}";
+
+        float healthPercent = (float)health.GetHealth() / health.GetMaxHealth();
+
+        healthBarFill.style.width = Length.Percent(healthPercent * 100f);
     }
 
     private void ShowHitIndicator(TookDamageEvent e)

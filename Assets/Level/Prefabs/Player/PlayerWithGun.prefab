@@ -445,6 +445,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerStatsUI
   document: {fileID: 271586012094846685}
+  playerController: {fileID: 656645658249047089}
   shooting: {fileID: 1201137457095070481}
   health: {fileID: 3585482613974724569}
   crosshairAppearTime: 0.1

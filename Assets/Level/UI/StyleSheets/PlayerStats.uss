@@ -9,6 +9,7 @@
     right: auto;
     font-size: 45px;
     -unity-font-style: bold;
+    margin-left: 30px;
 }
 
 .hidden {
@@ -18,3 +19,9 @@
 .red {
     -unity-background-image-tint-color: rgb(207, 0, 0);
 }
+
+.dash-filled {
+    background-color: rgb(0, 103, 215);
+}
+
+
