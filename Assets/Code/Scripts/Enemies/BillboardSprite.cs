@@ -21,8 +21,9 @@ public class BillboardSprite : MonoBehaviour
     void LateUpdate()
     {
         if (_player == null) return;
-
-        Quaternion billboardRot = Quaternion.LookRotation(transform.position - _player.position);
+        Vector3 direction = transform.position - _player.position;
+        direction.y = 0f;
+        Quaternion billboardRot = Quaternion.LookRotation(direction);
 
         if (isMoving)
         {
