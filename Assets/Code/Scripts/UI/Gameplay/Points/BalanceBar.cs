@@ -20,6 +20,10 @@ public class BalanceBar : MonoBehaviour
     [SerializeField] private float pulseMinOpacity = 0f;
     [SerializeField] private float pulseMaxOpacity = 0.4f;
 
+    [SerializeField] private float barLerpSpeed = 5f;
+
+    private float displayedScale;
+
     private void Awake()
     {
         var root = document.rootVisualElement;
@@ -35,6 +39,11 @@ public class BalanceBar : MonoBehaviour
         angelPoints = root.Q<Label>("AngelPoints");
     }
 
+    private void Start()
+    {
+        displayedScale = GameState.Instance.Scale;
+    }
+
     private void Update()
     {
         UpdateProgressBar();
@@ -43,15 +52,19 @@ public class BalanceBar : MonoBehaviour
 
     private void UpdateProgressBar()
     {
-        float scale = Mathf.Clamp(GameState.Instance.Scale, -1f, 1f);
+        displayedScale = Mathf.Lerp(displayedScale, GameState.Instance.Scale, Time.deltaTime * barLerpSpeed);
 
-        float angelPercent = (scale + 1f) * 0.5f;
+        // Prevent tiny floating point differences from never reaching the target
+        if (Mathf.Abs(displayedScale - GameState.Instance.Scale) < 0.001f)
+            displayedScale = GameState.Instance.Scale;
+
+        float angelPercent = (displayedScale + 1f) * 0.5f;
         float demonPercent = 1f - angelPercent;
 
         balanceAngelicBarFill.style.width = Length.Percent(angelPercent * 100f);
         balanceDemonicBarFill.style.width = Length.Percent(demonPercent * 100f);
 
-        balancePointsLabel.text = $"Balance: {scale:0.00}";
+        balancePointsLabel.text = $"Balance: {displayedScale:0.00}";
 
         demonPoints.text = $"{GameState.Instance.GlobalCombatPoints.demonPoints}";
         angelPoints.text = $"{GameState.Instance.GlobalCombatPoints.angelPoints}";

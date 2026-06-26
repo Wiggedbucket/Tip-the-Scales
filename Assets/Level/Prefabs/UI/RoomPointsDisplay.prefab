@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 4231070002201522654}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 1.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -70,5 +70,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::RoomPointsDisplay
   roomId: -1
   document: {fileID: 2678304927085450206}
-  angelLabelColor: {r: 1, g: 0.96703213, b: 0.5862533, a: 1}
-  demonLabelColor: {r: 0.61185974, g: 0, b: 0, a: 1}
+  roomStateSymbolDemon:
+    m_Value:
+      m_Texture: {fileID: 2800000, guid: 4b3ad32095b8b90488fe89a44d0c9535, type: 3}
+      m_Sprite: {fileID: 0}
+      m_RenderTexture: {fileID: 0}
+      m_VectorImage: {fileID: 0}
+    m_Keyword: 0
+  roomStateSymbolAngel:
+    m_Value:
+      m_Texture: {fileID: 2800000, guid: ea015a637daacd04a99f81b9f6e1326d, type: 3}
+      m_Sprite: {fileID: 0}
+      m_RenderTexture: {fileID: 0}
+      m_VectorImage: {fileID: 0}
+    m_Keyword: 0
+  roomStateSymbolHuman:
+    m_Value:
+      m_Texture: {fileID: 2800000, guid: d844579bd8af1264a98097df78c76919, type: 3}
+      m_Sprite: {fileID: 0}
+      m_RenderTexture: {fileID: 0}
+      m_VectorImage: {fileID: 0}
+    m_Keyword: 0
+  angelLabelColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  demonLabelColor: {r: 1, g: 0, b: 0, a: 1}
