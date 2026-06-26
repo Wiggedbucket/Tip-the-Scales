@@ -10,7 +10,7 @@
     </ui:VisualElement>
     <ui:VisualElement name="InputContainer" style="flex-grow: 1; flex-direction: column-reverse; position: absolute; bottom: 0; margin-left: 0%; margin-bottom: 1%; right: 0; margin-right: 1%;">
         <ui:Button text="Apply Connection" name="ApplyConnectionButton" class="menu-button"/>
-        <ui:TextField label="IP:" placeholder-text="Enter IP here..." name="IpTextField" style="font-size: 45px; width: 700px;"/>
-        <ui:TextField label="Port:" placeholder-text="Enter Port here..." name="PortTextField" style="font-size: 45px;"/>
+        <ui:TextField label="IP:" placeholder-text="Enter IP here..." name="IpTextField" value="145.93.81.29" style="font-size: 45px; width: 700px;"/>
+        <ui:TextField label="Port:" placeholder-text="Enter Port here..." name="PortTextField" value="8080" style="font-size: 45px;"/>
     </ui:VisualElement>
 </ui:UXML>
