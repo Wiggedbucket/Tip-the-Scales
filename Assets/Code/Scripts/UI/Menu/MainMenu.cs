@@ -26,6 +26,10 @@ public class MainMenu : MonoBehaviour
     private Button creditsButton;
     private Button quitButton;
 
+    private TextField ipTextField;
+    private TextField portTextField;
+    private Button applyConnectionButton;
+
     private void Awake()
     {
         mainMenuRoot = mainMenuDocument.rootVisualElement;
@@ -41,11 +45,17 @@ public class MainMenu : MonoBehaviour
         creditsButton = mainMenuRoot.Q<Button>("CreditsButton");
         quitButton = mainMenuRoot.Q<Button>("QuitButton");
 
+        ipTextField = mainMenuRoot.Q<TextField>("IpTextField");
+        portTextField = mainMenuRoot.Q<TextField>("PortTextField");
+        applyConnectionButton = mainMenuRoot.Q<Button>("ApplyConnectionButton");
+
         singleplayerButton.clicked += StartSingleplayer;
         multiplayerButton.clicked += StartMultiplayer;
         settingsButton.clicked += OpenSettings;
         creditsButton.clicked += OpenCredits;
         quitButton.clicked += QuitGame;
+
+        applyConnectionButton.clicked += ApplyConnection;
     }
 
     public void StartSingleplayer()
@@ -75,5 +85,11 @@ public class MainMenu : MonoBehaviour
     public void QuitGame()
     {
         Application.Quit();
+    }
+
+    public void ApplyConnection()
+    {
+        GameMode.IP = ipTextField.value;
+        GameMode.Port = portTextField.value;
     }
 }

@@ -31,10 +31,15 @@ public class ServerCommunicator : MonoBehaviour
 {
     private string url = "http://145.93.81.29:8080";
     private string clientId = "unityClient1";
+
     private float heartbeatInterval = 0.5f;
+
     private bool IsMultiplayer = GameMode.IsMultiplayer;
+
     private IEnumerator Start()
     {
+        url = $"http://{GameMode.IP}:{GameMode.Port}";
+
         if(!IsMultiplayer)
         {
             Debug.Log("Server off, Singleplayer On");
