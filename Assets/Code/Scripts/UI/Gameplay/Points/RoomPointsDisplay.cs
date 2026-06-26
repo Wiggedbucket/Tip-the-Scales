@@ -9,12 +9,18 @@ public class RoomPointsDisplay : MonoBehaviour
     [SerializeField]
     private UIDocument document;
 
+    private Image roomStateSymbol;
+
     private VisualElement balanceDemonicBarFill;
     private VisualElement balanceAngelicBarFill;
 
     private Label angelCombatPointsLabel;
     private Label seperatorLabel;
     private Label demonCombatPointsLabel;
+
+    [SerializeField] private StyleBackground roomStateSymbolDemon;
+    [SerializeField] private StyleBackground roomStateSymbolAngel;
+    [SerializeField] private StyleBackground roomStateSymbolHuman;
 
     [SerializeField]
     private Color angelLabelColor = Color.yellow;
@@ -24,6 +30,8 @@ public class RoomPointsDisplay : MonoBehaviour
     private void Awake()
     {
         var root = document.rootVisualElement;
+
+        roomStateSymbol = root.Q<Image>("RoomStateSymbol");
 
         balanceDemonicBarFill = root.Q<VisualElement>("BalanceDemonicBarFill");
         balanceAngelicBarFill = root.Q<VisualElement>("BalanceAngelicBarFill");
@@ -35,8 +43,29 @@ public class RoomPointsDisplay : MonoBehaviour
 
     private void Update()
     {
+        UpdateRoomStateSymbol();
         UpdateProgressBar();
         UpdateLabels();
+    }
+
+    private void UpdateRoomStateSymbol()
+    {
+        CombatPoints combatPoints = GameState.Instance.RoomCombatPointsList[roomId];
+
+        float roomScale = GameState.Instance.CalculateScale(combatPoints.angelPoints, combatPoints.demonPoints);
+
+        if (roomScale <= GameState.Instance.ScaleTreshold)
+        {
+            roomStateSymbol.style.backgroundImage = roomStateSymbolDemon;
+        }
+        else if (roomScale >= -GameState.Instance.ScaleTreshold)
+        {
+            roomStateSymbol.style.backgroundImage = roomStateSymbolAngel;
+        }
+        else
+        {
+            roomStateSymbol.style.backgroundImage = roomStateSymbolHuman;
+        }
     }
 
     private void UpdateProgressBar()
