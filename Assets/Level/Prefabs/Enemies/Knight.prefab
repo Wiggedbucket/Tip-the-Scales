@@ -324,4 +324,4 @@ MonoBehaviour:
   maxHealth: 40
   isEnemy: 1
   hitSound: 
-  deathSound: EnemyDeath
+  deathSound: KnightDeath

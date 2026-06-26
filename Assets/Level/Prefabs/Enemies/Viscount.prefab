@@ -225,7 +225,7 @@ MonoBehaviour:
   maxHealth: 60
   isEnemy: 1
   hitSound: 
-  deathSound: EnemyDeath
+  deathSound: MageDeath
 --- !u!1 &8783111442142413234
 GameObject:
   m_ObjectHideFlags: 0

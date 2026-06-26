@@ -198,7 +198,7 @@ MonoBehaviour:
   - name: AKReload
     data:
       clip: {fileID: 8300000, guid: 86a5c5d9efcd843489614435399b7c30, type: 3}
-      mixerGroup: {fileID: -5796144478588062741, guid: db81423d922aafc4ba892f1b9c1defa0, type: 2}
+      mixerGroup: {fileID: -2707584287952853688, guid: db81423d922aafc4ba892f1b9c1defa0, type: 2}
       loop: 0
       playOnAwake: 0
       frequentSound: 0
@@ -279,3 +279,59 @@ MonoBehaviour:
       rolloffMode: 1
       minDistance: 11.95
       maxDistance: 31
+  - name: MageDeath
+    data:
+      clip: {fileID: 8300000, guid: 8e6877ff8a1c4d446accc9d878219e6d, type: 3}
+      mixerGroup: {fileID: -5796144478588062741, guid: db81423d922aafc4ba892f1b9c1defa0, type: 2}
+      loop: 0
+      playOnAwake: 0
+      frequentSound: 0
+      pitch: 1
+      spatialBlend: 1
+      dopplerLevel: 0
+      spread: 0
+      rolloffMode: 1
+      minDistance: 3.6
+      maxDistance: 31
+  - name: ProjectileHiss
+    data:
+      clip: {fileID: 8300000, guid: 50339675b8ccee1498ddf3b419e72e47, type: 3}
+      mixerGroup: {fileID: -5796144478588062741, guid: db81423d922aafc4ba892f1b9c1defa0, type: 2}
+      loop: 0
+      playOnAwake: 0
+      frequentSound: 0
+      pitch: 1.19
+      spatialBlend: 1
+      dopplerLevel: 0
+      spread: 0
+      rolloffMode: 1
+      minDistance: 2.81
+      maxDistance: 9.3
+  - name: KnightDeath
+    data:
+      clip: {fileID: 8300000, guid: 8e6877ff8a1c4d446accc9d878219e6d, type: 3}
+      mixerGroup: {fileID: -5796144478588062741, guid: db81423d922aafc4ba892f1b9c1defa0, type: 2}
+      loop: 0
+      playOnAwake: 0
+      frequentSound: 0
+      pitch: 0.76
+      spatialBlend: 1
+      dopplerLevel: 0
+      spread: 0
+      rolloffMode: 1
+      minDistance: 4.27
+      maxDistance: 59.91
+  - name: BaronDeath
+    data:
+      clip: {fileID: 8300000, guid: 8e6877ff8a1c4d446accc9d878219e6d, type: 3}
+      mixerGroup: {fileID: -5796144478588062741, guid: db81423d922aafc4ba892f1b9c1defa0, type: 2}
+      loop: 0
+      playOnAwake: 0
+      frequentSound: 0
+      pitch: 0.4
+      spatialBlend: 1
+      dopplerLevel: 0
+      spread: 0
+      rolloffMode: 1
+      minDistance: 4.27
+      maxDistance: 59.91
