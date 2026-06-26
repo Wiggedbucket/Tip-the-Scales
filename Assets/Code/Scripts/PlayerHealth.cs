@@ -30,7 +30,6 @@ public class PlayerHealth : MonoBehaviour
             Cursor.visible = true;
 
             look.Disable();
-            // Send death to the server (If in multiplayer)
         }
         else
         {
