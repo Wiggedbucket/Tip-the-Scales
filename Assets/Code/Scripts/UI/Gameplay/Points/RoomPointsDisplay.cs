@@ -27,6 +27,10 @@ public class RoomPointsDisplay : MonoBehaviour
     [SerializeField]
     private Color demonLabelColor = Color.red;
 
+    [SerializeField] private float barLerpSpeed = 5f;
+
+    private float displayedScale;
+
     private void Awake()
     {
         var root = document.rootVisualElement;
@@ -39,6 +43,9 @@ public class RoomPointsDisplay : MonoBehaviour
         angelCombatPointsLabel = root.Q<Label>("AngelCombatPointsLabel");
         seperatorLabel = root.Q<Label>("SeperatorLabel");
         demonCombatPointsLabel = root.Q<Label>("DemonCombatPointsLabel");
+
+        CombatPoints combatPoints = GameState.Instance.RoomCombatPointsList[roomId];
+        displayedScale = GameState.Instance.CalculateScale(combatPoints.angelPoints, combatPoints.demonPoints);
     }
 
     private void Update()
@@ -50,15 +57,11 @@ public class RoomPointsDisplay : MonoBehaviour
 
     private void UpdateRoomStateSymbol()
     {
-        CombatPoints combatPoints = GameState.Instance.RoomCombatPointsList[roomId];
-
-        float roomScale = GameState.Instance.CalculateScale(combatPoints.angelPoints, combatPoints.demonPoints);
-
-        if (roomScale <= GameState.Instance.ScaleTreshold)
+        if (displayedScale <= GameState.Instance.ScaleTreshold)
         {
             roomStateSymbol.style.backgroundImage = roomStateSymbolDemon;
         }
-        else if (roomScale >= -GameState.Instance.ScaleTreshold)
+        else if (displayedScale >= -GameState.Instance.ScaleTreshold)
         {
             roomStateSymbol.style.backgroundImage = roomStateSymbolAngel;
         }
@@ -71,9 +74,12 @@ public class RoomPointsDisplay : MonoBehaviour
     private void UpdateProgressBar()
     {
         CombatPoints combatPoints = GameState.Instance.RoomCombatPointsList[roomId];
-        float scale = Mathf.Clamp(GameState.Instance.CalculateScale(combatPoints.angelPoints, combatPoints.demonPoints), -1f, 1f);
 
-        float angelPercent = (scale + 1f) * 0.5f;
+        float targetScale = GameState.Instance.CalculateScale(combatPoints.angelPoints, combatPoints.demonPoints);
+
+        displayedScale = Mathf.MoveTowards(displayedScale, targetScale, barLerpSpeed * Time.deltaTime);
+
+        float angelPercent = (displayedScale + 1f) * 0.5f;
         float demonPercent = 1f - angelPercent;
 
         balanceAngelicBarFill.style.width = Length.Percent(angelPercent * 100f);
