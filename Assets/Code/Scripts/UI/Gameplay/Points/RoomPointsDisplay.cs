@@ -43,7 +43,10 @@ public class RoomPointsDisplay : MonoBehaviour
         angelCombatPointsLabel = root.Q<Label>("AngelCombatPointsLabel");
         seperatorLabel = root.Q<Label>("SeperatorLabel");
         demonCombatPointsLabel = root.Q<Label>("DemonCombatPointsLabel");
+    }
 
+    private void Start()
+    {
         CombatPoints combatPoints = GameState.Instance.RoomCombatPointsList[roomId];
         displayedScale = GameState.Instance.CalculateScale(combatPoints.angelPoints, combatPoints.demonPoints);
     }

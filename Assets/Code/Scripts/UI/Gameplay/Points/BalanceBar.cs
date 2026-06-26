@@ -37,7 +37,10 @@ public class BalanceBar : MonoBehaviour
         balancePointsLabel = root.Q<Label>("BalancePointsLabel");
         demonPoints = root.Q<Label>("DemonPoints");
         angelPoints = root.Q<Label>("AngelPoints");
+    }
 
+    private void Start()
+    {
         displayedScale = GameState.Instance.Scale;
     }
 
