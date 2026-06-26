@@ -248,6 +248,10 @@ PrefabInstance:
       propertyPath: bindingsDocument
       value: 
       objectReference: {fileID: 1488693626763677206}
+    - target: {fileID: 3659910802426768972, guid: 4c1ca7e54bc0660478c7ca2acb9c16e4, type: 3}
+      propertyPath: m_SortingOrder
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 7041870230759806648, guid: 4c1ca7e54bc0660478c7ca2acb9c16e4, type: 3}
       propertyPath: m_Name
       value: Settings
